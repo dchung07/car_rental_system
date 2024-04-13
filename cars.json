@@ -1,0 +1,54 @@
+[
+    {
+      "type": "Sedan",
+      "brand": "Toyota",
+      "model": "Camry",
+      "image": "toyota_camry.jpg",
+      "mileage": "30 mpg",
+      "fuel_type": "petrol",
+      "seats": 5,
+      "quantity": 3,
+      "price_per_day": 50,
+      "description": "A comfortable and reliable sedan for city and highway driving.",
+      "availability": true
+    },
+    {
+      "type": "SUV",
+      "brand": "Honda",
+      "model": "CR-V",
+      "image": "honda_cr_v.jpg",
+      "mileage": "28 mpg",
+      "fuel_type": "petrol",
+      "seats": 5,
+      "quantity": 3,
+      "price_per_day": 65,
+      "description": "A spacious and versatile SUV with good fuel efficiency.",
+      "availability": true
+    },
+    {
+      "type": "Convertible",
+      "brand": "Ford",
+      "model": "Mustang",
+      "image": "ford_mustang.jpg",
+      "mileage": "25 mpg",
+      "fuel_type": "petrol",
+      "seats": 4,
+      "quantity": 2,
+      "price_per_day": 80,
+      "description": "Experience the thrill of driving with the top down in this iconic convertible.",
+      "availability": true
+    },
+    {
+      "type": "Hatchback",
+      "brand": "Volkswagen",
+      "model": "Golf",
+      "image": "volkswagen_golf.jpg",
+      "mileage": "32 mpg",
+      "fuel_type": "petrol",
+      "seats": 5,
+      "quantity": 3,
+      "price_per_day": 45,
+      "description": "A compact and efficient hatchback, perfect for urban driving.",
+      "availability": true
+    }
+  ]

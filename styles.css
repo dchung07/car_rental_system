@@ -92,3 +92,24 @@
 .categoryForm > select, .searchbar > input[type="submit"]{
     font-size: 1.5rem;
 }
+
+.content {
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.card {
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
