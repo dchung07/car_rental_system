@@ -12,48 +12,54 @@
 <body>
     <!-- Header -->
     <div class="container">
-        <div class="header">
-
-            <div class="logo">
-                <h3>Rent'a'Car</h3>
-                <img src="images/car.png" alt="logo">
-            </div>
-
-            <div class="header_middle">
-
-                <form class="categoryForm" method="POST" onchange="submitForm()">
-                    <select class="categoryDropdown" name="categoryDropdown" id="category">
-                        <option value="Category">Category</option>
-                        <option value="Fruit">Toyota</option>
-                        <option value="Drinks">Hyundai</option>
-                        <option value="Meat">Tesla</option>
-                    </select>
-                </form>
-
-
-                <div class="searchbar">
-                    <input type="search" placeholder="Search Products..." name="search" id="searchInput" />
-                    <button id="submitSearch" type="button" name="searchSubmit" value="true"
-                        style="border: none; background: url('images/search_black_24dp.svg') no-repeat; width: 24px; height: 24px; cursor: pointer;"></button>
+        <div class="header-container">
+            <div class="header">
+                <div class="logo">
+                    <h3>Rent'a'Car</h3>
+                    <img src="images/car.png" alt="logo">
                 </div>
-
-                <div id="suggestions"></div>
-
+                <div class="header_middle">
+                    <form class="categoryForm" method="POST" onchange="submitForm()">
+                        <select class="categoryDropdown" name="categoryDropdown" id="category">
+                            <option value="Category">Category</option>
+                            <option value="Fruit">Toyota</option>
+                            <option value="Drinks">Hyundai</option>
+                            <option value="Meat">Tesla</option>
+                        </select>
+                    </form>
+                    <div class="searchbar">
+                        <input type="search" placeholder="Search Products..." name="search" id="searchInput" />
+                        <button id="submitSearch" type="button" name="searchSubmit" value="true"></button>
+                    </div>
+                    <div id="suggestions"></div>
+                </div>
+                <img src="images/booking.png" alt="">
             </div>
+        </div>
 
-            <img src="images/booking.png" alt="">
-
+        <div class="category_container">
+            <button class="category_selector" value="all">All Cars</button>
+            <category_selector_container>
+                <select class="category_selector" name="type">
+                    <option value="type">Vehicle Types</option>
+                </select>
+                <select class="category_selector" name="brands">
+                    <option value="brands">Vehicle Brands</option>
+                </select>
+                <select class="category_selector" name="seats">
+                    <option value="seats">Seat Count</option>
+                </select>
+                <select class="category_selector" name="price">
+                    <option value="price">Vehicle Price</option>
+                </select>
+                <select class="category_selector" name="alphabet">
+                    <option value="alphabet">Alphabetical Order (A-Z)</option>
+                </select>
+            </category_selector_container>
+            <button class="category_selector" value="all">Show Category Filters</button>
         </div>
 
         <div class="content">
-
-            <div class="category_container">
-                <button>All Cars</button>
-                <select>Brands</select>
-                <select>Car Type</select>
-                <select></select>
-            </div>
-
 
             <div class="card-container" id="cardContainer">
                 <?php
@@ -101,6 +107,13 @@
                 ?>
             </div>
         </div>
+
+        <div class="footer">
+
+            <h3>@2024 Rent'a'Car Pty Ltd</h3>
+
+        </div>
+
     </div>
 
 </body>

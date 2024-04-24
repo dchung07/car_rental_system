@@ -62,7 +62,7 @@
       "quantity": 3,
       "price_per_day": 45,
       "description": "The Hyundai Kona 2024 is a 5 seat SUV with a 4-star ANCAP safety rating.",
-      "availability": true
+      "availability": false
     },
     {
       "type": "Sedan",
@@ -75,7 +75,7 @@
       "quantity": 3,
       "price_per_day": 55,
       "description": "It has a hybrid or petrol engine with a fuel economy range from 3.9L/100km to 8.5L/100km, depending on the model badge.",
-      "availability": true
+      "availability": false
     },
     {
       "type": "Sedan",
@@ -140,7 +140,7 @@
       "quantity": 2,
       "price_per_day": 245,
       "description": "The Sprinter is yours for a fun family night out.",
-      "availability": true
+      "availability": false
     },
     {
       "type": "Convertible",
@@ -335,7 +335,7 @@
       "quantity": 2,
       "price_per_day": 145,
       "description": "The Landcruiser is yours for a fun family night out.",
-      "availability": true
+      "availability": false
     },
     {
       "type": "SUV",
@@ -361,7 +361,7 @@
       "quantity": 2,
       "price_per_day": 145,
       "description": "The MX-5 is yours for a fun family night out.",
-      "availability": true
+      "availability": false
     },
     {
       "type": "SUV",
@@ -387,6 +387,6 @@
       "quantity": 2,
       "price_per_day": 145,
       "description": "The CX-5 is yours for a fun family night out.",
-      "availability": true
+      "availability": false
     }
   ]
