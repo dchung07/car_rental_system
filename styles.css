@@ -6,7 +6,7 @@
 }
 
 .container {
-    background-color: rgb(225, 228, 232);
+    background-color: white;
     height: 100vh;
 }
 
@@ -102,7 +102,7 @@
 
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
     padding: 1rem;
 }
@@ -116,6 +116,11 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    box-sizing: border-box
+}
+
+.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px;
 }
 
 .car-image > img {
@@ -125,6 +130,48 @@
 
 .car-details {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.addToCartBtn {
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 12px 24px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.unavailable_addToCartBtn {
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.unavailable_card {
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: not-allowed;
+    color: #888;
+    opacity: 0.5;
+}
+
+.addToCartBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px;
 }
 
 body {
