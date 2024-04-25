@@ -19,14 +19,6 @@
                     <img src="images/car.png" alt="logo">
                 </div>
                 <div class="header_middle">
-                    <form class="categoryForm" method="POST" onchange="submitForm()">
-                        <select class="categoryDropdown" name="categoryDropdown" id="category">
-                            <option value="Category">Category</option>
-                            <option value="Fruit">Toyota</option>
-                            <option value="Drinks">Hyundai</option>
-                            <option value="Meat">Tesla</option>
-                        </select>
-                    </form>
                     <div class="searchbar">
                         <input type="search" placeholder="Search Products..." name="search" id="searchInput" />
                         <button id="submitSearch" type="button" name="searchSubmit" value="true"></button>
@@ -37,9 +29,9 @@
             </div>
         </div>
 
-        <div class="category_container">
+        <!-- <div class="category_container">
             <button class="category_selector" value="all">All Cars</button>
-            <category_selector_container>
+            <div id="category_selector_container">
                 <select class="category_selector" name="type">
                     <option value="type">Vehicle Types</option>
                 </select>
@@ -55,11 +47,45 @@
                 <select class="category_selector" name="alphabet">
                     <option value="alphabet">Alphabetical Order (A-Z)</option>
                 </select>
-            </category_selector_container>
-            <button class="category_selector" value="all">Show Category Filters</button>
+            </div>
+            <div class="category-sub-container">
+                <img src="images/filter.png" alt="filter">
+                <button class="category_selector" id="show_category_btn">Categories (On/Off)</button>
+            </div>
+        </div> -->
+
+        <div class="category_bar">
+
+            <div class="category_bar_sub" id="browse_categories_btn">
+                <img src="images/menu.png" alt="">
+                <h3>Browse Categories</h3>
+            </div>
+
         </div>
 
-        <div class="content">
+        <div class="content" id="content">
+
+            <div class="content-side-bar">
+                <div class="side_bar_panel">
+                    <div class="sub_div_side_bar" id="categories_bar">
+                        <div class="side_bar_left_side">
+                            <img src="images/filter.png" alt="filter">
+                            <h3>Categories</h3>
+                        </div>
+                    </div>
+                    <div class="sub_div_side_bar">
+                        <div class="side_bar_left_side">
+                            <img src="images/palette.png" alt="palette">
+                            <h3>Palette</h3>
+                        </div>
+                    </div>
+                    <div class="sub_div_side_bar">
+                        <div class="side_bar_left_side">
+                            <img src="images/filter.png" alt="filter">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="card-container" id="cardContainer">
                 <?php

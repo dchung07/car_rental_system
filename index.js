@@ -1,5 +1,96 @@
 document.getElementById('searchInput').addEventListener('input', searchFilter);
 
+// let sub_div_side_bars = document.querySelectorAll('.sub_div_side_bar');
+// let categories_bar = document.getElementById("categories_bar");
+// let content = document.getElementById("content");
+
+// sub_div_side_bars.forEach(bar => {
+//     bar.addEventListener('click', function() {
+//         content.style.gridTemplateColumns = "3fr 8fr";
+//         let image = document.createElement('img');
+//         image.src = "images/left-arrow.png";
+//         image.style.height = "30px";
+//         image.style.width = "30px";
+//         image.style.display = "flex";
+        
+
+//         bar.appendChild(image);
+//     })
+// });
+
+let browse_categories_btn = document.getElementById("browse_categories_btn");
+
+browse_categories_btn.addEventListener('click', function() {
+    let category_main_modal = document.createElement('div');
+    let category_main_modal_title = document.createElement('h3');
+    let category_main_modal_close_img = document.createElement('img');
+    let category_main_modal_title_container = document.createElement('div');
+    let category_main_modal_content_container = document.createElement('div');
+    let modal_underlay = document.createElement('div');
+    let brandsBtn = document.createElement('button');
+    let typeBtn = document.createElement('button');
+
+    //Modal img (Close)
+    category_main_modal_close_img.src = "images/close.png";
+    category_main_modal_close_img.style.width = "20px";
+    category_main_modal_close_img.style.height = "20px";
+
+    category_main_modal_close_img.addEventListener('click', function() {
+        document.body.removeChild(category_main_modal);
+        document.body.removeChild(modal_underlay);
+    });
+
+    // Modal title (h3)
+    category_main_modal_title.textContent = "Browse Categories";
+
+    //Main category modal
+    category_main_modal.style.zIndex = "2147483647";
+    category_main_modal.style.position = "absolute";
+    category_main_modal.style.backgroundColor = "white";
+    category_main_modal.style.width = "400px";
+    category_main_modal.style.height = "100%";
+
+    //Container for modal title and img
+    category_main_modal_title_container.style.display = "flex";
+    category_main_modal_title_container.style.justifyContent = "space-between";
+    category_main_modal_title_container.style.padding = "2rem";
+
+    //Container for content of modal
+    category_main_modal_content_container.style.display = "flex";
+    category_main_modal_content_container.style.flexDirection = "column";
+    category_main_modal_content_container.style.gap = "1rem";
+
+    //Modal underlay
+    modal_underlay.style.zIndex = "2147483646";
+    modal_underlay.style.position = "absolute";
+    modal_underlay.style.backgroundColor = "grey";
+    modal_underlay.style.opacity = "0.8";
+    modal_underlay.style.width = "100%";
+    modal_underlay.style.height = "100%";
+
+    //Buttons
+    brandsBtn.textContent = "Browse by Brand";
+    typeBtn.textContent = "Browse by Type";
+    brandsBtn.classList = "modal_category_button";
+    typeBtn.classList = "modal_category_button";
+
+    //Prevent Scrolling
+    document.body.style.overflow = "hidden";
+
+    category_main_modal_title_container.appendChild(category_main_modal_title);
+    category_main_modal_title_container.appendChild(category_main_modal_close_img);
+    category_main_modal_content_container.appendChild(brandsBtn);
+    category_main_modal_content_container.appendChild(typeBtn);
+    category_main_modal.appendChild(category_main_modal_title_container);
+    category_main_modal.appendChild(category_main_modal_content_container);
+    document.body.appendChild(category_main_modal);
+    document.body.appendChild(modal_underlay);
+
+    console.log("hii");
+
+});
+
+
 function searchFilter() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
     const cardContainer = document.getElementById('cardContainer');
