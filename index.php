@@ -54,83 +54,80 @@
             </div>
         </div> -->
 
-        <div class="category_bar">
-
-            <div class="category_bar_sub" id="browse_categories_btn">
-                <img src="images/menu.png" alt="">
-                <h3>Browse Categories</h3>
-            </div>
-
-        </div>
-
         <div class="content" id="content">
 
-            <div class="content-side-bar">
-                <div class="side_bar_panel">
-                    <div class="sub_div_side_bar" id="categories_bar">
-                        <div class="side_bar_left_side">
-                            <img src="images/filter.png" alt="filter">
-                            <h3>Categories</h3>
+            <div class="category_bar">
+
+                <div class="category_bar_sub" id="browse_categories_btn">
+                    <img src="images/menu.png" alt="">
+                    <h3>Browse Categories</h3>
+                </div>
+
+            </div>
+
+            <div class="content_bottom_row">
+                <div class="content-side-bar">
+                    <div class="side_bar_panel">
+                        <div class="sub_div_side_bar" id="categories_bar">
+                            <div class="side_bar_left_side">
+                                <img src="images/filter.png" alt="filter">
+                                <h3>Categories</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="sub_div_side_bar">
-                        <div class="side_bar_left_side">
-                            <img src="images/palette.png" alt="palette">
-                            <h3>Palette</h3>
+                        <div class="sub_div_side_bar">
+                            <div class="side_bar_left_side">
+                                <img src="images/palette.png" alt="palette">
+                                <h3>Palette</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="sub_div_side_bar">
-                        <div class="side_bar_left_side">
-                            <img src="images/filter.png" alt="filter">
+                        <div class="sub_div_side_bar">
+                            <div class="side_bar_left_side">
+                                <img src="images/filter.png" alt="filter">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card-container" id="cardContainer">
-                <?php
-                $carsJson = file_get_contents('cars.json');
-                $cars = json_decode($carsJson, true);
-                foreach ($cars as $car) {
-                    if ($car['availability'] == 'true') {
-                        echo '<div class="card">';
-
-                        echo '<div class="car-image">';
-                        echo '<img src="car_images/' . $car['image'] . '" alt="' . $car['brand'] . "image" . ' ' . $car['model'] . '">';
-                        echo '</div>';
-
-                        echo '<div class="car-details">';
-                        echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
-                        echo '<p>Type: ' . $car['type'] . '</p>';
-                        echo '<p>Mileage: ' . $car['mileage'] . '</p>';
-                        echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
-                        echo '<p>Seats: ' . $car['seats'] . '</p>';
-                        echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
-                        echo '<p>Description: ' . $car['description'] . '</p>';
-                        echo '<button class="addToCartBtn">Rent</button>';
-
-                        echo '</div>';
-
-                        echo '</div>';
-                    } else {
-                        echo '<div class="unavailable_card">';
-                        echo '<div class="car-image">';
-                        echo '<img src="car_images/' . $car['image'] . '" alt="' . $car['brand'] . "image" . ' ' . $car['model'] . '">';
-                        echo '</div>';
-                        echo '<div class="car-details">';
-                        echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
-                        echo '<p>Type: ' . $car['type'] . '</p>';
-                        echo '<p>Mileage: ' . $car['mileage'] . '</p>';
-                        echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
-                        echo '<p>Seats: ' . $car['seats'] . '</p>';
-                        echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
-                        echo '<p>Description: ' . $car['description'] . '</p>';
-                        echo '<button class="unavailable_addToCartBtn" disabled>Not Available</button>';
-                        echo '</div>';
-                        echo '</div>';
+                <div class="card-container" id="cardContainer">
+                    <?php
+                    $carsJson = file_get_contents('cars.json');
+                    $cars = json_decode($carsJson, true);
+                    foreach ($cars as $car) {
+                        if ($car['availability'] == 'true') {
+                            echo '<div class="card">';
+                            echo '<div class="car-image">';
+                            echo '<img src="car_images/' . $car['image'] . '" alt="' . $car['brand'] . "image" . ' ' . $car['model'] . '">';
+                            echo '</div>';
+                            echo '<div class="car-details">';
+                            echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
+                            echo '<p>Type: ' . $car['type'] . '</p>';
+                            echo '<p>Mileage: ' . $car['mileage'] . '</p>';
+                            echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
+                            echo '<p>Seats: ' . $car['seats'] . '</p>';
+                            echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
+                            echo '<p>Description: ' . $car['description'] . '</p>';
+                            echo '<button class="addToCartBtn">Rent</button>';
+                            echo '</div>';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="unavailable_card">';
+                            echo '<div class="car-image">';
+                            echo '<img src="car_images/' . $car['image'] . '" alt="' . $car['brand'] . "image" . ' ' . $car['model'] . '">';
+                            echo '</div>';
+                            echo '<div class="car-details">';
+                            echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
+                            echo '<p>Type: ' . $car['type'] . '</p>';
+                            echo '<p>Mileage: ' . $car['mileage'] . '</p>';
+                            echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
+                            echo '<p>Seats: ' . $car['seats'] . '</p>';
+                            echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
+                            echo '<p>Description: ' . $car['description'] . '</p>';
+                            echo '<button class="unavailable_addToCartBtn" disabled>Not Available</button>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
 

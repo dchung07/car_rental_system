@@ -160,15 +160,27 @@ body {
 .header_middle {
     display: flex;
     gap: 1rem;
+    grid-row: 1;
+    grid-column: 1 / -1;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    /* grid-template-columns: 1fr 10fr; */
+    align-items: flex-start;
+    /* justify-content: center; */
 }
 
 .category_bar {
     display: flex;
+    height: 50px;
+    overflow: hidden;
 }
 
-.modal_category_button {
-    background-color: grey;
-    padding: 12px 24px;
+
+.category_main_modal_content_sub_container:hover {
+    background-color: orange;
 }
 
 .category_bar_sub {
@@ -205,13 +217,16 @@ body {
     font-size: 1.5rem;
 }
 
-.content {
+.content_bottom_row {
     display: grid;
-    grid-template-columns: 1fr 10fr;
-    align-items: flex-start;
+    grid-template-columns: 1fr 9fr;
 }
 
+
 .content-side-bar {
+    grid-row: 2;
+    align-self: start;
+
     margin-top: 1rem;
     margin-left: 1rem;
     display: flex;
@@ -258,6 +273,8 @@ body {
 }
 
 .card-container {
+    grid-row: 2;
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;

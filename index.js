@@ -27,8 +27,19 @@ browse_categories_btn.addEventListener('click', function() {
     let category_main_modal_title_container = document.createElement('div');
     let category_main_modal_content_container = document.createElement('div');
     let modal_underlay = document.createElement('div');
-    let brandsBtn = document.createElement('button');
-    let typeBtn = document.createElement('button');
+
+    function closeMainModal() {
+        document.body.removeChild(category_main_modal);
+        document.body.removeChild(modal_underlay);
+        document.body.style.overflow = "auto";
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target == modal_underlay) {
+            closeMainModal();
+        }
+    });
+
 
     //Modal img (Close)
     category_main_modal_close_img.src = "images/close.png";
@@ -36,9 +47,9 @@ browse_categories_btn.addEventListener('click', function() {
     category_main_modal_close_img.style.height = "20px";
 
     category_main_modal_close_img.addEventListener('click', function() {
-        document.body.removeChild(category_main_modal);
-        document.body.removeChild(modal_underlay);
+        closeMainModal();
     });
+
 
     // Modal title (h3)
     category_main_modal_title.textContent = "Browse Categories";
@@ -50,6 +61,7 @@ browse_categories_btn.addEventListener('click', function() {
     category_main_modal.style.width = "400px";
     category_main_modal.style.height = "100%";
 
+
     //Container for modal title and img
     category_main_modal_title_container.style.display = "flex";
     category_main_modal_title_container.style.justifyContent = "space-between";
@@ -59,6 +71,7 @@ browse_categories_btn.addEventListener('click', function() {
     category_main_modal_content_container.style.display = "flex";
     category_main_modal_content_container.style.flexDirection = "column";
     category_main_modal_content_container.style.gap = "1rem";
+    category_main_modal_content_container.style.width = "400px";
 
     //Modal underlay
     modal_underlay.style.zIndex = "2147483646";
@@ -68,32 +81,61 @@ browse_categories_btn.addEventListener('click', function() {
     modal_underlay.style.width = "100%";
     modal_underlay.style.height = "100%";
 
-    //Buttons
-    brandsBtn.textContent = "Browse by Brand";
-    typeBtn.textContent = "Browse by Type";
-    brandsBtn.classList = "modal_category_button";
-    typeBtn.classList = "modal_category_button";
 
     //Prevent Scrolling
     document.body.style.overflow = "hidden";
 
     category_main_modal_title_container.appendChild(category_main_modal_title);
     category_main_modal_title_container.appendChild(category_main_modal_close_img);
-    category_main_modal_content_container.appendChild(brandsBtn);
-    category_main_modal_content_container.appendChild(typeBtn);
+
+    function appendSubContainer(btnText) {
+        let category_main_modal_content_sub_container = document.createElement('div');
+        let variableBtn = document.createElement('h3');
+        let category_main_modal_arrow_img = document.createElement('img');
+
+        //Modal arrow
+        category_main_modal_arrow_img.src = "images/right_arrow.png";
+        category_main_modal_arrow_img.style.width = "20px";
+        category_main_modal_arrow_img.style.height = "20px";
+
+        //Buttons
+        variableBtn.textContent = btnText;
+        variableBtn.classList = "modal_category_button";
+
+        //Sub category container
+        category_main_modal_content_sub_container.style.display = "flex";
+        category_main_modal_content_sub_container.style.justifyContent = "space-between";
+        category_main_modal_content_sub_container.style.padding = "1rem";
+        category_main_modal_content_sub_container.style.alignItems = "center";
+        category_main_modal_content_sub_container.classList = "category_main_modal_content_sub_container";
+
+        //Second Modal
+        category_main_modal_content_sub_container.addEventListener('click', function() {
+
+        });
+
+        category_main_modal_content_sub_container.appendChild(variableBtn);
+        category_main_modal_content_sub_container.appendChild(category_main_modal_arrow_img);
+        category_main_modal_content_container.appendChild(category_main_modal_content_sub_container);
+        category_main_modal.appendChild(category_main_modal_content_container);
+
+    }
+    
     category_main_modal.appendChild(category_main_modal_title_container);
-    category_main_modal.appendChild(category_main_modal_content_container);
+    appendSubContainer("Browse By Brand");
+    appendSubContainer("Browse By Type");
     document.body.appendChild(category_main_modal);
     document.body.appendChild(modal_underlay);
 
-    console.log("hii");
 
 });
 
+//Search Filter
 
 function searchFilter() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
     const cardContainer = document.getElementById('cardContainer');
+    const contentDiv = document.getElementById('content');
     cardContainer.innerHTML = '';
 
     const xhttp = new XMLHttpRequest();
@@ -115,58 +157,60 @@ function searchFilter() {
                         (searchInt && car.seats === searchInt);
                 });
 
-                if (filteredCars.length === 0) {
+                // if (filteredCars.length === 0) {
 
+                //     cardContainer.textContent = '';
+
+                //     carsData.forEach(car => {
+
+                //         if (car.availability === false) {
+                //             let cardHtml = '';
+                //             cardHtml = `
+                //             <div class="card">
+                //                 <div class="car-image">
+                //                     <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                //                 </div>
+                //                 <div class="car-details">
+                //                     <h3>${car.brand} ${car.model}</h3>
+                //                     <p>Type: ${car.type}</p>
+                //                     <p>Mileage: ${car.mileage}</p>
+                //                     <p>Fuel Type: ${car.fuel_type}</p>
+                //                     <p>Seats: ${car.seats}</p>
+                //                     <p>Price per Day: $${car.price_per_day}</p>
+                //                     <p>Description: ${car.description}</p>
+                //                     <button class="unavailable_addToCartBtn" disabled>Rent</button>
+                //                 </div>
+                //             </div>
+                //         `;
+                //         } else {
+                //             let cardHtml = '';
+                //             cardHtml = `
+                //             <div class="card">
+                //                 <div class="car-image">
+                //                     <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                //                 </div>
+                //                 <div class="car-details">
+                //                     <h3>${car.brand} ${car.model}</h3>
+                //                     <p>Type: ${car.type}</p>
+                //                     <p>Mileage: ${car.mileage}</p>
+                //                     <p>Fuel Type: ${car.fuel_type}</p>
+                //                     <p>Seats: ${car.seats}</p>
+                //                     <p>Price per Day: $${car.price_per_day}</p>
+                //                     <p>Description: ${car.description}</p>
+                //                     <button class="addToCartBtn">Rent</button>
+                //                 </div>
+                //             </div>
+                //         `;
+                //         }
+                //         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                //     });
+
+                // } else { 
                     cardContainer.textContent = '';
-
-                    carsData.forEach(car => {
-                        let cardHtml = '';
-
-                        if (car.availability === false) {
-                            cardHtml = `
-                            <div class="card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="unavailable_addToCartBtn" disabled>Rent</button>
-                                </div>
-                            </div>
-                        `;
-                        } else {
-                            cardHtml = `
-                            <div class="card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="addToCartBtn">Rent</button>
-                                </div>
-                            </div>
-                        `;
-                        }
-                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
-                    });
-
-                } else {
-                    cardContainer.textContent = '';
+                    
 
                     filteredCars.forEach(car => {
-                        let cardHtml = '';
+                        // let cardHtml = '';
 
                         if (car.availability === false) {
                             cardHtml = `
@@ -187,6 +231,7 @@ function searchFilter() {
                             </div>
                         `;
                         } else {
+                            // let cardHtml = '';
                             cardHtml = `
                             <div class="card">
                                 <div class="car-image">
@@ -207,7 +252,7 @@ function searchFilter() {
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
-                }
+                // }
             } else {
                 console.error('Error:', xhttp.status);
             }
