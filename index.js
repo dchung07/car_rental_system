@@ -110,30 +110,6 @@ browse_categories_btn.addEventListener('click', function() {
         category_main_modal_content_sub_container.style.alignItems = "center";
         category_main_modal_content_sub_container.classList = "category_main_modal_content_sub_container";
 
-        //Second Modal
-        // category_main_modal_content_sub_container.addEventListener('click', function() {
-        //     if(category_main_modal.style.width === "1000px") {
-        //         category_main_modal.style.width = "400px";
-        //     } else {
-        //         category_main_modal.style.width = "1000px";
-        //         let category_sub_modal_title_container = document.createElement('div');
-        //         let category_sub_modal_content_container = document.createElement('div');
-        //         let category_sub_modal_title = document.createElement('h3');
-    
-        //         category_sub_modal_title.textContent = "Placeholder Title Test"; //Change to whatever the context is (e.g. brand / type)
-        //         category_sub_modal_title.style.marginLeft = "1rem";
-
-        //         category_sub_modal_title_container.appendChild(category_sub_modal_title);
-        //         category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
-        //         category_main_modal_content_container_container.style.width = "1000px";
-        //         category_main_modal_content_container_container.style.display = "flex";
-        //         category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-        //         category_main_modal.appendChild(category_main_modal_content_container_container);
-
-        //     }
-
-        // });
-
         category_main_modal_content_sub_container.appendChild(variableBtn);
         category_main_modal_content_sub_container.appendChild(category_main_modal_arrow_img);
         category_main_modal_content_container.appendChild(category_main_modal_content_sub_container);
@@ -168,6 +144,33 @@ browse_categories_btn.addEventListener('click', function() {
                     category_sub_modal_title.style.marginLeft = "1rem";
                     category_sub_modal_content_container.classList = "category_sub_modal_content_container";
 
+                    //JSON
+                    const xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function () {
+                        if (xhttp.readyState === XMLHttpRequest.DONE) {
+                            if (xhttp.status === 200) {
+                                const carsData = JSON.parse(xhttp.responseText);
+
+                                const uniqueBrands = new Set();
+                                const uniqueType = new Set();
+                                
+                                carsData.forEach(car => {
+                                    uniqueBrands.add(car.brand);
+                                    uniqueType.add(car.type);
+                                });
+                                console.log("Unique Brands " + uniqueBrands.size);
+                                console.log("Unique Type " + uniqueType.size);
+                            }
+                        }
+                    }
+                    xhttp.open('GET', 'cars.json', true);
+                    xhttp.send();
+
+                    //Depending on the containerTextContent use either the brand or type loop.
+                    //Then generate buttons with each of the brands/types and append it to the category_sub_modal_content_container (but content version)
+                    //So category_sub_modal_content (Maybe this name will suffice)
+
                     category_sub_modal_title_container.appendChild(category_sub_modal_title);
                     category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
                     category_main_modal_content_container_container.style.width = "1000px";
@@ -176,13 +179,13 @@ browse_categories_btn.addEventListener('click', function() {
                     category_main_modal.appendChild(category_main_modal_content_container_container);
                     document.body.appendChild(category_main_modal);
 
-                    console.log(category_sub_modal_content_container.children);
                 }
+
+                //category_sub_modal_content_container
+                //
 
             } else {
                 let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
-                console.log(category_sub_modal_content_container.children);
-                console.log(category_sub_modal_content_container.parentNode);
                 const parentContainer = category_sub_modal_content_container.parentNode;
 
                 if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
