@@ -26,6 +26,7 @@ browse_categories_btn.addEventListener('click', function() {
     let category_main_modal_close_img = document.createElement('img');
     let category_main_modal_title_container = document.createElement('div');
     let category_main_modal_content_container = document.createElement('div');
+    let category_main_modal_content_container_container = document.createElement('div');
     let modal_underlay = document.createElement('div');
 
     function closeMainModal() {
@@ -110,23 +111,93 @@ browse_categories_btn.addEventListener('click', function() {
         category_main_modal_content_sub_container.classList = "category_main_modal_content_sub_container";
 
         //Second Modal
-        category_main_modal_content_sub_container.addEventListener('click', function() {
+        // category_main_modal_content_sub_container.addEventListener('click', function() {
+        //     if(category_main_modal.style.width === "1000px") {
+        //         category_main_modal.style.width = "400px";
+        //     } else {
+        //         category_main_modal.style.width = "1000px";
+        //         let category_sub_modal_title_container = document.createElement('div');
+        //         let category_sub_modal_content_container = document.createElement('div');
+        //         let category_sub_modal_title = document.createElement('h3');
+    
+        //         category_sub_modal_title.textContent = "Placeholder Title Test"; //Change to whatever the context is (e.g. brand / type)
+        //         category_sub_modal_title.style.marginLeft = "1rem";
 
-        });
+        //         category_sub_modal_title_container.appendChild(category_sub_modal_title);
+        //         category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
+        //         category_main_modal_content_container_container.style.width = "1000px";
+        //         category_main_modal_content_container_container.style.display = "flex";
+        //         category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+        //         category_main_modal.appendChild(category_main_modal_content_container_container);
+
+        //     }
+
+        // });
 
         category_main_modal_content_sub_container.appendChild(variableBtn);
         category_main_modal_content_sub_container.appendChild(category_main_modal_arrow_img);
         category_main_modal_content_container.appendChild(category_main_modal_content_sub_container);
-        category_main_modal.appendChild(category_main_modal_content_container);
+        category_main_modal_content_container_container.appendChild(category_main_modal_content_container);
+        category_main_modal.appendChild(category_main_modal_content_container_container);
 
     }
+
     
     category_main_modal.appendChild(category_main_modal_title_container);
-    appendSubContainer("Browse By Brand");
-    appendSubContainer("Browse By Type");
+    appendSubContainer("Brand");
+    appendSubContainer("Type");
     document.body.appendChild(category_main_modal);
     document.body.appendChild(modal_underlay);
 
+    const sub_container_buttons = document.querySelectorAll('.category_main_modal_content_sub_container');
+
+    sub_container_buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (category_main_modal.style.width !== "1000px") {
+                category_main_modal.style.width = "1000px";
+
+                let container = button.closest('.category_main_modal_content_sub_container');
+
+                if (container) {
+                    let containerTextContent = container.textContent.trim();
+                    let category_sub_modal_title_container = document.createElement('div');
+                    let category_sub_modal_content_container = document.createElement('div');
+                    let category_sub_modal_title = document.createElement('h3');
+
+                    category_sub_modal_title.textContent = containerTextContent;
+                    category_sub_modal_title.style.marginLeft = "1rem";
+                    category_sub_modal_content_container.classList = "category_sub_modal_content_container";
+
+                    category_sub_modal_title_container.appendChild(category_sub_modal_title);
+                    category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
+                    category_main_modal_content_container_container.style.width = "1000px";
+                    category_main_modal_content_container_container.style.display = "flex";
+                    category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                    category_main_modal.appendChild(category_main_modal_content_container_container);
+                    document.body.appendChild(category_main_modal);
+
+                    console.log(category_sub_modal_content_container.children);
+                }
+
+            } else {
+                let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
+                console.log(category_sub_modal_content_container.children);
+                console.log(category_sub_modal_content_container.parentNode);
+                const parentContainer = category_sub_modal_content_container.parentNode;
+
+                if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
+
+                    parentContainer.removeChild(category_sub_modal_content_container);
+
+                } else {
+
+                }
+
+
+                category_main_modal.style.width = "400px";
+            }
+        });
+    });
 
 });
 
