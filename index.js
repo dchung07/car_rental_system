@@ -130,12 +130,15 @@ browse_categories_btn.addEventListener('click', function() {
 
     const sub_container_buttons = document.querySelectorAll('.category_main_modal_content_sub_container');
 
+    let currentContent = "";
+
     sub_container_buttons.forEach(button => {
         button.addEventListener('click', () => {
             if (category_main_modal.style.width !== "1000px") {
                 category_main_modal.style.width = "1000px";
 
                 let container = button.closest('.category_main_modal_content_sub_container');
+                currentContent = container.textContent;
 
                 if (container) {
                     let containerTextContent = container.textContent.trim();
@@ -171,20 +174,18 @@ browse_categories_btn.addEventListener('click', function() {
                                     uniqueBrands.add(car.brand);
                                     uniqueType.add(car.type);
                                 });
-                                console.log("Unique Brands " + uniqueBrands.size);
-                                console.log("Unique Type " + uniqueType.size);
-                                console.log(category_sub_modal_title.textContent);
+
 
                                 if(category_sub_modal_title.textContent === "Brand") {
                                     for(const value of uniqueBrands) {
-                                        console.log(value);
+                                        
                                         let brandButton = document.createElement('button');
                                         let category_sub_modal_content_container_content = document.createElement('div');
                                         brandButton.textContent = value;
                                         brandButton.classList = "brandButton";
 
                                         brandButton.addEventListener('click', function() {
-                                            console.log(brandButton.textContent);
+                                            
                                             closeMainModal();
                                             searchCategory(brandButton.textContent);
 
@@ -202,14 +203,13 @@ browse_categories_btn.addEventListener('click', function() {
 
                                 } else if(category_sub_modal_title.textContent === "Type") {
                                     for(const value of uniqueType) {
-                                        console.log(value);
                                         let typeButton = document.createElement('button');
                                         let category_sub_modal_content_container_content = document.createElement('div');
                                         typeButton.textContent = value;
                                         typeButton.classList = "typeButton";
 
                                         typeButton.addEventListener('click', function() {
-                                            console.log(typeButton.textContent);
+                                           
                                             closeMainModal();
                                             searchCategory(typeButton.textContent);
 
@@ -255,24 +255,154 @@ browse_categories_btn.addEventListener('click', function() {
                 //
 
             } else {
-                let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
-                const parentContainer = category_sub_modal_content_container.parentNode;
 
-                if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
+                //What if it is 1000px in width (sub modal is on however clicked on a different Textcontent  (e.g. brand -> type))
+                let container = button.closest('.category_main_modal_content_sub_container');
 
-                    parentContainer.removeChild(category_sub_modal_content_container);
-
+                if(currentContent === container.textContent) {
+                    let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
+                    const parentContainer = category_sub_modal_content_container.parentNode;
+    
+                    if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
+    
+                        parentContainer.removeChild(category_sub_modal_content_container);
+    
+                    }
+                    category_main_modal.style.width = "400px";
                 } else {
+                    let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
+                    const parentContainer = category_sub_modal_content_container.parentNode;
+    
+                    if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
+    
+                        parentContainer.removeChild(category_sub_modal_content_container);
+    
+                    }
+                    category_main_modal.style.width = "400px";
+
+                    category_main_modal.style.width = "1000px";
+
+                let container = button.closest('.category_main_modal_content_sub_container');
+                currentContent = container.textContent;
+
+                if (container) {
+                    let containerTextContent = container.textContent.trim();
+                    let category_sub_modal_title_container = document.createElement('div');
+                    let category_sub_modal_content_container = document.createElement('div');
+                    let category_sub_modal_title = document.createElement('h3');
+
+                    category_sub_modal_title.textContent = containerTextContent;
+                    category_sub_modal_title.style.marginLeft = "1rem";
+                    category_sub_modal_content_container.classList = "category_sub_modal_content_container";
+                    category_sub_modal_content_container.style.display = "flex";
+                    category_sub_modal_content_container.style.flexDirection = "column";
+                    category_sub_modal_content_container.style.alignItems = "stretch";
+                    category_sub_modal_content_container.style.width = "600px";
+
+                    category_sub_modal_title_container.style.display = "flex";
+                    category_sub_modal_title_container.style.justifyContent = "center";
+                    category_sub_modal_title_container.style.marginBottom = "1rem";
+
+
+                    //JSON
+                    const xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function () {
+                        if (xhttp.readyState === XMLHttpRequest.DONE) {
+                            if (xhttp.status === 200) {
+                                const carsData = JSON.parse(xhttp.responseText);
+
+                                const uniqueBrands = new Set();
+                                const uniqueType = new Set();
+                                
+                                carsData.forEach(car => {
+                                    uniqueBrands.add(car.brand);
+                                    uniqueType.add(car.type);
+                                });
+
+
+                                if(category_sub_modal_title.textContent === "Brand") {
+                                    for(const value of uniqueBrands) {
+                                        
+                                        let brandButton = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        brandButton.textContent = value;
+                                        brandButton.classList = "brandButton";
+
+                                        brandButton.addEventListener('click', function() {
+                                            
+                                            closeMainModal();
+                                            searchCategory(brandButton.textContent);
+
+                                        });
+
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(brandButton);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+
+                                    }
+
+                                } else if(category_sub_modal_title.textContent === "Type") {
+                                    for(const value of uniqueType) {
+                                        let typeButton = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        typeButton.textContent = value;
+                                        typeButton.classList = "typeButton";
+
+                                        typeButton.addEventListener('click', function() {
+                                           
+                                            closeMainModal();
+                                            searchCategory(typeButton.textContent);
+
+                                        });
+
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(typeButton);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+                                    }
+                                } else {
+
+                                }
+
+
+
+                            }
+                        }
+                    }
+                    xhttp.open('GET', 'cars.json', true);
+                    xhttp.send();
+
+                    //Depending on the containerTextContent use either the brand or type loop.
+                    //Then generate buttons with each of the brands/types and append it to the category_sub_modal_content_container (but content version)
+                    //So category_sub_modal_content (Maybe this name will suffice)
+
+
+
+                    category_sub_modal_title_container.appendChild(category_sub_modal_title);
+                    category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
+                    category_main_modal_content_container_container.style.width = "1000px";
+                    category_main_modal_content_container_container.style.display = "flex";
+                    category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                    category_main_modal.appendChild(category_main_modal_content_container_container);
+                    document.body.appendChild(category_main_modal);
 
                 }
+                }
 
-
-                category_main_modal.style.width = "400px";
             }
         });
     });
 
 });
+
 
 //Filter Function (Brand / Type Input)
 

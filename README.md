@@ -17,3 +17,5 @@ Bugs
 -> Give each button an event listener that will update the cardContainer.
 
 -> Remember to create cardHTML for when there are no exact results (removed it previously)
+
+-> I want to make it so clicking on the button to go from sub to main modal, if clicking on a different one (e.g. brand to type) then it should switch automatically instead of closing sub modal
