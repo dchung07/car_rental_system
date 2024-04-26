@@ -19,3 +19,12 @@ Bugs
 -> Remember to create cardHTML for when there are no exact results (removed it previously)
 
 -> I want to make it so clicking on the button to go from sub to main modal, if clicking on a different one (e.g. brand to type) then it should switch automatically instead of closing sub modal
+
+
+-> To-Do
+
+-> Start brainstorming how the reservation section will work
+
+-> Click image to flip to show another type of image
+
+-> Must add modularity it is getting too difficult to see what is happening!

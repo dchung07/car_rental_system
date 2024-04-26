@@ -25,7 +25,11 @@
                     </div>
                     <div id="suggestions"></div>
                 </div>
-                <img src="images/booking.png" alt="">
+                <div class="header_right">
+                    <!-- <img src="images/book.png" alt=""> -->
+                    <h3>Reservations</h3>
+                </div>
+
             </div>
         </div>
 
@@ -61,6 +65,11 @@
                 <div class="category_bar_sub" id="browse_categories_btn">
                     <img src="images/menu.png" alt="">
                     <h3>Browse Categories</h3>
+                </div>
+
+                <div class="category_bar_sub" id="browse_all_categories_btn">
+                    <img src="images/car1.png" alt="">
+                    <h3>All Cars</h3>
                 </div>
 
             </div>

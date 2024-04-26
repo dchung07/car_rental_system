@@ -1,22 +1,68 @@
 document.getElementById('searchInput').addEventListener('input', searchFilter);
 
-// let sub_div_side_bars = document.querySelectorAll('.sub_div_side_bar');
-// let categories_bar = document.getElementById("categories_bar");
-// let content = document.getElementById("content");
+let browse_all_categories_btn = document.getElementById('browse_all_categories_btn');
 
-// sub_div_side_bars.forEach(bar => {
-//     bar.addEventListener('click', function() {
-//         content.style.gridTemplateColumns = "3fr 8fr";
-//         let image = document.createElement('img');
-//         image.src = "images/left-arrow.png";
-//         image.style.height = "30px";
-//         image.style.width = "30px";
-//         image.style.display = "flex";
-        
+browse_all_categories_btn.addEventListener('click', function() {
+    const xhttp = new XMLHttpRequest();
 
-//         bar.appendChild(image);
-//     })
-// });
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === XMLHttpRequest.DONE) {
+            if (xhttp.status === 200) {
+                const carsData = JSON.parse(xhttp.responseText);
+
+                    cardContainer.textContent = '';
+
+                    carsData.forEach(car => {
+
+                        if (car.availability === false) {
+                            // let cardHtml = '';
+                            cardHtml = `
+                            <div class="unavailable_card">
+                                <div class="car-image">
+                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                                </div>
+                                <div class="car-details">
+                                    <h3>${car.brand} ${car.model}</h3>
+                                    <p>Type: ${car.type}</p>
+                                    <p>Mileage: ${car.mileage}</p>
+                                    <p>Fuel Type: ${car.fuel_type}</p>
+                                    <p>Seats: ${car.seats}</p>
+                                    <p>Price per Day: $${car.price_per_day}</p>
+                                    <p>Description: ${car.description}</p>
+                                    <button class="unavailable_addToCartBtn" disabled>Rent</button>
+                                </div>
+                            </div>
+                        `;
+                        } else {
+                            // let cardHtml = '';
+                            cardHtml = `
+                            <div class="card">
+                                <div class="car-image">
+                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                                </div>
+                                <div class="car-details">
+                                    <h3>${car.brand} ${car.model}</h3>
+                                    <p>Type: ${car.type}</p>
+                                    <p>Mileage: ${car.mileage}</p>
+                                    <p>Fuel Type: ${car.fuel_type}</p>
+                                    <p>Seats: ${car.seats}</p>
+                                    <p>Price per Day: $${car.price_per_day}</p>
+                                    <p>Description: ${car.description}</p>
+                                    <button class="addToCartBtn">Rent</button>
+                                </div>
+                            </div>
+                        `;
+                        }
+                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                    });
+
+                } 
+        }
+    };
+
+    xhttp.open('GET', 'cars.json', true);
+    xhttp.send();
+});
 
 let browse_categories_btn = document.getElementById("browse_categories_btn");
 
@@ -125,6 +171,9 @@ browse_categories_btn.addEventListener('click', function() {
     category_main_modal.appendChild(category_main_modal_title_container);
     appendSubContainer("Brand");
     appendSubContainer("Type");
+    appendSubContainer("Seats");
+    appendSubContainer("Fuel Type");
+    appendSubContainer("Price Per Day");
     document.body.appendChild(category_main_modal);
     document.body.appendChild(modal_underlay);
 
@@ -169,67 +218,64 @@ browse_categories_btn.addEventListener('click', function() {
 
                                 const uniqueBrands = new Set();
                                 const uniqueType = new Set();
+                                const uniqueSeats = new Set();
+                                const uniqueFuels = new Set();
+                                const uniquePrice = new Set();
+                                const uniqueAvailability = new Set();
                                 
                                 carsData.forEach(car => {
                                     uniqueBrands.add(car.brand);
                                     uniqueType.add(car.type);
+                                    uniqueSeats.add(car.seats);
+                                    uniqueFuels.add(car.fuel_type);
+                                    uniquePrice.add(car.price_per_day);
+                                    uniqueAvailability.add(car.availability);
                                 });
 
 
                                 if(category_sub_modal_title.textContent === "Brand") {
-                                    for(const value of uniqueBrands) {
-                                        
-                                        let brandButton = document.createElement('button');
-                                        let category_sub_modal_content_container_content = document.createElement('div');
-                                        brandButton.textContent = value;
-                                        brandButton.classList = "brandButton";
-
-                                        brandButton.addEventListener('click', function() {
-                                            
-                                            closeMainModal();
-                                            searchCategory(brandButton.textContent);
-
-                                        });
-
-                                        category_sub_modal_content_container_content.style.display = "flex";
-                                        category_sub_modal_content_container_content.style.flexDirection = "column";
-                                        category_sub_modal_content_container_content.appendChild(brandButton);
-                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
-                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                                        category_main_modal.appendChild(category_main_modal_content_container_container);
-                                        document.body.appendChild(category_main_modal);
-
-                                    }
-
+                                    generateSubModalButtons(uniqueBrands);
                                 } else if(category_sub_modal_title.textContent === "Type") {
-                                    for(const value of uniqueType) {
-                                        let typeButton = document.createElement('button');
-                                        let category_sub_modal_content_container_content = document.createElement('div');
-                                        typeButton.textContent = value;
-                                        typeButton.classList = "typeButton";
-
-                                        typeButton.addEventListener('click', function() {
-                                           
-                                            closeMainModal();
-                                            searchCategory(typeButton.textContent);
-
-                                        });
-
-                                        category_sub_modal_content_container_content.style.display = "flex";
-                                        category_sub_modal_content_container_content.style.flexDirection = "column";
-                                        category_sub_modal_content_container_content.appendChild(typeButton);
-                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
-                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                                        category_main_modal.appendChild(category_main_modal_content_container_container);
-                                        document.body.appendChild(category_main_modal);
-                                    }
-                                } else {
-
+                                    generateSubModalButtons(uniqueType);
+                                } else if(category_sub_modal_title.textContent === "Seats"){
+                                    generateSubModalButtons(uniqueSeats);
+                                } else if(category_sub_modal_title.textContent === "Fuel Type") {
+                                    generateSubModalButtons(uniqueFuels);
+                                } else if(category_sub_modal_title.textContent === "Price Per Day") {
+                                    generateSubModalButtons(uniquePrice);
+                                } else if(category_sub_modal_title.textContent === "Availability") {
+                                    generateSubModalButtons(uniqueAvailability);
                                 }
 
-
+                                function generateSubModalButtons(categorySet) {
+                                    for(const value of categorySet) {
+                                                                        
+                                        let genericBtn = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        genericBtn.textContent = value;
+                                        genericBtn.classList = "ctgryBtn";
+                                
+                                        genericBtn.addEventListener('click', function() {
+                                            
+                                            closeMainModal();
+                                            searchCategory(value);
+                                
+                                        });
+                                
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(genericBtn);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+                                
+                                    }
+                                }
 
                             }
+
+
                         }
                     }
                     xhttp.open('GET', 'cars.json', true);
@@ -278,7 +324,7 @@ browse_categories_btn.addEventListener('click', function() {
                         parentContainer.removeChild(category_sub_modal_content_container);
     
                     }
-                    category_main_modal.style.width = "400px";
+                    // category_main_modal.style.width = "400px";
 
                     category_main_modal.style.width = "1000px";
 
@@ -314,68 +360,64 @@ browse_categories_btn.addEventListener('click', function() {
 
                                 const uniqueBrands = new Set();
                                 const uniqueType = new Set();
+                                const uniqueSeats = new Set();
+                                const uniqueFuels = new Set();
+                                const uniquePrice = new Set();
+                                const uniqueAvailability = new Set();
                                 
                                 carsData.forEach(car => {
                                     uniqueBrands.add(car.brand);
                                     uniqueType.add(car.type);
+                                    uniqueSeats.add(car.seats);
+                                    uniqueFuels.add(car.fuel_type);
+                                    uniquePrice.add(car.price_per_day);
+                                    uniqueAvailability.add(car.availability);
                                 });
 
 
                                 if(category_sub_modal_title.textContent === "Brand") {
-                                    for(const value of uniqueBrands) {
-                                        
-                                        let brandButton = document.createElement('button');
-                                        let category_sub_modal_content_container_content = document.createElement('div');
-                                        brandButton.textContent = value;
-                                        brandButton.classList = "brandButton";
-
-                                        brandButton.addEventListener('click', function() {
-                                            
-                                            closeMainModal();
-                                            searchCategory(brandButton.textContent);
-
-                                        });
-
-                                        category_sub_modal_content_container_content.style.display = "flex";
-                                        category_sub_modal_content_container_content.style.flexDirection = "column";
-                                        category_sub_modal_content_container_content.appendChild(brandButton);
-                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
-                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                                        category_main_modal.appendChild(category_main_modal_content_container_container);
-                                        document.body.appendChild(category_main_modal);
-
-                                    }
-
+                                    generateSubModalButtons(uniqueBrands);
                                 } else if(category_sub_modal_title.textContent === "Type") {
-                                    for(const value of uniqueType) {
-                                        let typeButton = document.createElement('button');
-                                        let category_sub_modal_content_container_content = document.createElement('div');
-                                        typeButton.textContent = value;
-                                        typeButton.classList = "typeButton";
-
-                                        typeButton.addEventListener('click', function() {
-                                           
-                                            closeMainModal();
-                                            searchCategory(typeButton.textContent);
-
-                                        });
-
-                                        category_sub_modal_content_container_content.style.display = "flex";
-                                        category_sub_modal_content_container_content.style.flexDirection = "column";
-                                        category_sub_modal_content_container_content.appendChild(typeButton);
-                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
-                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                                        category_main_modal.appendChild(category_main_modal_content_container_container);
-                                        document.body.appendChild(category_main_modal);
-                                    }
-                                } else {
-
+                                    generateSubModalButtons(uniqueType);
+                                } else if(category_sub_modal_title.textContent === "Seats"){
+                                    generateSubModalButtons(uniqueSeats);
+                                } else if(category_sub_modal_title.textContent === "Fuel Type") {
+                                    generateSubModalButtons(uniqueFuels);
+                                } else if(category_sub_modal_title.textContent === "Price Per Day") {
+                                    generateSubModalButtons(uniquePrice);
+                                } else if(category_sub_modal_title.textContent === "Availability") {
+                                    generateSubModalButtons(uniqueAvailability);
                                 }
 
-
+                                function generateSubModalButtons(categorySet) {
+                                    for(const value of categorySet) {
+                                                                        
+                                        let genericBtn = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        genericBtn.textContent = value;
+                                        genericBtn.classList = "ctgryBtn";
+                                
+                                        genericBtn.addEventListener('click', function() {
+                                            
+                                            closeMainModal();
+                                            searchCategory(value);
+                                
+                                        });
+                                
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(genericBtn);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+                                
+                                    }
+                                }
 
                             }
                         }
+
                     }
                     xhttp.open('GET', 'cars.json', true);
                     xhttp.send();
@@ -400,11 +442,13 @@ browse_categories_btn.addEventListener('click', function() {
             }
         });
     });
+    
 
 });
 
 
-//Filter Function (Brand / Type Input)
+
+//Filter Function (Brand / Type / Seats Input)
 
 function searchCategory(input) {
     const xhttp = new XMLHttpRequest();
@@ -413,10 +457,17 @@ function searchCategory(input) {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 200) {
                 const carsData = JSON.parse(xhttp.responseText);
-                input = input.toLowerCase();
+                if(!Number(input)) {
+                    input = input.toLowerCase();
+                }
+                const searchInt = parseInt(input);
                 const filteredCars = carsData.filter(car => {
                     return car.brand.toLowerCase().includes(input) ||
-                            car.type.toLowerCase().includes(input);
+                            car.type.toLowerCase().includes(input) ||
+                            car.type.toLowerCase().includes(input) ||
+                            car.fuel_type.toLowerCase().includes(input) ||
+                            car.price_per_day === searchInt ||
+                            (car.seats === searchInt);
                 });
 
                     cardContainer.textContent = '';
@@ -499,55 +550,55 @@ function searchFilter() {
                         (searchInt && car.seats === searchInt);
                 });
 
-                // if (filteredCars.length === 0) {
+                if (filteredCars.length === 0) {
 
-                //     cardContainer.textContent = '';
+                    cardContainer.textContent = '';
 
-                //     carsData.forEach(car => {
+                    carsData.forEach(car => {
 
-                //         if (car.availability === false) {
-                //             let cardHtml = '';
-                //             cardHtml = `
-                //             <div class="card">
-                //                 <div class="car-image">
-                //                     <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                //                 </div>
-                //                 <div class="car-details">
-                //                     <h3>${car.brand} ${car.model}</h3>
-                //                     <p>Type: ${car.type}</p>
-                //                     <p>Mileage: ${car.mileage}</p>
-                //                     <p>Fuel Type: ${car.fuel_type}</p>
-                //                     <p>Seats: ${car.seats}</p>
-                //                     <p>Price per Day: $${car.price_per_day}</p>
-                //                     <p>Description: ${car.description}</p>
-                //                     <button class="unavailable_addToCartBtn" disabled>Rent</button>
-                //                 </div>
-                //             </div>
-                //         `;
-                //         } else {
-                //             let cardHtml = '';
-                //             cardHtml = `
-                //             <div class="card">
-                //                 <div class="car-image">
-                //                     <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                //                 </div>
-                //                 <div class="car-details">
-                //                     <h3>${car.brand} ${car.model}</h3>
-                //                     <p>Type: ${car.type}</p>
-                //                     <p>Mileage: ${car.mileage}</p>
-                //                     <p>Fuel Type: ${car.fuel_type}</p>
-                //                     <p>Seats: ${car.seats}</p>
-                //                     <p>Price per Day: $${car.price_per_day}</p>
-                //                     <p>Description: ${car.description}</p>
-                //                     <button class="addToCartBtn">Rent</button>
-                //                 </div>
-                //             </div>
-                //         `;
-                //         }
-                //         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
-                //     });
+                        if (car.availability === false) {
+                            // let cardHtml = '';
+                            cardHtml = `
+                            <div class="unavailable_card">
+                                <div class="car-image">
+                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                                </div>
+                                <div class="car-details">
+                                    <h3>${car.brand} ${car.model}</h3>
+                                    <p>Type: ${car.type}</p>
+                                    <p>Mileage: ${car.mileage}</p>
+                                    <p>Fuel Type: ${car.fuel_type}</p>
+                                    <p>Seats: ${car.seats}</p>
+                                    <p>Price per Day: $${car.price_per_day}</p>
+                                    <p>Description: ${car.description}</p>
+                                    <button class="unavailable_addToCartBtn" disabled>Rent</button>
+                                </div>
+                            </div>
+                        `;
+                        } else {
+                            // let cardHtml = '';
+                            cardHtml = `
+                            <div class="card">
+                                <div class="car-image">
+                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                                </div>
+                                <div class="car-details">
+                                    <h3>${car.brand} ${car.model}</h3>
+                                    <p>Type: ${car.type}</p>
+                                    <p>Mileage: ${car.mileage}</p>
+                                    <p>Fuel Type: ${car.fuel_type}</p>
+                                    <p>Seats: ${car.seats}</p>
+                                    <p>Price per Day: $${car.price_per_day}</p>
+                                    <p>Description: ${car.description}</p>
+                                    <button class="addToCartBtn">Rent</button>
+                                </div>
+                            </div>
+                        `;
+                        }
+                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                    });
 
-                // } else { 
+                } else { 
                     cardContainer.textContent = '';
                     
 
@@ -594,7 +645,7 @@ function searchFilter() {
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
-                // }
+                }
             } else {
                 console.error('Error:', xhttp.status);
             }

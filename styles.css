@@ -193,7 +193,7 @@ body {
 }
 
 .category_bar_sub:hover {
-    background-color: rgb(255, 183, 82);
+    background-color: orange;
 }
 
 .category_bar_sub > img {
@@ -222,13 +222,26 @@ body {
     grid-template-columns: 1fr 9fr;
 }
 
-.brandButton, .typeButton {
+.brandButton, .typeButton, .seatsButton {
     padding: 12px 24px;
     border: 1px solid transparent;
     box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 15px;
 }
 
-.brandButton:hover, .typeButton:hover {
+.ctgryBtn {
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 15px;
+}
+
+.ctgryBtn:hover {
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    background-color: orange;
+}
+
+.brandButton:hover, .typeButton:hover, .seatsButton:hover {
     padding: 12px 24px;
     border: 1px solid transparent;
     box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
@@ -296,7 +309,7 @@ body {
 
 .card {
     border: 1px solid transparent;
-    border-radius: 16px;
+    border-radius: 6px;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
     display: flex;
@@ -326,19 +339,20 @@ body {
 
 .addToCartBtn {
     border: 1px solid transparent;
-    border-radius: 16px;
+    border-radius: 6px;
     padding: 12px 24px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
     width: 100%;
     box-sizing: border-box;
     font-size: 1rem;
     font-weight: bold;
+    cursor: pointer;
 }
 
 
 .unavailable_addToCartBtn {
     border: 1px solid transparent;
-    border-radius: 16px;
+    border-radius: 6px;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
     width: 100%;
@@ -369,9 +383,26 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.header > img {
-    width: 40px;
-    height: 40px;
+.header_right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 24px;
+}
+
+.header_right:hover {
+    background-color: orange;
+}
+
+/* .header_right > img {
+    width: 30px;
+    height: 30px;
+} */
+
+.header_right > h3 {
+    color: white;
+    font-size: 26px;
 }
 
 @media (max-width: 1850px) {
