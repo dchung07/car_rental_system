@@ -15,3 +15,5 @@ Bugs
 -> When the sub modal is opened (e.g. brand) 
 -> Loop through the json and for each brand that exists (length), generate DOM elements (buttons with the relevant brand name) and append it to the sub modal.
 -> Give each button an event listener that will update the cardContainer.
+
+-> Remember to create cardHTML for when there are no exact results (removed it previously)

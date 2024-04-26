@@ -110,6 +110,9 @@ browse_categories_btn.addEventListener('click', function() {
         category_main_modal_content_sub_container.style.alignItems = "center";
         category_main_modal_content_sub_container.classList = "category_main_modal_content_sub_container";
 
+        //
+        category_main_modal_content_container_container.style.width = "100%";
+
         category_main_modal_content_sub_container.appendChild(variableBtn);
         category_main_modal_content_sub_container.appendChild(category_main_modal_arrow_img);
         category_main_modal_content_container.appendChild(category_main_modal_content_sub_container);
@@ -143,6 +146,15 @@ browse_categories_btn.addEventListener('click', function() {
                     category_sub_modal_title.textContent = containerTextContent;
                     category_sub_modal_title.style.marginLeft = "1rem";
                     category_sub_modal_content_container.classList = "category_sub_modal_content_container";
+                    category_sub_modal_content_container.style.display = "flex";
+                    category_sub_modal_content_container.style.flexDirection = "column";
+                    category_sub_modal_content_container.style.alignItems = "stretch";
+                    category_sub_modal_content_container.style.width = "600px";
+
+                    category_sub_modal_title_container.style.display = "flex";
+                    category_sub_modal_title_container.style.justifyContent = "center";
+                    category_sub_modal_title_container.style.marginBottom = "1rem";
+
 
                     //JSON
                     const xhttp = new XMLHttpRequest();
@@ -161,6 +173,62 @@ browse_categories_btn.addEventListener('click', function() {
                                 });
                                 console.log("Unique Brands " + uniqueBrands.size);
                                 console.log("Unique Type " + uniqueType.size);
+                                console.log(category_sub_modal_title.textContent);
+
+                                if(category_sub_modal_title.textContent === "Brand") {
+                                    for(const value of uniqueBrands) {
+                                        console.log(value);
+                                        let brandButton = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        brandButton.textContent = value;
+                                        brandButton.classList = "brandButton";
+
+                                        brandButton.addEventListener('click', function() {
+                                            console.log(brandButton.textContent);
+                                            closeMainModal();
+                                            searchCategory(brandButton.textContent);
+
+                                        });
+
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(brandButton);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+
+                                    }
+
+                                } else if(category_sub_modal_title.textContent === "Type") {
+                                    for(const value of uniqueType) {
+                                        console.log(value);
+                                        let typeButton = document.createElement('button');
+                                        let category_sub_modal_content_container_content = document.createElement('div');
+                                        typeButton.textContent = value;
+                                        typeButton.classList = "typeButton";
+
+                                        typeButton.addEventListener('click', function() {
+                                            console.log(typeButton.textContent);
+                                            closeMainModal();
+                                            searchCategory(typeButton.textContent);
+
+                                        });
+
+                                        category_sub_modal_content_container_content.style.display = "flex";
+                                        category_sub_modal_content_container_content.style.flexDirection = "column";
+                                        category_sub_modal_content_container_content.appendChild(typeButton);
+                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                                        document.body.appendChild(category_main_modal);
+                                    }
+                                } else {
+
+                                }
+
+
+
                             }
                         }
                     }
@@ -170,6 +238,8 @@ browse_categories_btn.addEventListener('click', function() {
                     //Depending on the containerTextContent use either the brand or type loop.
                     //Then generate buttons with each of the brands/types and append it to the category_sub_modal_content_container (but content version)
                     //So category_sub_modal_content (Maybe this name will suffice)
+
+
 
                     category_sub_modal_title_container.appendChild(category_sub_modal_title);
                     category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
@@ -203,6 +273,74 @@ browse_categories_btn.addEventListener('click', function() {
     });
 
 });
+
+//Filter Function (Brand / Type Input)
+
+function searchCategory(input) {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === XMLHttpRequest.DONE) {
+            if (xhttp.status === 200) {
+                const carsData = JSON.parse(xhttp.responseText);
+                input = input.toLowerCase();
+                const filteredCars = carsData.filter(car => {
+                    return car.brand.toLowerCase().includes(input) ||
+                            car.type.toLowerCase().includes(input);
+                });
+
+                    cardContainer.textContent = '';
+                                
+
+                    filteredCars.forEach(car => {
+
+                    if (car.availability === false) {
+                        cardHtml = `
+                        <div class="card">
+                            <div class="car-image">
+                                <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                            </div>
+                            <div class="car-details">
+                                <h3>${car.brand} ${car.model}</h3>
+                                <p>Type: ${car.type}</p>
+                                <p>Mileage: ${car.mileage}</p>
+                                <p>Fuel Type: ${car.fuel_type}</p>
+                                <p>Seats: ${car.seats}</p>
+                                <p>Price per Day: $${car.price_per_day}</p>
+                                <p>Description: ${car.description}</p>
+                                <button class="unavailable_addToCartBtn" disabled>Rent</button>
+                            </div>
+                        </div>
+                    `;
+                    } else {
+                        // let cardHtml = '';
+                        cardHtml = `
+                        <div class="card">
+                            <div class="car-image">
+                                <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+                            </div>
+                            <div class="car-details">
+                                <h3>${car.brand} ${car.model}</h3>
+                                <p>Type: ${car.type}</p>
+                                <p>Mileage: ${car.mileage}</p>
+                                <p>Fuel Type: ${car.fuel_type}</p>
+                                <p>Seats: ${car.seats}</p>
+                                <p>Price per Day: $${car.price_per_day}</p>
+                                <p>Description: ${car.description}</p>
+                                <button class="addToCartBtn">Rent</button>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                });
+            }
+        }
+    }
+    xhttp.open('GET', 'cars.json', true);
+    xhttp.send();
+}
+
 
 //Search Filter
 
