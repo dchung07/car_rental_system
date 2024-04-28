@@ -1,5 +1,652 @@
 document.getElementById('searchInput').addEventListener('input', searchFilter);
 
+//Night Mode functionality Optional
+
+// let palette = document.getElementById('palette');
+// const rootStyles = getComputedStyle(document.documentElement);
+
+// palette.addEventListener('click', function() {
+//     document.documentElement.style.setProperty('--primary-color', 'black');
+//     document.documentElement.style.setProperty('--secndary-color', 'white');
+// });
+
+// test
+// function test(event) {
+//     console.log(event.target.parentElement.children[0]);
+// }
+
+//Rent -> Reservation Button for all the other generated Cards
+function addReservationForNonMain(event) {
+    let reservation_main_modal = document.createElement('div');
+        let reservation_modal_title = document.createElement('h3');
+        let reservation_modal_close_img = document.createElement('img');
+        let reservation_modal_title_container = document.createElement('div');
+        let reservation_modal_underlay = document.createElement('div');
+    
+    
+        function closeMainReservationModal() {
+            document.body.removeChild(reservation_main_modal);
+            document.body.removeChild(reservation_modal_underlay);
+            document.body.style.overflow = "auto";
+        }
+    
+        window.addEventListener('click', function(event) {
+            if (event.target == reservation_modal_underlay) {
+                closeMainReservationModal();
+            }
+        });
+    
+        //Reservation Modal img (Close)
+        reservation_modal_close_img.src = "images/close.png";
+        reservation_modal_close_img.style.width = "20px";
+        reservation_modal_close_img.style.height = "20px";
+    
+        reservation_modal_close_img.addEventListener('click', function() {
+            closeMainReservationModal();
+        });
+    
+        //Reservation Modal Title
+        reservation_modal_title.textContent = "Your Reservations";
+    
+        //Container for reservation modal title and img
+        reservation_modal_title_container.style.display = "flex";
+        reservation_modal_title_container.style.justifyContent = "space-between";
+        reservation_modal_title_container.style.padding = "2rem";
+    
+        //Main reservation modal
+        reservation_main_modal.style.zIndex = "2147483647";
+        reservation_main_modal.style.position = "absolute";
+        reservation_main_modal.style.backgroundColor = "white";
+        reservation_main_modal.style.width = "500px";
+        reservation_main_modal.style.height = "100%";
+        reservation_main_modal.style.top = "0";
+        reservation_main_modal.style.right = "0";
+    
+        //Reservation Modal Underlay
+        reservation_modal_underlay.style.zIndex = "2147483646";
+        reservation_modal_underlay.style.position = "absolute";
+        reservation_modal_underlay.style.backgroundColor = "grey";
+        reservation_modal_underlay.style.opacity = "0.8";
+        reservation_modal_underlay.style.width = "100%";
+        reservation_modal_underlay.style.height = "100%";
+    
+        //Prevent Scrolling
+        document.body.style.overflow = "hidden";
+
+        let reservation_modal_content_container = document.createElement('div');
+    
+        reservation_modal_title_container.appendChild(reservation_modal_title);
+        reservation_modal_title_container.appendChild(reservation_modal_close_img);
+        reservation_main_modal.appendChild(reservation_modal_title_container);
+
+        //Retrieve Only the car_image/ source section so we can put on an image of the car
+        let carImg = document.createElement('img');
+        let carImgSrc = event.target.parentElement.children[8].value;
+
+        carImg.src = "car_images/" + carImgSrc + ".jpg";
+        carImg.style.width = "150px";
+        carImg.style.height = "150px";
+        reservation_modal_content_container.appendChild(carImg);
+
+        // console.log("test: " + event.target.parentElement.children[8].value);
+        
+
+        let carText = document.createElement('h3');
+        carText.textContent = event.target.parentElement.children[0].textContent.trim();
+        let carType = document.createElement('h3');
+        carType.textContent = event.target.parentElement.children[1].textContent.trim();
+        let carMileage = document.createElement('h3');
+        carMileage.textContent = event.target.parentElement.children[2].textContent.trim();
+        let carFuel = document.createElement('h3');
+        carFuel.textContent = event.target.parentElement.children[3].textContent.trim();
+        let carSeats = document.createElement('h3');
+        carSeats.textContent = event.target.parentElement.children[4].textContent.trim();
+        let carPrice = document.createElement('h3');
+        carPrice.textContent = event.target.parentElement.children[5].textContent.trim();
+
+        let quantityInput = document.createElement('input');
+        let quantityInputAddButton = document.createElement('button');
+        let quantityInputMinusButton = document.createElement('button');
+        let quantityInputContainer = document.createElement('div');
+
+        let reservation_modal_content_container_container = document.createElement('div');
+
+        quantityInputAddButton.textContent = "+";
+        quantityInputMinusButton.textContent = "-";
+        quantityInput.placeholder = "1";
+        // quantityInput.type = "number";
+        quantityInput.inputMode = "numeric";
+        quantityInput.min = "1";
+
+        //Find the max quantity of car
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                if (xhttp.status === 200) {
+                    const carsData = JSON.parse(xhttp.responseText);
+
+
+                        carsData.forEach(car => {
+                            if((car.brand + " " + car.model) === event.target.parentElement.children[0].textContent.trim()) {
+                                quantityInput.max = car.quantity;
+
+                            }
+                        });
+                }
+            }
+        }
+
+        xhttp.open('GET', 'cars.json', true);
+        xhttp.send();
+
+        let startDateInput = document.createElement('input');
+        let endDateInput = document.createElement('input');
+        let dateContainer = document.createElement('div');
+
+        startDateInput.type = "date";
+        endDateInput.type = "date";
+        dateContainer.appendChild(startDateInput);
+        dateContainer.appendChild(endDateInput);
+
+        //Date container styling
+        dateContainer.style.display = "flex";
+        dateContainer.style.gap = "1rem";
+
+
+
+        //Need to access the JSON file and find out what the max number of cars available are.
+
+        quantityInput.style.textAlign = "center";
+
+        quantityInputContainer.appendChild(quantityInputMinusButton);
+        quantityInputContainer.appendChild(quantityInput);
+        quantityInputContainer.appendChild(quantityInputAddButton);
+
+        //Reservation Modal Content Container Styling
+        reservation_modal_content_container.style.display = "flex";
+        reservation_modal_content_container.style.flexDirection = "column";
+        reservation_modal_content_container.style.gap = "1rem";
+        reservation_modal_content_container.style.alignItems = "center";
+
+        //Reservation Modal Content Container Container Styling
+        reservation_modal_content_container_container.style.display = "flex";
+        reservation_modal_content_container_container.style.flexDirection = "column";
+        reservation_modal_content_container_container.style.gap = "1rem";
+        reservation_modal_content_container_container.style.alignItems = "center";
+
+        reservation_modal_content_container.appendChild(carText);
+        reservation_modal_content_container.appendChild(carType);
+        reservation_modal_content_container.appendChild(carMileage);
+        reservation_modal_content_container.appendChild(carFuel);
+        reservation_modal_content_container.appendChild(carSeats);
+        reservation_modal_content_container.appendChild(carPrice);
+        
+        reservation_modal_content_container_container.appendChild(reservation_modal_content_container);
+        reservation_modal_content_container_container.appendChild(quantityInputContainer);
+        reservation_modal_content_container_container.appendChild(dateContainer);
+
+        
+
+        reservation_main_modal.appendChild(reservation_modal_content_container_container);
+        
+        document.body.appendChild(reservation_main_modal);
+        document.body.appendChild(reservation_modal_underlay);
+}
+
+//Rent -> Reservation Button for the main content
+
+function addReservation(event) {
+    let reservation_main_modal = document.createElement('div');
+        let reservation_modal_title = document.createElement('h3');
+        let reservation_modal_close_img = document.createElement('img');
+        let reservation_modal_title_container = document.createElement('div');
+        let reservation_modal_underlay = document.createElement('div');
+    
+    
+        function closeMainReservationModal() {
+            document.body.removeChild(reservation_main_modal);
+            document.body.removeChild(reservation_modal_underlay);
+            document.body.style.overflow = "auto";
+        }
+    
+        window.addEventListener('click', function(event) {
+            if (event.target == reservation_modal_underlay) {
+                closeMainReservationModal();
+            }
+        });
+    
+        //Reservation Modal img (Close)
+        reservation_modal_close_img.src = "images/close.png";
+        reservation_modal_close_img.style.width = "20px";
+        reservation_modal_close_img.style.height = "20px";
+    
+        reservation_modal_close_img.addEventListener('click', function() {
+            closeMainReservationModal();
+        });
+    
+        //Reservation Modal Title
+        reservation_modal_title.textContent = "Your Reservations";
+    
+        //Container for reservation modal title and img
+        reservation_modal_title_container.style.display = "flex";
+        reservation_modal_title_container.style.justifyContent = "space-between";
+        reservation_modal_title_container.style.padding = "2rem";
+    
+        //Main reservation modal
+        reservation_main_modal.style.zIndex = "2147483647";
+        reservation_main_modal.style.position = "absolute";
+        reservation_main_modal.style.backgroundColor = "white";
+        reservation_main_modal.style.width = "500px";
+        reservation_main_modal.style.height = "100%";
+        reservation_main_modal.style.top = "0";
+        reservation_main_modal.style.right = "0";
+    
+        //Reservation Modal Underlay
+        reservation_modal_underlay.style.zIndex = "2147483646";
+        reservation_modal_underlay.style.position = "absolute";
+        reservation_modal_underlay.style.backgroundColor = "grey";
+        reservation_modal_underlay.style.opacity = "0.8";
+        reservation_modal_underlay.style.width = "100%";
+        reservation_modal_underlay.style.height = "100%";
+    
+        //Prevent Scrolling
+        document.body.style.overflow = "hidden";
+
+        let reservation_modal_content_container = document.createElement('div');
+    
+        reservation_modal_title_container.appendChild(reservation_modal_title);
+        reservation_modal_title_container.appendChild(reservation_modal_close_img);
+        reservation_main_modal.appendChild(reservation_modal_title_container);
+
+        //Retrieve Only the car_image/ source section so we can put on an image of the car
+        let carImg = document.createElement('img');
+        let carImgSourceUnprocessed = event.target.parentElement.parentElement.firstChild.firstChild.src;
+
+        const startIndex = carImgSourceUnprocessed.indexOf('car_images/');
+        let pathFromCarImages;
+
+            if (startIndex !== -1) {
+
+                pathFromCarImages = carImgSourceUnprocessed.substring(startIndex);
+
+            }
+
+        carImg.src = pathFromCarImages;
+        carImg.style.width = "150px";
+        carImg.style.height = "150px";
+        reservation_modal_content_container.appendChild(carImg);
+
+        let carText = document.createElement('h3');
+        carText.textContent = event.target.parentElement.children[0].textContent.trim();
+        let carType = document.createElement('h3');
+        carType.textContent = event.target.parentElement.children[1].textContent.trim();
+        let carMileage = document.createElement('h3');
+        carMileage.textContent = event.target.parentElement.children[2].textContent.trim();
+        let carFuel = document.createElement('h3');
+        carFuel.textContent = event.target.parentElement.children[3].textContent.trim();
+        let carSeats = document.createElement('h3');
+        carSeats.textContent = event.target.parentElement.children[4].textContent.trim();
+        let carPrice = document.createElement('h3');
+        carPrice.textContent = event.target.parentElement.children[5].textContent.trim();
+
+        let quantityInput = document.createElement('input');
+        let quantityInputAddButton = document.createElement('button');
+        let quantityInputMinusButton = document.createElement('button');
+        let quantityInputContainer = document.createElement('div');
+
+        let reservation_modal_content_container_container = document.createElement('div');
+
+        quantityInputAddButton.textContent = "+";
+        quantityInputMinusButton.textContent = "-";
+        quantityInput.placeholder = "1";
+        // quantityInput.type = "number";
+        quantityInput.inputMode = "numeric";
+        quantityInput.min = "1";
+
+        //Find the max quantity of car
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                if (xhttp.status === 200) {
+                    const carsData = JSON.parse(xhttp.responseText);
+
+
+                        carsData.forEach(car => {
+                            if((car.brand + " " + car.model) === event.target.parentElement.children[0].textContent.trim()) {
+                                quantityInput.max = car.quantity;
+
+                            }
+                        });
+                }
+            }
+        }
+
+        xhttp.open('GET', 'cars.json', true);
+        xhttp.send();
+
+        let startDateInput = document.createElement('input');
+        let endDateInput = document.createElement('input');
+        let dateContainer = document.createElement('div');
+
+        startDateInput.type = "date";
+        endDateInput.type = "date";
+        dateContainer.appendChild(startDateInput);
+        dateContainer.appendChild(endDateInput);
+
+        //Date container styling
+        dateContainer.style.display = "flex";
+        dateContainer.style.gap = "1rem";
+
+
+
+        //Need to access the JSON file and find out what the max number of cars available are.
+
+        quantityInput.style.textAlign = "center";
+
+        quantityInputContainer.appendChild(quantityInputMinusButton);
+        quantityInputContainer.appendChild(quantityInput);
+        quantityInputContainer.appendChild(quantityInputAddButton);
+
+        //Reservation Modal Content Container Styling
+        reservation_modal_content_container.style.display = "flex";
+        reservation_modal_content_container.style.flexDirection = "column";
+        reservation_modal_content_container.style.gap = "1rem";
+        reservation_modal_content_container.style.alignItems = "center";
+
+        //Reservation Modal Content Container Container Styling
+        reservation_modal_content_container_container.style.display = "flex";
+        reservation_modal_content_container_container.style.flexDirection = "column";
+        reservation_modal_content_container_container.style.gap = "1rem";
+        reservation_modal_content_container_container.style.alignItems = "center";
+
+        reservation_modal_content_container.appendChild(carText);
+        reservation_modal_content_container.appendChild(carType);
+        reservation_modal_content_container.appendChild(carMileage);
+        reservation_modal_content_container.appendChild(carFuel);
+        reservation_modal_content_container.appendChild(carSeats);
+        reservation_modal_content_container.appendChild(carPrice);
+        
+        reservation_modal_content_container_container.appendChild(reservation_modal_content_container);
+        reservation_modal_content_container_container.appendChild(quantityInputContainer);
+        reservation_modal_content_container_container.appendChild(dateContainer);
+
+        
+
+        reservation_main_modal.appendChild(reservation_modal_content_container_container);
+        
+        document.body.appendChild(reservation_main_modal);
+        document.body.appendChild(reservation_modal_underlay);
+ 
+}
+
+const addToCartBtns = document.querySelectorAll('.addToCartBtn');
+
+// addToCartBtns.forEach(button => {
+//     button.addEventListener('click', function() {
+
+//         let reservation_main_modal = document.createElement('div');
+//         let reservation_modal_title = document.createElement('h3');
+//         let reservation_modal_close_img = document.createElement('img');
+//         let reservation_modal_title_container = document.createElement('div');
+//         let reservation_modal_underlay = document.createElement('div');
+    
+    
+//         function closeMainReservationModal() {
+//             document.body.removeChild(reservation_main_modal);
+//             document.body.removeChild(reservation_modal_underlay);
+//             document.body.style.overflow = "auto";
+//         }
+    
+//         window.addEventListener('click', function(event) {
+//             if (event.target == reservation_modal_underlay) {
+//                 closeMainReservationModal();
+//             }
+//         });
+    
+//         //Reservation Modal img (Close)
+//         reservation_modal_close_img.src = "images/close.png";
+//         reservation_modal_close_img.style.width = "20px";
+//         reservation_modal_close_img.style.height = "20px";
+    
+//         reservation_modal_close_img.addEventListener('click', function() {
+//             closeMainReservationModal();
+//         });
+    
+//         //Reservation Modal Title
+//         reservation_modal_title.textContent = "Your Reservations";
+    
+//         //Container for reservation modal title and img
+//         reservation_modal_title_container.style.display = "flex";
+//         reservation_modal_title_container.style.justifyContent = "space-between";
+//         reservation_modal_title_container.style.padding = "2rem";
+    
+//         //Main reservation modal
+//         reservation_main_modal.style.zIndex = "2147483647";
+//         reservation_main_modal.style.position = "absolute";
+//         reservation_main_modal.style.backgroundColor = "white";
+//         reservation_main_modal.style.width = "500px";
+//         reservation_main_modal.style.height = "100%";
+//         reservation_main_modal.style.top = "0";
+//         reservation_main_modal.style.right = "0";
+    
+//         //Reservation Modal Underlay
+//         reservation_modal_underlay.style.zIndex = "2147483646";
+//         reservation_modal_underlay.style.position = "absolute";
+//         reservation_modal_underlay.style.backgroundColor = "grey";
+//         reservation_modal_underlay.style.opacity = "0.8";
+//         reservation_modal_underlay.style.width = "100%";
+//         reservation_modal_underlay.style.height = "100%";
+    
+//         //Prevent Scrolling
+//         document.body.style.overflow = "hidden";
+
+//         let reservation_modal_content_container = document.createElement('div');
+    
+//         reservation_modal_title_container.appendChild(reservation_modal_title);
+//         reservation_modal_title_container.appendChild(reservation_modal_close_img);
+//         reservation_main_modal.appendChild(reservation_modal_title_container);
+
+//         //Retrieve Only the car_image/ source section so we can put on an image of the car
+//         let carImg = document.createElement('img');
+//         let carImgSourceUnprocessed = button.parentElement.parentElement.firstChild.firstChild.src;
+
+//         const startIndex = carImgSourceUnprocessed.indexOf('car_images/');
+//         let pathFromCarImages;
+
+//             if (startIndex !== -1) {
+
+//                 pathFromCarImages = carImgSourceUnprocessed.substring(startIndex);
+
+//             }
+
+//         carImg.src = pathFromCarImages;
+//         carImg.style.width = "150px";
+//         carImg.style.height = "150px";
+//         reservation_modal_content_container.appendChild(carImg);
+
+//         let carText = document.createElement('h3');
+//         carText.textContent = button.parentElement.children[0].textContent.trim();
+//         let carType = document.createElement('h3');
+//         carType.textContent = button.parentElement.children[1].textContent.trim();
+//         let carMileage = document.createElement('h3');
+//         carMileage.textContent = button.parentElement.children[2].textContent.trim();
+//         let carFuel = document.createElement('h3');
+//         carFuel.textContent = button.parentElement.children[3].textContent.trim();
+//         let carSeats = document.createElement('h3');
+//         carSeats.textContent = button.parentElement.children[4].textContent.trim();
+//         let carPrice = document.createElement('h3');
+//         carPrice.textContent = button.parentElement.children[5].textContent.trim();
+
+//         let quantityInput = document.createElement('input');
+//         let quantityInputAddButton = document.createElement('button');
+//         let quantityInputMinusButton = document.createElement('button');
+//         let quantityInputContainer = document.createElement('div');
+
+//         let reservation_modal_content_container_container = document.createElement('div');
+
+//         quantityInputAddButton.textContent = "+";
+//         quantityInputMinusButton.textContent = "-";
+//         quantityInput.placeholder = "1";
+//         // quantityInput.type = "number";
+//         quantityInput.inputMode = "numeric";
+//         quantityInput.min = "1";
+
+//         //Find the max quantity of car
+//         const xhttp = new XMLHttpRequest();
+
+//         xhttp.onreadystatechange = function () {
+//             if (xhttp.readyState === XMLHttpRequest.DONE) {
+//                 if (xhttp.status === 200) {
+//                     const carsData = JSON.parse(xhttp.responseText);
+
+
+//                         carsData.forEach(car => {
+//                             if((car.brand + " " + car.model) === button.parentElement.children[0].textContent.trim()) {
+//                                 quantityInput.max = car.quantity;
+
+//                             }
+//                         });
+//                 }
+//             }
+//         }
+
+//         xhttp.open('GET', 'cars.json', true);
+//         xhttp.send();
+
+//         let startDateInput = document.createElement('input');
+//         let endDateInput = document.createElement('input');
+//         let dateContainer = document.createElement('div');
+
+//         startDateInput.type = "date";
+//         endDateInput.type = "date";
+//         dateContainer.appendChild(startDateInput);
+//         dateContainer.appendChild(endDateInput);
+
+//         //Date container styling
+//         dateContainer.style.display = "flex";
+//         dateContainer.style.gap = "1rem";
+
+
+
+//         //Need to access the JSON file and find out what the max number of cars available are.
+
+//         quantityInput.style.textAlign = "center";
+
+//         quantityInputContainer.appendChild(quantityInputMinusButton);
+//         quantityInputContainer.appendChild(quantityInput);
+//         quantityInputContainer.appendChild(quantityInputAddButton);
+
+//         //Reservation Modal Content Container Styling
+//         reservation_modal_content_container.style.display = "flex";
+//         reservation_modal_content_container.style.flexDirection = "column";
+//         reservation_modal_content_container.style.gap = "1rem";
+//         reservation_modal_content_container.style.alignItems = "center";
+
+//         //Reservation Modal Content Container Container Styling
+//         reservation_modal_content_container_container.style.display = "flex";
+//         reservation_modal_content_container_container.style.flexDirection = "column";
+//         reservation_modal_content_container_container.style.gap = "1rem";
+//         reservation_modal_content_container_container.style.alignItems = "center";
+
+//         reservation_modal_content_container.appendChild(carText);
+//         reservation_modal_content_container.appendChild(carType);
+//         reservation_modal_content_container.appendChild(carMileage);
+//         reservation_modal_content_container.appendChild(carFuel);
+//         reservation_modal_content_container.appendChild(carSeats);
+//         reservation_modal_content_container.appendChild(carPrice);
+        
+//         reservation_modal_content_container_container.appendChild(reservation_modal_content_container);
+//         reservation_modal_content_container_container.appendChild(quantityInputContainer);
+//         reservation_modal_content_container_container.appendChild(dateContainer);
+
+        
+
+//         reservation_main_modal.appendChild(reservation_modal_content_container_container);
+        
+//         document.body.appendChild(reservation_main_modal);
+//         document.body.appendChild(reservation_modal_underlay);
+ 
+//     });
+// });
+
+//Reservation
+
+let reservation = document.getElementById("reservation");
+
+reservation.addEventListener('click', function() {
+    generateReservationModal();
+
+});
+
+//Generate Reservation Modal
+function generateReservationModal() {
+    let reservation_main_modal = document.createElement('div');
+    let reservation_modal_title = document.createElement('h3');
+    let reservation_modal_close_img = document.createElement('img');
+    let reservation_modal_title_container = document.createElement('div');
+    let reservation_modal_underlay = document.createElement('div');
+
+    function closeMainReservationModal() {
+        document.body.removeChild(reservation_main_modal);
+        document.body.removeChild(reservation_modal_underlay);
+        document.body.style.overflow = "auto";
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target == reservation_modal_underlay) {
+            closeMainReservationModal();
+        }
+    });
+
+    //Reservation Modal img (Close)
+    reservation_modal_close_img.src = "images/close.png";
+    reservation_modal_close_img.style.width = "20px";
+    reservation_modal_close_img.style.height = "20px";
+
+    reservation_modal_close_img.addEventListener('click', function() {
+        closeMainReservationModal();
+    });
+
+    //Reservation Modal Title
+    reservation_modal_title.textContent = "Your Reservations";
+
+    //Container for reservation modal title and img
+    reservation_modal_title_container.style.display = "flex";
+    reservation_modal_title_container.style.justifyContent = "space-between";
+    reservation_modal_title_container.style.padding = "2rem";
+
+    //Main reservation modal
+    reservation_main_modal.style.zIndex = "2147483647";
+    reservation_main_modal.style.position = "absolute";
+    reservation_main_modal.style.backgroundColor = "white";
+    reservation_main_modal.style.width = "500px";
+    reservation_main_modal.style.height = "100%";
+    reservation_main_modal.style.top = "0";
+    reservation_main_modal.style.right = "0";
+
+    //Reservation Modal Underlay
+    reservation_modal_underlay.style.zIndex = "2147483646";
+    reservation_modal_underlay.style.position = "absolute";
+    reservation_modal_underlay.style.backgroundColor = "grey";
+    reservation_modal_underlay.style.opacity = "0.8";
+    reservation_modal_underlay.style.width = "100%";
+    reservation_modal_underlay.style.height = "100%";
+
+    //Prevent Scrolling
+    document.body.style.overflow = "hidden";
+
+    reservation_modal_title_container.appendChild(reservation_modal_title);
+    reservation_modal_title_container.appendChild(reservation_modal_close_img);
+    reservation_main_modal.appendChild(reservation_modal_title_container);
+    document.body.appendChild(reservation_main_modal);
+    document.body.appendChild(reservation_modal_underlay);
+}
+
+
+//Click on all Cars button to retrieve all cars
+
 let browse_all_categories_btn = document.getElementById('browse_all_categories_btn');
 
 browse_all_categories_btn.addEventListener('click', function() {
@@ -48,7 +695,8 @@ browse_all_categories_btn.addEventListener('click', function() {
                                     <p>Seats: ${car.seats}</p>
                                     <p>Price per Day: $${car.price_per_day}</p>
                                     <p>Description: ${car.description}</p>
-                                    <button class="addToCartBtn">Rent</button>
+                                    <button class="addToCartBtn" onclick="addReservationForNonMain(event)">Rent</button>
+                                    <input type="hidden" value="${car.id}"/>
                                 </div>
                             </div>
                         `;
@@ -63,6 +711,10 @@ browse_all_categories_btn.addEventListener('click', function() {
     xhttp.open('GET', 'cars.json', true);
     xhttp.send();
 });
+
+function cardGeneration() {
+
+}
 
 let browse_categories_btn = document.getElementById("browse_categories_btn");
 
@@ -446,6 +1098,47 @@ browse_categories_btn.addEventListener('click', function() {
 
 });
 
+function disabledCardGeneratorFunc(car) {
+    cardHtml = `
+    <div class="card">
+        <div class="car-image">
+            <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+        </div>
+        <div class="car-details">
+            <h3>${car.brand} ${car.model}</h3>
+            <p>Type: ${car.type}</p>
+            <p>Mileage: ${car.mileage}</p>
+            <p>Fuel Type: ${car.fuel_type}</p>
+            <p>Seats: ${car.seats}</p>
+            <p>Price per Day: $${car.price_per_day}</p>
+            <p>Description: ${car.description}</p>
+            <button class="unavailable_addToCartBtn" disabled>Rent</button>
+        </div>
+    </div>
+`;
+}
+
+function cardGeneratorFunc(car) {
+    cardHtml = `
+    <div class="card">
+        <div class="car-image">
+            <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
+        </div>
+        <div class="car-details">
+            <h3>${car.brand} ${car.model}</h3>
+            <p>Type: ${car.type}</p>
+            <p>Mileage: ${car.mileage}</p>
+            <p>Fuel Type: ${car.fuel_type}</p>
+            <p>Seats: ${car.seats}</p>
+            <p>Price per Day: $${car.price_per_day}</p>
+            <p>Description: ${car.description}</p>
+            <button class="addToCartBtn" onclick="addReservationForNonMain(event)">Rent</button>
+            <input type="hidden" value="${car.id}"/>
+        </div>
+    </div>
+`;
+}
+
 
 
 //Filter Function (Brand / Type / Seats Input)
@@ -476,42 +1169,10 @@ function searchCategory(input) {
                     filteredCars.forEach(car => {
 
                     if (car.availability === false) {
-                        cardHtml = `
-                        <div class="card">
-                            <div class="car-image">
-                                <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                            </div>
-                            <div class="car-details">
-                                <h3>${car.brand} ${car.model}</h3>
-                                <p>Type: ${car.type}</p>
-                                <p>Mileage: ${car.mileage}</p>
-                                <p>Fuel Type: ${car.fuel_type}</p>
-                                <p>Seats: ${car.seats}</p>
-                                <p>Price per Day: $${car.price_per_day}</p>
-                                <p>Description: ${car.description}</p>
-                                <button class="unavailable_addToCartBtn" disabled>Rent</button>
-                            </div>
-                        </div>
-                    `;
+                        disabledCardGeneratorFunc(car);
                     } else {
                         // let cardHtml = '';
-                        cardHtml = `
-                        <div class="card">
-                            <div class="car-image">
-                                <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                            </div>
-                            <div class="car-details">
-                                <h3>${car.brand} ${car.model}</h3>
-                                <p>Type: ${car.type}</p>
-                                <p>Mileage: ${car.mileage}</p>
-                                <p>Fuel Type: ${car.fuel_type}</p>
-                                <p>Seats: ${car.seats}</p>
-                                <p>Price per Day: $${car.price_per_day}</p>
-                                <p>Description: ${car.description}</p>
-                                <button class="addToCartBtn">Rent</button>
-                            </div>
-                        </div>
-                    `;
+                        cardGeneratorFunc(car);
                     }
                     cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                 });
@@ -557,43 +1218,10 @@ function searchFilter() {
                     carsData.forEach(car => {
 
                         if (car.availability === false) {
-                            // let cardHtml = '';
-                            cardHtml = `
-                            <div class="unavailable_card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="unavailable_addToCartBtn" disabled>Rent</button>
-                                </div>
-                            </div>
-                        `;
+                            disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
-                            cardHtml = `
-                            <div class="card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="addToCartBtn">Rent</button>
-                                </div>
-                            </div>
-                        `;
+                            cardGeneratorFunc(car);
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
@@ -606,42 +1234,10 @@ function searchFilter() {
                         // let cardHtml = '';
 
                         if (car.availability === false) {
-                            cardHtml = `
-                            <div class="card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="unavailable_addToCartBtn" disabled>Rent</button>
-                                </div>
-                            </div>
-                        `;
+                            disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
-                            cardHtml = `
-                            <div class="card">
-                                <div class="car-image">
-                                    <img src="car_images/${car.image}" alt="${car.brand} ${car.model}">
-                                </div>
-                                <div class="car-details">
-                                    <h3>${car.brand} ${car.model}</h3>
-                                    <p>Type: ${car.type}</p>
-                                    <p>Mileage: ${car.mileage}</p>
-                                    <p>Fuel Type: ${car.fuel_type}</p>
-                                    <p>Seats: ${car.seats}</p>
-                                    <p>Price per Day: $${car.price_per_day}</p>
-                                    <p>Description: ${car.description}</p>
-                                    <button class="addToCartBtn">Rent</button>
-                                </div>
-                            </div>
-                        `;
+                            cardGeneratorFunc(car);
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
@@ -656,4 +1252,3 @@ function searchFilter() {
     xhttp.send();
 }
 
-//

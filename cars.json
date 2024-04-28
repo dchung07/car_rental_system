@@ -1,5 +1,6 @@
 [
     {
+      "id": 1,
       "type": "Coupe",
       "brand": "Hyundai",
       "model": "N Vision 74 2024",
@@ -13,6 +14,7 @@
       "availability": true
     },
     {
+      "id": 2,
       "type": "Sedan",
       "brand": "Hyundai",
       "model": "Elantra N 2024",
@@ -26,6 +28,7 @@
       "availability": true
     },
     {
+      "id": 3,
       "type": "Sedan",
       "brand": "Kia",
       "model": "K5 2024",
@@ -39,6 +42,7 @@
       "availability": true
     },
     {
+      "id": 4,
       "type": "SUV",
       "brand": "Mazda",
       "model": "CX-8 2024",
@@ -52,6 +56,7 @@
       "availability": true
     },
     {
+      "id": 5,
       "type": "SUV",
       "brand": "Hyundai",
       "model": "Kona 2024",
@@ -65,6 +70,7 @@
       "availability": false
     },
     {
+      "id": 6,
       "type": "Sedan",
       "brand": "Hyundai",
       "model": "i30 2024",
@@ -78,6 +84,7 @@
       "availability": false
     },
     {
+      "id": 7,
       "type": "Sedan",
       "brand": "Toyota",
       "model": "Camry 2024",
@@ -91,6 +98,7 @@
       "availability": true
     },
     {
+      "id": 8,
       "type": "Hatch",
       "brand": "Mazda",
       "model": "3 2023",
@@ -104,6 +112,7 @@
       "availability": true
     },
     {
+      "id": 9,
       "type": "Van",
       "brand": "Toyota",
       "model": "Hiace 2024",
@@ -117,6 +126,7 @@
       "availability": true
     },
     {
+      "id": 10,
       "type": "Van",
       "brand": "Mercedes-Benz",
       "model": "Vito 2024",
@@ -130,6 +140,7 @@
       "availability": true
     },
     {
+      "id": 11,
       "type": "Van",
       "brand": "Mercedes-Benz",
       "model": "Sprinter 2024",
@@ -142,7 +153,8 @@
       "description": "The Sprinter is yours for a fun family night out.",
       "availability": false
     },
-    {
+    {      
+      "id": 12,
       "type": "Convertible",
       "brand": "Mercedes-Benz",
       "model": "E-Class 2024",
@@ -156,6 +168,7 @@
       "availability": true
     },
     {
+      "id": 13,
       "type": "SUV",
       "brand": "Toyota",
       "model": "RAV4 2024",
@@ -169,6 +182,7 @@
       "availability": true
     },
     {
+      "id": 14,
       "type": "SUV",
       "brand": "Toyota",
       "model": "Kluger 2024",
@@ -182,6 +196,7 @@
       "availability": true
     },
     {
+      "id": 15,
       "type": "SUV",
       "brand": "Toyota",
       "model": "Hilux 2024",
@@ -195,6 +210,7 @@
       "availability": true
     },
     {
+      "id": 16,
       "type": "Sedan",
       "brand": "Hyundai",
       "model": "Sonata 2024",
@@ -208,6 +224,7 @@
       "availability": true
     },
     {
+      "id": 17,
       "type": "SUV",
       "brand": "Hyundai",
       "model": "IONIQ 5 2024",
@@ -221,6 +238,7 @@
       "availability": true
     },
     {
+      "id": 18,
       "type": "Sedan",
       "brand": "Hyundai",
       "model": "IONIQ 6 2024",
@@ -234,6 +252,7 @@
       "availability": true
     },
     {
+      "id": 19,
       "type": "SUV",
       "brand": "Kia",
       "model": "EV9 2024",
@@ -247,6 +266,7 @@
       "availability": true
     },
     {
+      "id": 20,
       "type": "Coupe",
       "brand": "Mercedes-Benz",
       "model": "C-Class C200 2024",
@@ -260,6 +280,7 @@
       "availability": true
     },
     {
+      "id": 21,
       "type": "Hatch",
       "brand": "Mercedes-Benz",
       "model": "A-class A180 2024",
@@ -273,6 +294,7 @@
       "availability": true
     },
     {
+      "id": 22,
       "type": "Hatch",
       "brand": "Honda",
       "model": "civic VTi LX MY22 2024",
@@ -286,6 +308,7 @@
       "availability": true
     },
     {
+      "id": 23,
       "type": "SUV",
       "brand": "Mercedes-Benz",
       "model": "G-Class 2024",
@@ -299,6 +322,7 @@
       "availability": true
     },
     {
+      "id": 24,
       "type": "Coupe",
       "brand": "Toyota",
       "model": "Supra 2024",
@@ -312,6 +336,7 @@
       "availability": true
     },
     {
+      "id": 25,
       "type": "SUV",
       "brand": "Toyota",
       "model": "Yaris Cross 2024",
@@ -325,6 +350,7 @@
       "availability": true
     },
     {
+      "id": 26,
       "type": "SUV",
       "brand": "Toyota",
       "model": "Landcruiser 2024",
@@ -338,6 +364,7 @@
       "availability": false
     },
     {
+      "id": 27,
       "type": "SUV",
       "brand": "Toyota",
       "model": "Landcruiser Prado 2024",
@@ -351,6 +378,7 @@
       "availability": true
     },
     {
+      "id": 28,
       "type": "Coupe",
       "brand": "Mazda",
       "model": "MX-5 2024",
@@ -364,6 +392,7 @@
       "availability": false
     },
     {
+      "id": 29,
       "type": "SUV",
       "brand": "Mazda",
       "model": "MX-30 2024",
@@ -377,6 +406,7 @@
       "availability": true
     },
     {
+      "id": 30,
       "type": "SUV",
       "brand": "Mazda",
       "model": "CX-5 2024",

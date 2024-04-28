@@ -25,8 +25,8 @@
                     </div>
                     <div id="suggestions"></div>
                 </div>
-                <div class="header_right">
-                    <!-- <img src="images/book.png" alt=""> -->
+                <div class="header_right" id="reservation">
+                    <img src="images/book.png" alt="">
                     <h3>Reservations</h3>
                 </div>
 
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="sub_div_side_bar">
-                            <div class="side_bar_left_side">
+                            <div class="side_bar_left_side" id = "palette">
                                 <img src="images/palette.png" alt="palette">
                                 <h3>Palette</h3>
                             </div>
@@ -114,7 +114,8 @@
                             echo '<p>Seats: ' . $car['seats'] . '</p>';
                             echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
                             echo '<p>Description: ' . $car['description'] . '</p>';
-                            echo '<button class="addToCartBtn">Rent</button>';
+                            echo '<button class="addToCartBtn" onclick="addReservation(event)">Rent</button>';
+                            echo '<input type="hidden" value="${car.id}"/>';
                             echo '</div>';
                             echo '</div>';
                         } else {
@@ -131,6 +132,7 @@
                             echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
                             echo '<p>Description: ' . $car['description'] . '</p>';
                             echo '<button class="unavailable_addToCartBtn" disabled>Not Available</button>';
+                            
                             echo '</div>';
                             echo '</div>';
                         }

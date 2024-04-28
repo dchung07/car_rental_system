@@ -28,3 +28,13 @@ Bugs
 -> Click image to flip to show another type of image
 
 -> Must add modularity it is getting too difficult to see what is happening!
+
+To-Do
+
+-> Reservation Page should open a right side modal.
+
+The right side modal will have a reservation page
+
+-> Create a quantity Selector
+-> Add Start Date Selector + End Date Selector
+-> Below a Cost Calculator of Total Rental Cost
