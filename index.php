@@ -114,8 +114,8 @@
                             echo '<p>Seats: ' . $car['seats'] . '</p>';
                             echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
                             echo '<p>Description: ' . $car['description'] . '</p>';
-                            echo '<button class="addToCartBtn" onclick="addReservation(event)">Rent</button>';
-                            echo '<input type="hidden" value="${car.id}"/>';
+                            echo '<button class="addToCartBtn" onclick="addReservationForNonMain(event)">Rent</button>';
+                            echo '<input type="hidden" value="' . $car['id'] . '"/>';
                             echo '</div>';
                             echo '</div>';
                         } else {

@@ -38,3 +38,6 @@ The right side modal will have a reservation page
 -> Create a quantity Selector
 -> Add Start Date Selector + End Date Selector
 -> Below a Cost Calculator of Total Rental Cost
+
+-> To-Do
+For now add confirmation button. It does not have to be functional at the moment, just the positioning.

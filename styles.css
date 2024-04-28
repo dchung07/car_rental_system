@@ -382,6 +382,65 @@ body {
     opacity: 0.5;
 }
 
+.quantityInput {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 8px 12px;
+}
+
+.quantityInputAddButton, .quantityInputMinusButton {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 8px 12px;
+}
+
+.startDateInput {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 8px 12px;
+}
+
+.endDateInput {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 8px 12px;
+}
+
+.dateContainer {
+    /* border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 1rem; */
+}
+
+.reservation_modal_content_container_container {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+/* .reservation_modal_content_container {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    padding: 2rem;
+    border-radius: 12px;
+} */
+
+.reservation_modal_title_container {
+    border-bottom: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+}
+
+.reservation_modal_footer_container {
+    border-top: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 1) 0px 5px 15px;
+    margin-top: auto;
+    padding: 2rem 1rem 5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
 .addToCartBtn:hover {
     box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px;
 }
