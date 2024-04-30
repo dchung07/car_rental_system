@@ -60,13 +60,16 @@ function cardGeneratorFunc(car) {
 `;
 }
 
-//Rent -> Reservation Button for all the other generated Cards
+//Rent -> Reservation Button for all the other generated Cards (Name is non main but it applies to main one too (in index.php -> just have not changed the name yet))
 function addReservationForNonMain(event) {
+
+
+
     let reservation_main_modal = document.createElement('div');
-        let reservation_modal_title = document.createElement('h3');
-        let reservation_modal_close_img = document.createElement('img');
-        let reservation_modal_title_container = document.createElement('div');
-        let reservation_modal_underlay = document.createElement('div');
+    let reservation_modal_title = document.createElement('h3');
+    let reservation_modal_close_img = document.createElement('img');
+    let reservation_modal_title_container = document.createElement('div');
+    let reservation_modal_underlay = document.createElement('div');
     
     
         function closeMainReservationModal() {
@@ -101,10 +104,10 @@ function addReservationForNonMain(event) {
     
         //Main reservation modal
         reservation_main_modal.style.zIndex = "2147483647";
-        reservation_main_modal.style.position = "absolute";
+        reservation_main_modal.style.position = "fixed";
         reservation_main_modal.style.backgroundColor = "white";
         reservation_main_modal.style.width = "500px";
-        reservation_main_modal.style.height = "100vh";
+        reservation_main_modal.style.height = "100%";
         reservation_main_modal.style.top = "0";
         reservation_main_modal.style.right = "0";
         reservation_main_modal.style.display = "flex"
@@ -113,7 +116,7 @@ function addReservationForNonMain(event) {
     
         //Reservation Modal Underlay
         reservation_modal_underlay.style.zIndex = "2147483646";
-        reservation_modal_underlay.style.position = "absolute";
+        reservation_modal_underlay.style.position = "fixed";
         reservation_modal_underlay.style.backgroundColor = "grey";
         reservation_modal_underlay.style.opacity = "0.8";
         reservation_modal_underlay.style.width = "100%";
@@ -285,6 +288,7 @@ function generateReservationModal() {
     let reservation_modal_title_container = document.createElement('div');
     let reservation_modal_underlay = document.createElement('div');
 
+
     function closeMainReservationModal() {
         document.body.removeChild(reservation_main_modal);
         document.body.removeChild(reservation_modal_underlay);
@@ -314,9 +318,11 @@ function generateReservationModal() {
     reservation_modal_title_container.style.justifyContent = "space-between";
     reservation_modal_title_container.style.padding = "2rem";
 
+    let cardContainer = document.getElementById('cardContainer');
+
     //Main reservation modal
     reservation_main_modal.style.zIndex = "2147483647";
-    reservation_main_modal.style.position = "absolute";
+    reservation_main_modal.style.position = "fixed";
     reservation_main_modal.style.backgroundColor = "white";
     reservation_main_modal.style.width = "500px";
     reservation_main_modal.style.height = "100%";
@@ -325,11 +331,13 @@ function generateReservationModal() {
 
     //Reservation Modal Underlay
     reservation_modal_underlay.style.zIndex = "2147483646";
-    reservation_modal_underlay.style.position = "absolute";
+    reservation_modal_underlay.style.position = "fixed";
     reservation_modal_underlay.style.backgroundColor = "grey";
     reservation_modal_underlay.style.opacity = "0.8";
     reservation_modal_underlay.style.width = "100%";
     reservation_modal_underlay.style.height = "100%";
+
+    cardContainer.style.zIndex = "2147483645";
 
     //Prevent Scrolling
     document.body.style.overflow = "hidden";
@@ -421,7 +429,7 @@ browse_categories_btn.addEventListener('click', function() {
 
     //Main category modal
     category_main_modal.style.zIndex = "2147483647";
-    category_main_modal.style.position = "absolute";
+    category_main_modal.style.position = "fixed";
     category_main_modal.style.backgroundColor = "white";
     category_main_modal.style.width = "400px";
     category_main_modal.style.height = "100%";
@@ -440,11 +448,14 @@ browse_categories_btn.addEventListener('click', function() {
 
     //Modal underlay
     modal_underlay.style.zIndex = "2147483646";
-    modal_underlay.style.position = "absolute";
+    modal_underlay.style.position = "fixed";
     modal_underlay.style.backgroundColor = "grey";
     modal_underlay.style.opacity = "0.8";
     modal_underlay.style.width = "100%";
     modal_underlay.style.height = "100%";
+
+    let cardContainer = document.getElementById('cardContainer');
+    cardContainer.style.zIndex = "2147483645";
 
 
     //Prevent Scrolling

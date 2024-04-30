@@ -33,31 +33,6 @@
             </div>
         </div>
 
-        <!-- <div class="category_container">
-            <button class="category_selector" value="all">All Cars</button>
-            <div id="category_selector_container">
-                <select class="category_selector" name="type">
-                    <option value="type">Vehicle Types</option>
-                </select>
-                <select class="category_selector" name="brands">
-                    <option value="brands">Vehicle Brands</option>
-                </select>
-                <select class="category_selector" name="seats">
-                    <option value="seats">Seat Count</option>
-                </select>
-                <select class="category_selector" name="price">
-                    <option value="price">Vehicle Price</option>
-                </select>
-                <select class="category_selector" name="alphabet">
-                    <option value="alphabet">Alphabetical Order (A-Z)</option>
-                </select>
-            </div>
-            <div class="category-sub-container">
-                <img src="images/filter.png" alt="filter">
-                <button class="category_selector" id="show_category_btn">Categories (On/Off)</button>
-            </div>
-        </div> -->
-
         <div class="content" id="content">
 
             <div class="category_bar">

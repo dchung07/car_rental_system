@@ -41,3 +41,7 @@ The right side modal will have a reservation page
 
 -> To-Do
 For now add confirmation button. It does not have to be functional at the moment, just the positioning.
+
+-> Error when scrolling down and pressing rent, or browse categories there are stylistic destruction
+
+->
