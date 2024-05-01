@@ -538,6 +538,40 @@ body {
     margin: 1rem;
 }
 
+.remove_button {
+    display: flex;
+    width: 100%;
+    /* background-color: red; */
+    /* color: white; */
+    box-sizing: border-box;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.user_details_form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.reservation_order_details {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+#reservation_remove_button {
+    width: 100%;
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    padding: 1rem;
+    font-weight: bold;
+    border: none;
+}
+
 
 @media (max-width: 1850px) {
     .category_selector {

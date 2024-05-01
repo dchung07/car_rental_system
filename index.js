@@ -187,17 +187,56 @@ function openReservation() {
     let previousReservation = JSON.parse(localStorage.getItem('previous_reservation'));
 
     if (currentReservation) {
+
+        let reservation_remove_button = document.getElementById('reservation_remove_button');
+        reservation_remove_button.style.opacity = "1";
+        reservation_remove_button.style.cursor = "pointer";
+        reservation_remove_button.disabled = false;
+
         current_reservation.innerHTML = '';
 
         let currentReservationCard = createReservationCard(currentReservation);
 
         current_reservation.appendChild(currentReservationCard);
+    } else {
+        //In the case that there is no currentReservation then we should show something else...
+
+        let reservation_remove_button = document.getElementById('reservation_remove_button');
+        reservation_remove_button.style.opacity = "0.3";
+        reservation_remove_button.style.cursor = "not-allowed";
+        reservation_remove_button.disabled = true;
+
+        let current_reservation = document.querySelector('.current_reservation');
+        current_reservation.innerHTML = '';
+        let reservation_modal = document.querySelector('.reservation_modal');
+        let currentReservationCard = document.createElement('div');
+        currentReservationCard.textContent = "Nothing here...";
+        currentReservationCard.style.display = "flex";
+        currentReservationCard.style.justifyContent = "center";
+        currentReservationCard.style.alignItems = "center";
+        currentReservationCard.style.height = "100dvh";
+        current_reservation.appendChild(currentReservationCard);
+
+        // console.log(localStorage.getItem('current_reservation'));
+
     }
 
-
-
-
 }
+
+let reservation_remove_button = document.getElementById('reservation_remove_button');
+reservation_remove_button.addEventListener('click', function() {
+    
+    // let cart = localStorage.getItem('current_reservation');
+    // console.log("hi");
+    // console.log(cart);
+    localStorage.removeItem('current_reservation');
+    // console.log(cart);
+    // let reservation_modal_content_container_container = document.getQuerySelector('.reservation_modal_content_container_container');
+    // reservation_modal_content_container_container.innerHTML = '';
+
+    openReservation();
+
+});
 
 
 function addReservation(event) {
@@ -227,6 +266,7 @@ function addReservation(event) {
                 };
 
                 localStorage.setItem('current_reservation', JSON.stringify(carDetails));
+                console.log(localStorage.getItem('current_reservation'));
                 openReservation();
             } else {
 
