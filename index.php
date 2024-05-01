@@ -177,7 +177,7 @@
                         <div class="reservation_order_details">
                             <div class="reservation_order_details_quantity_container">
                                 <label for="car_quantity">Quantity to Rent: </label>
-                                <input type="number" id="car_quantity" placeholder="How many...?" required>
+                                <input type="number" id="car_quantity" placeholder="How many...?" min="1" required>
                             </div>
                             <div class="reservation_order_details_date_container">
                                 <label for="start_date">Start date: </label>
@@ -205,12 +205,12 @@
                     </div>
                     <div class="reservation_modal_footer_container">
                         <div class="remove_button">
-                            <button id="reservation_remove_button">REMOVE RESERVATION</button>
+                            <button id="reservation_remove_button">CANCEL</button>
                         </div>
                         <h5>Order Summary</h5>
                         <div class="checkout-container">
-                            <h5>Total Price: $50.50</h5>
-                            <button>Checkout</button>
+                            <h5 id="total_rental_cost">Total Rental Cost: </h5>
+                            <button>PLACE ORDER</button>
                         </div>    
                     </div>
             </div>

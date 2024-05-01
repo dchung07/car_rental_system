@@ -529,6 +529,23 @@ body {
     flex-direction: column;
     margin-top: auto;
     align-items: center;
+    font-size: 24px;
+}
+
+.reservation_order_details_quantity_container {
+    width: 50%;
+}
+
+#car_quantity {
+    width: 50%;
+}
+
+.checkout-container {
+    font-size: 24px;
+}
+
+.checkout-container > button {
+    font-size: 24px;
 }
 
 .checkout-container {

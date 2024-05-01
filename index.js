@@ -184,7 +184,6 @@ function openReservation() {
     }
 
     let currentReservation = JSON.parse(localStorage.getItem('current_reservation'));
-    let previousReservation = JSON.parse(localStorage.getItem('previous_reservation'));
 
     if (currentReservation) {
 
@@ -198,6 +197,141 @@ function openReservation() {
         let currentReservationCard = createReservationCard(currentReservation);
 
         current_reservation.appendChild(currentReservationCard);
+
+        //Logic for calculating Total Price 
+
+        //Set the car quantity selection to have a max quantity to however many cars it has in stock.
+        let car_quantity = document.getElementById('car_quantity');
+        car_quantity.setAttribute('max', currentReservation.quantity);
+
+        //Check what the current value of the car quantity selection is
+        let updatedValue
+        car_quantity.addEventListener('input', function(event) {
+            updatedValue = event.target.value;
+            
+            totalRentalCost();
+        });
+
+        //Get the start date
+
+        let start_date = document.getElementById('start_date');
+        // let today = new Date().toISOString().split('T')[0];
+        let today = new Date().toISOString().split('T')[0];
+
+        start_date.setAttribute('min', today);
+
+        let user_selected_start_date;
+
+
+
+        //Get the unformatted today date so we can create tommorow and make the min attribute of end_date to tommorow
+
+        let todayUnformatted = new Date();
+        let tommorow = addDays(todayUnformatted, 1);
+
+        let tommorowFormatted = tommorow.toISOString().split('T')[0];
+
+        //Get the end date
+
+        let end_date = document.getElementById('end_date');
+        end_date.setAttribute('min', tommorowFormatted);
+
+        let user_selected_end_date;
+
+        let differenceDays;
+        
+        let total_rental_cost = document.getElementById('total_rental_cost');
+
+        start_date.addEventListener('input', function() {
+ 
+            user_selected_start_date = start_date.value;
+
+            //inputting the start date should set the min date value + 1 for the end_date
+
+            let user_selected_start_date_object = new Date(user_selected_start_date);
+            user_selected_start_date_object.setDate(user_selected_start_date_object.getDate() + 1);
+            let user_selected_start_date_object_formatted = user_selected_start_date_object.toISOString().split('T')[0];
+
+            end_date.setAttribute('min', user_selected_start_date_object_formatted);
+
+            totalRentalCost();
+
+        });
+
+        end_date.addEventListener('input', function() {
+   
+            user_selected_end_date = end_date.value;
+            console.log(typeof user_selected_end_date);
+
+            //Likewise setting the end date should set the max to be the end date - 1 day for the start_date
+
+            let maxDay = minusDays(user_selected_end_date, 1);
+            
+            start_date.setAttribute('max', maxDay.toISOString().split('T')[0]);
+
+            totalRentalCost();
+
+        });
+
+        //Function to change text content of total rental cost
+        function totalRentalCost() {
+            if(end_date.value !== '' && start_date.value !== '') {
+                differenceDays = differenceInDays(user_selected_start_date, user_selected_end_date);
+                
+                //Check if updatedValue is set (user selection for car quantity)
+                if(updatedValue.value !== '') {
+                    let rental_cost = differenceDays * updatedValue * currentReservation.pricePerDay;
+                    total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
+                }
+            }
+        }
+
+        //Function to add to the days (used to get tommorow)
+        function addDays(date, days) {
+            let result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+          }
+
+        //Function to minus the days (used to find the max day possible for a start date)
+        function minusDays(date, days) {
+            let result = new Date(date);
+            result.setDate(result.getDate() - days);
+            return result;
+        }
+
+
+        function parseDate(dateString) {
+            let components = dateString.split('-');
+            let year = parseInt(components[0], 10) + 2000;
+            let month = parseInt(components[1], 10) - 1;
+            let day = parseInt(components[2], 10);
+
+            return new Date(year, month, day);
+        }
+        
+
+        function differenceInDays(start, end) {
+            let date1 = parseDate(start);
+            let date2 = parseDate(end);
+
+            let differenceInMilli = date2 - date1;
+            let differenceInDays = differenceInMilli / (1000 * 60 * 60 * 24);
+            return differenceInDays;
+        }
+
+        //Find out the difference in days between the end date and the start date ONLY if both start and end date are set
+        // if(end_date.value !== '' && start_date.value !== '') {
+        //     console.log(differenceInDays(user_selected_start_date, user_selected_end_date));
+        // }
+
+
+        //If user quantity input (updatedValue) and the difference of the end date and start date has been calculated, then proceed to calculate the cost
+        // if()
+
+
+
+
     } else {
         //In the case that there is no currentReservation then we should show something else...
 
@@ -218,7 +352,6 @@ function openReservation() {
         current_reservation.appendChild(currentReservationCard);
 
         // console.log(localStorage.getItem('current_reservation'));
-
     }
 
 }
