@@ -44,4 +44,27 @@ For now add confirmation button. It does not have to be functional at the moment
 
 -> Error when scrolling down and pressing rent, or browse categories there are stylistic destruction
 
-->
+-> To-Do
+
+When adding to cart, there are two options -> use the session variable or a localhost. 
+
+-> Session used
+
+-> Loading the car details is a step slower. 
+-> Figure out how to keep everything smooth without reloading the entire screen as that causes the reservation modal to close
+
+-> So when click on the rent button -> we retrieve its car id through an ajax call -> Then we send another ajax call to add the items to the php cart items -> 
+-> Instead of loading the data in the index.php file, load it through the DOM in AJAX, which should solve the issue of the cart items not being updated when the ajax is called.
+
+-> To-Do
+
+Add quantity selector / Dates
+
+
+-> To-do today
+
+-> Have a remove button to remove the item from the reservation modal and the reservation localstorage.
+
+Add quantity selector / Dates
+
+Style the reservation modal checkout
