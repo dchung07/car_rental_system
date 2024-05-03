@@ -1,19 +1,19 @@
-document.getElementById('searchInput').addEventListener('input', searchFilter);
+// document.getElementById('searchInput').addEventListener('input', searchFilter);
+document.getElementById('submitSearch').addEventListener('click', searchFilter);
 
-//Night Mode functionality Optional
+//When focused search
+let suggestions = document.getElementById('suggestions');
+document.getElementById('searchInput').addEventListener('focus', function() {
 
-// let palette = document.getElementById('palette');
-// const rootStyles = getComputedStyle(document.documentElement);
+    suggestions.style.display = "block";
+});
 
-// palette.addEventListener('click', function() {
-//     document.documentElement.style.setProperty('--primary-color', 'black');
-//     document.documentElement.style.setProperty('--secndary-color', 'white');
-// });
+document.getElementById('searchInput').addEventListener('blur', function() {
 
-// test
-// function test(event) {
-//     console.log(event.target.parentElement.children[0]);
-// }
+    suggestions.style.display = "none";
+});
+
+
 
 function test(event) {
     console.log(event.target.parentElement.children[8].value);
@@ -23,45 +23,7 @@ function test(event) {
 let reservationBtn = document.getElementById('reservation');
 reservationBtn.addEventListener('click', openReservation);
 
-// function openReservation() {
-//     let reservation_modal = document.querySelector('.reservation_modal');
-//     let reservation_modal_underlay = document.querySelector('.reservation_modal_underlay');
-//     let cardContainer = document.getElementById('cardContainer');
 
-//     reservation_modal.style.display = "flex";
-//     reservation_modal.style.flexDirection = "column";
-//     reservation_modal_underlay.style.display = "block";
-//     document.body.style.overflow = "hidden";
-//     cardContainer.style.zIndex = "999";
-
-//     let reservation_close_btn = document.querySelector('.reservation_close_btn');
-//     reservation_close_btn.addEventListener('click', function() {
-//         closeReservationModal();
-//     });
-
-//     // let xhr = new XMLHttpRequest();
-//     // xhr.open('GET', 'index.php', true);
-//     // xhr.onreadystatechange = function() {
-//     //     if (xhr.readyState === 4 && xhr.status === 200) {
-//     //         let current_reservation = document.querySelector('.current_reservation');
-//     //         current_reservation.innerHTML = xhr.responseText;
-//     //     }
-//     // };
-//     // xhr.send();
-    
-
-//     function closeReservationModal() {
-//         reservation_modal.style.display = "none";
-//         reservation_modal_underlay.style.display = "none";
-//         document.body.style.overflow = "auto";
-//     }
-    
-//     window.addEventListener('click', function(event) {
-//         if (event.target == reservation_modal_underlay) {
-//             closeReservationModal();
-//         }
-//     });
-// }
 
 //When 'Rent' button is clicked addReservation
 // function addReservation(event) {
@@ -113,6 +75,7 @@ reservationBtn.addEventListener('click', openReservation);
 // }
 
 function openReservation() {
+
     let reservation_modal = document.querySelector('.reservation_modal');
     let reservation_modal_underlay = document.querySelector('.reservation_modal_underlay');
     let cardContainer = document.getElementById('cardContainer');
@@ -122,11 +85,11 @@ function openReservation() {
     reservation_modal.style.display = "flex";
     reservation_modal.style.flexDirection = "column";
     reservation_modal_underlay.style.display = "block";
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";/*  */
     cardContainer.style.zIndex = "999";
 
     let reservation_close_btn = document.querySelector('.reservation_close_btn');
-    reservation_close_btn.addEventListener('click', function() {
+    reservation_close_btn.addEventListener('click', function () {
         closeReservationModal();
     });
 
@@ -136,48 +99,50 @@ function openReservation() {
         document.body.style.overflow = "auto";
     }
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == reservation_modal_underlay) {
             closeReservationModal();
         }
     });
+    // let total_rental_cost = document.getElementById('total_rental_cost');
+    // total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
 
 
     function createReservationCard(reservation) {
         let reservationCard = document.createElement('div');
         reservationCard.classList.add('reservation_card');
-    
+
         let image = document.createElement('img');
         image.src = "car_images/" + reservation.image;
         image.style.width = "250px";
         image.style.height = "250px";
         reservationCard.appendChild(image);
-    
+
         let details = document.createElement('div');
         details.classList.add('reservation_details');
 
         let sub_details = document.createElement('div');
         sub_details.classList.add('reservation_sub_details');
-    
+
         let title = document.createElement('h3');
         title.textContent = `${reservation.brand} ${reservation.model}`;
         details.appendChild(title);
-    
+
         let type = document.createElement('p');
         type.textContent = `Type: ${reservation.type}`;
         sub_details.appendChild(type);
-    
+
         let mileage = document.createElement('p');
         mileage.textContent = `Mileage: ${reservation.mileage}`;
         sub_details.appendChild(mileage);
-    
+
         let price = document.createElement('p');
         price.textContent = `Price per Day: $${reservation.pricePerDay}`;
         sub_details.appendChild(price);
 
 
 
-    
+
         reservationCard.appendChild(details);
         reservationCard.appendChild(sub_details);
         return reservationCard;
@@ -206,9 +171,9 @@ function openReservation() {
 
         //Check what the current value of the car quantity selection is
         let updatedValue
-        car_quantity.addEventListener('input', function(event) {
+        car_quantity.addEventListener('input', function (event) {
             updatedValue = event.target.value;
-            
+
             totalRentalCost();
         });
 
@@ -239,11 +204,11 @@ function openReservation() {
         let user_selected_end_date;
 
         let differenceDays;
-        
+
         let total_rental_cost = document.getElementById('total_rental_cost');
 
-        start_date.addEventListener('input', function() {
- 
+        start_date.addEventListener('input', function () {
+
             user_selected_start_date = start_date.value;
 
             //inputting the start date should set the min date value + 1 for the end_date
@@ -258,15 +223,15 @@ function openReservation() {
 
         });
 
-        end_date.addEventListener('input', function() {
-   
+        end_date.addEventListener('input', function () {
+
             user_selected_end_date = end_date.value;
             console.log(typeof user_selected_end_date);
 
             //Likewise setting the end date should set the max to be the end date - 1 day for the start_date
 
             let maxDay = minusDays(user_selected_end_date, 1);
-            
+
             start_date.setAttribute('max', maxDay.toISOString().split('T')[0]);
 
             totalRentalCost();
@@ -275,12 +240,15 @@ function openReservation() {
 
         //Function to change text content of total rental cost
         function totalRentalCost() {
-            if(end_date.value !== '' && start_date.value !== '') {
+            if (end_date.value !== '' && start_date.value !== '') {
                 differenceDays = differenceInDays(user_selected_start_date, user_selected_end_date);
-                
+
                 //Check if updatedValue is set (user selection for car quantity)
-                if(updatedValue.value !== '') {
+                if (!isNaN(updatedValue)) {
                     let rental_cost = differenceDays * updatedValue * currentReservation.pricePerDay;
+                    total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
+                } else {
+                    let rental_cost = differenceDays * 1 * currentReservation.pricePerDay;
                     total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
                 }
             }
@@ -291,7 +259,7 @@ function openReservation() {
             let result = new Date(date);
             result.setDate(result.getDate() + days);
             return result;
-          }
+        }
 
         //Function to minus the days (used to find the max day possible for a start date)
         function minusDays(date, days) {
@@ -309,7 +277,7 @@ function openReservation() {
 
             return new Date(year, month, day);
         }
-        
+
 
         function differenceInDays(start, end) {
             let date1 = parseDate(start);
@@ -357,12 +325,24 @@ function openReservation() {
 }
 
 let reservation_remove_button = document.getElementById('reservation_remove_button');
-reservation_remove_button.addEventListener('click', function() {
-    
+reservation_remove_button.addEventListener('click', function () {
+
     // let cart = localStorage.getItem('current_reservation');
     // console.log("hi");
     // console.log(cart);
     localStorage.removeItem('current_reservation');
+    let total_rental_cost = document.getElementById('total_rental_cost');
+    total_rental_cost.textContent = "Total Rental Cost: ";
+
+    //Should also reset the values of the inputs of date, and quantity
+    let start_date = document.getElementById('start_date');
+    let end_date = document.getElementById('end_date');
+    let car_quantity = document.getElementById('car_quantity');
+
+    start_date.value = '';
+    end_date.value = '';
+    car_quantity.value = '';
+
     // console.log(cart);
     // let reservation_modal_content_container_container = document.getQuerySelector('.reservation_modal_content_container_container');
     // reservation_modal_content_container_container.innerHTML = '';
@@ -425,8 +405,8 @@ function disabledCardGeneratorFunc(car) {
             <p>Fuel Type: ${car.fuel_type}</p>
             <p>Seats: ${car.seats}</p>
             <p>Price per Day: $${car.price_per_day}</p>
-            <p>Description: ${car.description}</p>
-            <button class="unavailable_addToCartBtn" disabled>Rent</button>
+            <p>${car.description}</p>
+            <button class="unavailable_addToCartBtn" disabled>NOT AVAILABLE</button>
         </div>
     </div>
 `;
@@ -445,311 +425,19 @@ function cardGeneratorFunc(car) {
             <p>Fuel Type: ${car.fuel_type}</p>
             <p>Seats: ${car.seats}</p>
             <p>Price per Day: $${car.price_per_day}</p>
-            <p>Description: ${car.description}</p>
-            <button class="addToCartBtn" onclick="addReservation(event)">Rent</button>
+            <p>${car.description}</p>
+            <button class="addToCartBtn" onclick="addReservation(event)">RENT</button>
             <input type="hidden" value="${car.id}"/>
         </div>
     </div>
 `;
 }
 
-//Rent -> Reservation Button for all the other generated Cards (Name is non main but it applies to main one too (in index.php -> just have not changed the name yet))
-// function addReservationForNonMain(event) {
-
-
-
-//     let reservation_main_modal = document.createElement('div');
-//     let reservation_modal_title = document.createElement('h3');
-//     let reservation_modal_close_img = document.createElement('img');
-//     let reservation_modal_title_container = document.createElement('div');
-//     let reservation_modal_underlay = document.createElement('div');
-    
-    
-//         function closeMainReservationModal() {
-//             document.body.removeChild(reservation_main_modal);
-//             document.body.removeChild(reservation_modal_underlay);
-//             document.body.style.overflow = "auto";
-//         }
-    
-//         window.addEventListener('click', function(event) {
-//             if (event.target == reservation_modal_underlay) {
-//                 closeMainReservationModal();
-//             }
-//         });
-    
-//         //Reservation Modal img (Close)
-//         reservation_modal_close_img.src = "images/close.png";
-//         reservation_modal_close_img.style.width = "20px";
-//         reservation_modal_close_img.style.height = "20px";
-    
-//         reservation_modal_close_img.addEventListener('click', function() {
-//             closeMainReservationModal();
-//         });
-    
-//         //Reservation Modal Title
-//         reservation_modal_title.textContent = "Your Reservations";
-    
-//         //Container for reservation modal title and img
-//         reservation_modal_title_container.classList = "reservation_modal_title_container";
-//         reservation_modal_title_container.style.display = "flex";
-//         reservation_modal_title_container.style.justifyContent = "space-between";
-//         reservation_modal_title_container.style.padding = "2rem";
-    
-//         //Main reservation modal
-//         reservation_main_modal.style.zIndex = "2147483647";
-//         reservation_main_modal.style.position = "fixed";
-//         reservation_main_modal.style.backgroundColor = "white";
-//         reservation_main_modal.style.width = "500px";
-//         reservation_main_modal.style.height = "100%";
-//         reservation_main_modal.style.top = "0";
-//         reservation_main_modal.style.right = "0";
-//         reservation_main_modal.style.display = "flex"
-//         reservation_main_modal.style.flexDirection = "column";
-
-    
-//         //Reservation Modal Underlay
-//         reservation_modal_underlay.style.zIndex = "2147483646";
-//         reservation_modal_underlay.style.position = "fixed";
-//         reservation_modal_underlay.style.backgroundColor = "grey";
-//         reservation_modal_underlay.style.opacity = "0.8";
-//         reservation_modal_underlay.style.width = "100%";
-//         reservation_modal_underlay.style.height = "100%";
-    
-//         //Prevent Scrolling
-//         document.body.style.overflow = "hidden";
-
-//         let reservation_modal_content_container = document.createElement('div');
-    
-//         reservation_modal_title_container.appendChild(reservation_modal_title);
-//         reservation_modal_title_container.appendChild(reservation_modal_close_img);
-//         reservation_main_modal.appendChild(reservation_modal_title_container);
-
-//         //Retrieve Only the car_image/ source section so we can put on an image of the car
-//         let carImg = document.createElement('img');
-//         let carImgSrc = event.target.parentElement.children[8].value;
-
-//         carImg.src = "car_images/" + carImgSrc + ".jpg";
-//         carImg.style.width = "150px";
-//         carImg.style.height = "150px";
-//         reservation_modal_content_container.appendChild(carImg);
-
-//         // console.log("test: " + event.target.parentElement.children[8].value);
-        
-
-//         let carText = document.createElement('h3');
-//         carText.textContent = event.target.parentElement.children[0].textContent.trim();
-//         let carType = document.createElement('h3');
-//         carType.textContent = event.target.parentElement.children[1].textContent.trim();
-//         let carMileage = document.createElement('h3');
-//         carMileage.textContent = event.target.parentElement.children[2].textContent.trim();
-//         let carFuel = document.createElement('h3');
-//         carFuel.textContent = event.target.parentElement.children[3].textContent.trim();
-//         let carSeats = document.createElement('h3');
-//         carSeats.textContent = event.target.parentElement.children[4].textContent.trim();
-//         let carPrice = document.createElement('h3');
-//         carPrice.textContent = event.target.parentElement.children[5].textContent.trim();
-
-//         let quantityInput = document.createElement('input');
-//         let quantityInputAddButton = document.createElement('button');
-//         let quantityInputMinusButton = document.createElement('button');
-//         let quantityInputContainer = document.createElement('div');
-//         quantityInputContainer.classList = "quantityInputContainer";
-//         quantityInput.classList = "quantityInput";
-//         quantityInputAddButton.classList = "quantityInputAddButton";
-//         quantityInputMinusButton.classList = "quantityInputMinusButton";
-
-//         let reservation_modal_content_container_container = document.createElement('div');
-//         reservation_modal_content_container_container.classList = "reservation_modal_content_container_container";
-
-//         quantityInputAddButton.textContent = "+";
-//         quantityInputMinusButton.textContent = "-";
-//         quantityInput.placeholder = "1";
-//         // quantityInput.type = "number";
-//         quantityInput.inputMode = "numeric";
-//         quantityInput.min = "1";
-
-//         //Find the max quantity of car
-//         const xhttp = new XMLHttpRequest();
-
-//         xhttp.onreadystatechange = function () {
-//             if (xhttp.readyState === XMLHttpRequest.DONE) {
-//                 if (xhttp.status === 200) {
-//                     const carsData = JSON.parse(xhttp.responseText);
-
-
-//                         carsData.forEach(car => {
-//                             if((car.brand + " " + car.model) === event.target.parentElement.children[0].textContent.trim()) {
-//                                 quantityInput.max = car.quantity;
-
-//                             }
-//                         });
-//                 }
-//             }
-//         }
-
-//         xhttp.open('GET', 'cars.json', true);
-//         xhttp.send();
-
-//         let startDateInput = document.createElement('input');
-//         let endDateInput = document.createElement('input');
-//         let dateContainer = document.createElement('div');
-
-//         startDateInput.classList = "startDateInput";
-//         endDateInput.classList = "endDateInput";
-
-//         dateContainer.classList = "dateContainer";
-
-//         startDateInput.type = "date";
-//         endDateInput.type = "date";
-//         dateContainer.appendChild(startDateInput);
-//         dateContainer.appendChild(endDateInput);
-
-//         //Date container styling
-//         dateContainer.style.display = "flex";
-//         dateContainer.style.gap = "1rem";
-
-
-
-//         //Need to access the JSON file and find out what the max number of cars available are.
-
-//         quantityInput.style.textAlign = "center";
-
-//         quantityInputContainer.appendChild(quantityInputMinusButton);
-//         quantityInputContainer.appendChild(quantityInput);
-//         quantityInputContainer.appendChild(quantityInputAddButton);
-
-//         //Reservation Modal Content Container Styling
-//         reservation_modal_content_container.classList = "reservation_modal_content_container";
-//         reservation_modal_content_container.style.display = "flex";
-//         reservation_modal_content_container.style.flexDirection = "column";
-//         reservation_modal_content_container.style.gap = "1rem";
-//         reservation_modal_content_container.style.alignItems = "center";
-
-//         //Reservation Modal Content Container Container Styling
-//         reservation_modal_content_container_container.classList = "reservation_modal_content_container_container";
-//         reservation_modal_content_container_container.style.display = "flex";
-//         reservation_modal_content_container_container.style.flexDirection = "column";
-//         reservation_modal_content_container_container.style.gap = "1rem";
-//         reservation_modal_content_container_container.style.alignItems = "center";
-
-//         reservation_modal_content_container.appendChild(carText);
-//         reservation_modal_content_container.appendChild(carType);
-//         reservation_modal_content_container.appendChild(carMileage);
-//         reservation_modal_content_container.appendChild(carFuel);
-//         reservation_modal_content_container.appendChild(carSeats);
-//         reservation_modal_content_container.appendChild(carPrice);
-
-//         let reservation_modal_footer_container = document.createElement('div');
-//         reservation_modal_footer_container.classList = "reservation_modal_footer_container";
-
-//         let reservation_modal_footer_total_cost = document.createElement('h3');
-//         reservation_modal_footer_total_cost.textContent = "Rental Cost";
-
-//         let reservation_modal_footer_checkout = document.createElement('h3');
-//         reservation_modal_footer_checkout.textContent = "Checkout";
-
-//         reservation_modal_footer_container.appendChild(reservation_modal_footer_total_cost);
-//         reservation_modal_footer_container.appendChild(reservation_modal_footer_checkout);
-        
-//         reservation_modal_content_container_container.appendChild(reservation_modal_content_container);
-//         reservation_modal_content_container_container.appendChild(quantityInputContainer);
-//         reservation_modal_content_container_container.appendChild(dateContainer);
-        
-
-//         reservation_main_modal.appendChild(reservation_modal_content_container_container);
-//         reservation_main_modal.appendChild(reservation_modal_footer_container);
-        
-//         document.body.appendChild(reservation_main_modal);
-//         document.body.appendChild(reservation_modal_underlay);
-// }
-
-
-//Reservation
-
-// let reservation = document.getElementById("reservation");
-
-// reservation.addEventListener('click', function() {
-//     generateReservationModal();
-
-// });
-
-//Generate Reservation Modal
-// function generateReservationModal() {
-//     let reservation_main_modal = document.createElement('div');
-//     let reservation_modal_title = document.createElement('h3');
-//     let reservation_modal_close_img = document.createElement('img');
-//     let reservation_modal_title_container = document.createElement('div');
-//     let reservation_modal_underlay = document.createElement('div');
-
-
-//     function closeMainReservationModal() {
-//         document.body.removeChild(reservation_main_modal);
-//         document.body.removeChild(reservation_modal_underlay);
-//         document.body.style.overflow = "auto";
-//     }
-
-//     window.addEventListener('click', function(event) {
-//         if (event.target == reservation_modal_underlay) {
-//             closeMainReservationModal();
-//         }
-//     });
-
-//     //Reservation Modal img (Close)
-//     reservation_modal_close_img.src = "images/close.png";
-//     reservation_modal_close_img.style.width = "20px";
-//     reservation_modal_close_img.style.height = "20px";
-
-//     reservation_modal_close_img.addEventListener('click', function() {
-//         closeMainReservationModal();
-//     });
-
-//     //Reservation Modal Title
-//     reservation_modal_title.textContent = "Your Reservations";
-
-//     //Container for reservation modal title and img
-//     reservation_modal_title_container.style.display = "flex";
-//     reservation_modal_title_container.style.justifyContent = "space-between";
-//     reservation_modal_title_container.style.padding = "2rem";
-
-//     let cardContainer = document.getElementById('cardContainer');
-
-//     //Main reservation modal
-//     reservation_main_modal.style.zIndex = "2147483647";
-//     reservation_main_modal.style.position = "fixed";
-//     reservation_main_modal.style.backgroundColor = "white";
-//     reservation_main_modal.style.width = "500px";
-//     reservation_main_modal.style.height = "100%";
-//     reservation_main_modal.style.top = "0";
-//     reservation_main_modal.style.right = "0";
-
-//     //Reservation Modal Underlay
-//     reservation_modal_underlay.style.zIndex = "2147483646";
-//     reservation_modal_underlay.style.position = "fixed";
-//     reservation_modal_underlay.style.backgroundColor = "grey";
-//     reservation_modal_underlay.style.opacity = "0.8";
-//     reservation_modal_underlay.style.width = "100%";
-//     reservation_modal_underlay.style.height = "100%";
-
-//     cardContainer.style.zIndex = "2147483645";
-
-//     //Prevent Scrolling
-//     document.body.style.overflow = "hidden";
-
-//     reservation_modal_title_container.appendChild(reservation_modal_title);
-//     reservation_modal_title_container.appendChild(reservation_modal_close_img);
-//     reservation_main_modal.appendChild(reservation_modal_title_container);
-//     document.body.appendChild(reservation_main_modal);
-//     document.body.appendChild(reservation_modal_underlay);
-
-//     //Need to start appending the necessary cards into the modal
-// }
-
-
 //Click on all Cars button to retrieve all cars
 
 let browse_all_categories_btn = document.getElementById('browse_all_categories_btn');
 
-browse_all_categories_btn.addEventListener('click', function() {
+browse_all_categories_btn.addEventListener('click', function () {
     const xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
@@ -757,21 +445,21 @@ browse_all_categories_btn.addEventListener('click', function() {
             if (xhttp.status === 200) {
                 const carsData = JSON.parse(xhttp.responseText);
 
-                    cardContainer.textContent = '';
+                cardContainer.textContent = '';
 
-                    carsData.forEach(car => {
+                carsData.forEach(car => {
 
-                        if (car.availability === false) {
-                            // let cardHtml = '';
-                            disabledCardGeneratorFunc(car);
-                        } else {
-                            // let cardHtml = '';
-                            cardGeneratorFunc(car);
-                        }
-                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
-                    });
+                    if (car.availability === false) {
+                        // let cardHtml = '';
+                        disabledCardGeneratorFunc(car);
+                    } else {
+                        // let cardHtml = '';
+                        cardGeneratorFunc(car);
+                    }
+                    cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                });
 
-                } 
+            }
         }
     };
 
@@ -785,7 +473,7 @@ function cardGeneration() {
 
 let browse_categories_btn = document.getElementById("browse_categories_btn");
 
-browse_categories_btn.addEventListener('click', function() {
+browse_categories_btn.addEventListener('click', function () {
     let category_main_modal = document.createElement('div');
     let category_main_modal_title = document.createElement('h3');
     let category_main_modal_close_img = document.createElement('img');
@@ -800,7 +488,7 @@ browse_categories_btn.addEventListener('click', function() {
         document.body.style.overflow = "auto";
     }
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == modal_underlay) {
             closeMainModal();
         }
@@ -812,7 +500,7 @@ browse_categories_btn.addEventListener('click', function() {
     category_main_modal_close_img.style.width = "20px";
     category_main_modal_close_img.style.height = "20px";
 
-    category_main_modal_close_img.addEventListener('click', function() {
+    category_main_modal_close_img.addEventListener('click', function () {
         closeMainModal();
     });
 
@@ -889,7 +577,7 @@ browse_categories_btn.addEventListener('click', function() {
 
     }
 
-    
+
     category_main_modal.appendChild(category_main_modal_title_container);
     appendSubContainer("Brand");
     appendSubContainer("Type");
@@ -944,7 +632,7 @@ browse_categories_btn.addEventListener('click', function() {
                                 const uniqueFuels = new Set();
                                 const uniquePrice = new Set();
                                 const uniqueAvailability = new Set();
-                                
+
                                 carsData.forEach(car => {
                                     uniqueBrands.add(car.brand);
                                     uniqueType.add(car.type);
@@ -955,35 +643,35 @@ browse_categories_btn.addEventListener('click', function() {
                                 });
 
 
-                                if(category_sub_modal_title.textContent === "Brand") {
+                                if (category_sub_modal_title.textContent === "Brand") {
                                     generateSubModalButtons(uniqueBrands);
-                                } else if(category_sub_modal_title.textContent === "Type") {
+                                } else if (category_sub_modal_title.textContent === "Type") {
                                     generateSubModalButtons(uniqueType);
-                                } else if(category_sub_modal_title.textContent === "Seats"){
+                                } else if (category_sub_modal_title.textContent === "Seats") {
                                     generateSubModalButtons(uniqueSeats);
-                                } else if(category_sub_modal_title.textContent === "Fuel Type") {
+                                } else if (category_sub_modal_title.textContent === "Fuel Type") {
                                     generateSubModalButtons(uniqueFuels);
-                                } else if(category_sub_modal_title.textContent === "Price Per Day") {
+                                } else if (category_sub_modal_title.textContent === "Price Per Day") {
                                     generateSubModalButtons(uniquePrice);
-                                } else if(category_sub_modal_title.textContent === "Availability") {
+                                } else if (category_sub_modal_title.textContent === "Availability") {
                                     generateSubModalButtons(uniqueAvailability);
                                 }
 
                                 function generateSubModalButtons(categorySet) {
-                                    for(const value of categorySet) {
-                                                                        
+                                    for (const value of categorySet) {
+
                                         let genericBtn = document.createElement('button');
                                         let category_sub_modal_content_container_content = document.createElement('div');
                                         genericBtn.textContent = value;
                                         genericBtn.classList = "ctgryBtn";
-                                
-                                        genericBtn.addEventListener('click', function() {
-                                            
+
+                                        genericBtn.addEventListener('click', function () {
+
                                             closeMainModal();
                                             searchCategory(value);
-                                
+
                                         });
-                                
+
                                         category_sub_modal_content_container_content.style.display = "flex";
                                         category_sub_modal_content_container_content.style.flexDirection = "column";
                                         category_sub_modal_content_container_content.appendChild(genericBtn);
@@ -991,7 +679,7 @@ browse_categories_btn.addEventListener('click', function() {
                                         category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
                                         category_main_modal.appendChild(category_main_modal_content_container_container);
                                         document.body.appendChild(category_main_modal);
-                                
+
                                     }
                                 }
 
@@ -1027,144 +715,144 @@ browse_categories_btn.addEventListener('click', function() {
                 //What if it is 1000px in width (sub modal is on however clicked on a different Textcontent  (e.g. brand -> type))
                 let container = button.closest('.category_main_modal_content_sub_container');
 
-                if(currentContent === container.textContent) {
+                if (currentContent === container.textContent) {
                     let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
                     const parentContainer = category_sub_modal_content_container.parentNode;
-    
+
                     if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
-    
+
                         parentContainer.removeChild(category_sub_modal_content_container);
-    
+
                     }
                     category_main_modal.style.width = "400px";
                 } else {
                     let category_sub_modal_content_container = document.querySelector('.category_sub_modal_content_container');
                     const parentContainer = category_sub_modal_content_container.parentNode;
-    
+
                     if (parentContainer && parentContainer.contains(category_sub_modal_content_container)) {
-    
+
                         parentContainer.removeChild(category_sub_modal_content_container);
-    
+
                     }
                     // category_main_modal.style.width = "400px";
 
                     category_main_modal.style.width = "1000px";
 
-                let container = button.closest('.category_main_modal_content_sub_container');
-                currentContent = container.textContent;
+                    let container = button.closest('.category_main_modal_content_sub_container');
+                    currentContent = container.textContent;
 
-                if (container) {
-                    let containerTextContent = container.textContent.trim();
-                    let category_sub_modal_title_container = document.createElement('div');
-                    let category_sub_modal_content_container = document.createElement('div');
-                    let category_sub_modal_title = document.createElement('h3');
+                    if (container) {
+                        let containerTextContent = container.textContent.trim();
+                        let category_sub_modal_title_container = document.createElement('div');
+                        let category_sub_modal_content_container = document.createElement('div');
+                        let category_sub_modal_title = document.createElement('h3');
 
-                    category_sub_modal_title.textContent = containerTextContent;
-                    category_sub_modal_title.style.marginLeft = "1rem";
-                    category_sub_modal_content_container.classList = "category_sub_modal_content_container";
-                    category_sub_modal_content_container.style.display = "flex";
-                    category_sub_modal_content_container.style.flexDirection = "column";
-                    category_sub_modal_content_container.style.alignItems = "stretch";
-                    category_sub_modal_content_container.style.width = "600px";
+                        category_sub_modal_title.textContent = containerTextContent;
+                        category_sub_modal_title.style.marginLeft = "1rem";
+                        category_sub_modal_content_container.classList = "category_sub_modal_content_container";
+                        category_sub_modal_content_container.style.display = "flex";
+                        category_sub_modal_content_container.style.flexDirection = "column";
+                        category_sub_modal_content_container.style.alignItems = "stretch";
+                        category_sub_modal_content_container.style.width = "600px";
 
-                    category_sub_modal_title_container.style.display = "flex";
-                    category_sub_modal_title_container.style.justifyContent = "center";
-                    category_sub_modal_title_container.style.marginBottom = "1rem";
-
-
-                    //JSON
-                    const xhttp = new XMLHttpRequest();
-
-                    xhttp.onreadystatechange = function () {
-                        if (xhttp.readyState === XMLHttpRequest.DONE) {
-                            if (xhttp.status === 200) {
-                                const carsData = JSON.parse(xhttp.responseText);
-
-                                const uniqueBrands = new Set();
-                                const uniqueType = new Set();
-                                const uniqueSeats = new Set();
-                                const uniqueFuels = new Set();
-                                const uniquePrice = new Set();
-                                const uniqueAvailability = new Set();
-                                
-                                carsData.forEach(car => {
-                                    uniqueBrands.add(car.brand);
-                                    uniqueType.add(car.type);
-                                    uniqueSeats.add(car.seats);
-                                    uniqueFuels.add(car.fuel_type);
-                                    uniquePrice.add(car.price_per_day);
-                                    uniqueAvailability.add(car.availability);
-                                });
+                        category_sub_modal_title_container.style.display = "flex";
+                        category_sub_modal_title_container.style.justifyContent = "center";
+                        category_sub_modal_title_container.style.marginBottom = "1rem";
 
 
-                                if(category_sub_modal_title.textContent === "Brand") {
-                                    generateSubModalButtons(uniqueBrands);
-                                } else if(category_sub_modal_title.textContent === "Type") {
-                                    generateSubModalButtons(uniqueType);
-                                } else if(category_sub_modal_title.textContent === "Seats"){
-                                    generateSubModalButtons(uniqueSeats);
-                                } else if(category_sub_modal_title.textContent === "Fuel Type") {
-                                    generateSubModalButtons(uniqueFuels);
-                                } else if(category_sub_modal_title.textContent === "Price Per Day") {
-                                    generateSubModalButtons(uniquePrice);
-                                } else if(category_sub_modal_title.textContent === "Availability") {
-                                    generateSubModalButtons(uniqueAvailability);
-                                }
+                        //JSON
+                        const xhttp = new XMLHttpRequest();
 
-                                function generateSubModalButtons(categorySet) {
-                                    for(const value of categorySet) {
-                                                                        
-                                        let genericBtn = document.createElement('button');
-                                        let category_sub_modal_content_container_content = document.createElement('div');
-                                        genericBtn.textContent = value;
-                                        genericBtn.classList = "ctgryBtn";
-                                
-                                        genericBtn.addEventListener('click', function() {
-                                            
-                                            closeMainModal();
-                                            searchCategory(value);
-                                
-                                        });
-                                
-                                        category_sub_modal_content_container_content.style.display = "flex";
-                                        category_sub_modal_content_container_content.style.flexDirection = "column";
-                                        category_sub_modal_content_container_content.appendChild(genericBtn);
-                                        category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
-                                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                                        category_main_modal.appendChild(category_main_modal_content_container_container);
-                                        document.body.appendChild(category_main_modal);
-                                
+                        xhttp.onreadystatechange = function () {
+                            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                                if (xhttp.status === 200) {
+                                    const carsData = JSON.parse(xhttp.responseText);
+
+                                    const uniqueBrands = new Set();
+                                    const uniqueType = new Set();
+                                    const uniqueSeats = new Set();
+                                    const uniqueFuels = new Set();
+                                    const uniquePrice = new Set();
+                                    const uniqueAvailability = new Set();
+
+                                    carsData.forEach(car => {
+                                        uniqueBrands.add(car.brand);
+                                        uniqueType.add(car.type);
+                                        uniqueSeats.add(car.seats);
+                                        uniqueFuels.add(car.fuel_type);
+                                        uniquePrice.add(car.price_per_day);
+                                        uniqueAvailability.add(car.availability);
+                                    });
+
+
+                                    if (category_sub_modal_title.textContent === "Brand") {
+                                        generateSubModalButtons(uniqueBrands);
+                                    } else if (category_sub_modal_title.textContent === "Type") {
+                                        generateSubModalButtons(uniqueType);
+                                    } else if (category_sub_modal_title.textContent === "Seats") {
+                                        generateSubModalButtons(uniqueSeats);
+                                    } else if (category_sub_modal_title.textContent === "Fuel Type") {
+                                        generateSubModalButtons(uniqueFuels);
+                                    } else if (category_sub_modal_title.textContent === "Price Per Day") {
+                                        generateSubModalButtons(uniquePrice);
+                                    } else if (category_sub_modal_title.textContent === "Availability") {
+                                        generateSubModalButtons(uniqueAvailability);
                                     }
-                                }
 
+                                    function generateSubModalButtons(categorySet) {
+                                        for (const value of categorySet) {
+
+                                            let genericBtn = document.createElement('button');
+                                            let category_sub_modal_content_container_content = document.createElement('div');
+                                            genericBtn.textContent = value;
+                                            genericBtn.classList = "ctgryBtn";
+
+                                            genericBtn.addEventListener('click', function () {
+
+                                                closeMainModal();
+                                                searchCategory(value);
+
+                                            });
+
+                                            category_sub_modal_content_container_content.style.display = "flex";
+                                            category_sub_modal_content_container_content.style.flexDirection = "column";
+                                            category_sub_modal_content_container_content.appendChild(genericBtn);
+                                            category_sub_modal_content_container.appendChild(category_sub_modal_content_container_content);
+                                            category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                                            category_main_modal.appendChild(category_main_modal_content_container_container);
+                                            document.body.appendChild(category_main_modal);
+
+                                        }
+                                    }
+
+                                }
                             }
+
                         }
+                        xhttp.open('GET', 'cars.json', true);
+                        xhttp.send();
+
+                        //Depending on the containerTextContent use either the brand or type loop.
+                        //Then generate buttons with each of the brands/types and append it to the category_sub_modal_content_container (but content version)
+                        //So category_sub_modal_content (Maybe this name will suffice)
+
+
+
+                        category_sub_modal_title_container.appendChild(category_sub_modal_title);
+                        category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
+                        category_main_modal_content_container_container.style.width = "1000px";
+                        category_main_modal_content_container_container.style.display = "flex";
+                        category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
+                        category_main_modal.appendChild(category_main_modal_content_container_container);
+                        document.body.appendChild(category_main_modal);
 
                     }
-                    xhttp.open('GET', 'cars.json', true);
-                    xhttp.send();
-
-                    //Depending on the containerTextContent use either the brand or type loop.
-                    //Then generate buttons with each of the brands/types and append it to the category_sub_modal_content_container (but content version)
-                    //So category_sub_modal_content (Maybe this name will suffice)
-
-
-
-                    category_sub_modal_title_container.appendChild(category_sub_modal_title);
-                    category_sub_modal_content_container.appendChild(category_sub_modal_title_container);
-                    category_main_modal_content_container_container.style.width = "1000px";
-                    category_main_modal_content_container_container.style.display = "flex";
-                    category_main_modal_content_container_container.appendChild(category_sub_modal_content_container);
-                    category_main_modal.appendChild(category_main_modal_content_container_container);
-                    document.body.appendChild(category_main_modal);
-
-                }
                 }
 
             }
         });
     });
-    
+
 
 });
 
@@ -1179,23 +867,23 @@ function searchCategory(input) {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 200) {
                 const carsData = JSON.parse(xhttp.responseText);
-                if(!Number(input)) {
+                if (!Number(input)) {
                     input = input.toLowerCase();
                 }
                 const searchInt = parseInt(input);
                 const filteredCars = carsData.filter(car => {
                     return car.brand.toLowerCase().includes(input) ||
-                            car.type.toLowerCase().includes(input) ||
-                            car.type.toLowerCase().includes(input) ||
-                            car.fuel_type.toLowerCase().includes(input) ||
-                            car.price_per_day === searchInt ||
-                            (car.seats === searchInt);
+                        car.type.toLowerCase().includes(input) ||
+                        car.type.toLowerCase().includes(input) ||
+                        car.fuel_type.toLowerCase().includes(input) ||
+                        car.price_per_day === searchInt ||
+                        (car.seats === searchInt);
                 });
 
-                    cardContainer.textContent = '';
-                                
+                cardContainer.textContent = '';
 
-                    filteredCars.forEach(car => {
+
+                filteredCars.forEach(car => {
 
                     if (car.availability === false) {
                         disabledCardGeneratorFunc(car);
@@ -1216,6 +904,7 @@ function searchCategory(input) {
 //Search Filter
 
 function searchFilter() {
+
     const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
     const cardContainer = document.getElementById('cardContainer');
     const contentDiv = document.getElementById('content');
@@ -1226,6 +915,7 @@ function searchFilter() {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 200) {
+
                 const carsData = JSON.parse(xhttp.responseText);
                 const filteredCars = carsData.filter(car => {
 
@@ -1253,11 +943,12 @@ function searchFilter() {
                             cardGeneratorFunc(car);
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                        document.getElementById('searchInput').value = '';
                     });
 
-                } else { 
+                } else {
                     cardContainer.textContent = '';
-                    
+
 
                     filteredCars.forEach(car => {
                         // let cardHtml = '';
@@ -1269,14 +960,15 @@ function searchFilter() {
                             cardGeneratorFunc(car);
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                        document.getElementById('searchInput').value = '';
                     });
                 }
+
             } else {
                 console.error('Error:', xhttp.status);
             }
         }
     };
-
     xhttp.open('GET', 'cars.json', true);
     xhttp.send();
 }

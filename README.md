@@ -69,4 +69,11 @@ Add quantity selector / Dates
 
 Style the reservation modal checkout
 
-->
+->By default set the car quantity to 1
+
+-> work on the search bar recommendation logic
+-> Show recent keywords when search box is focused but user has not made any inputs yet...
+So have an array of localstorage where searches by the user are stored in the localstorage array. Make it a set for unique values? 
+-> Give Real-time suggestions
+So we need to get a list of brands, type, whatever else we want included in the search and then store each unique value inside an array.
+Then we can use include() to see if the search is included in any of the array elements.

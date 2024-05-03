@@ -117,6 +117,7 @@ body {
     border: 1px solid transparent;
     border-bottom: 1px solid transparent;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 1px;
+    /* position: relative; */
 }
 
 .searchbar:has(input[type="search"]:focus) {
@@ -164,11 +165,42 @@ body {
     border-radius: 50%;
 }
 
+.card > .car-details > h3 {
+    color: #005792;
+    font-weight: 1000;
+}
+
+.unavailable_card > .car-details > h3 {
+    color: #ff4343;
+    font-weight: 1000;
+}
+
+.car-details > p {
+    color: grey;
+
+}
+
 .header_middle {
     display: flex;
     gap: 1rem;
-    grid-row: 1;
-    grid-column: 1 / -1;
+    /* grid-row: 1;
+    grid-column: 1 / -1; */
+    flex-direction: column;
+    /* background-color: aqua; */
+    position: relative;
+}
+
+#suggestions {
+    position: absolute;
+    top: 100%;
+    /* left: 0; */
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 9999; 
+    display: none;
 }
 
 .content {
@@ -318,7 +350,7 @@ body {
 }
 
 .card {
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     border-radius: 6px;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
@@ -336,6 +368,7 @@ body {
 .car-image > img {
     width: 250px;
     height: 250px;
+    border-radius: 8px;
 }
 
 .car-details {
@@ -355,8 +388,10 @@ body {
     width: 100%;
     box-sizing: border-box;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 1000;
     cursor: pointer;
+    background-color: #005792;
+    color: white;
 }
 
 
@@ -369,11 +404,13 @@ body {
     box-sizing: border-box;
     font-size: 1rem;
     font-weight: bold;
+    background-color: #ff4343;
+    color: white;
 }
 
 .unavailable_card {
-    border: 1px solid transparent;
-    border-radius: 16px;
+    border: 2px solid transparent;
+    border-radius: 8px;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
     display: flex;

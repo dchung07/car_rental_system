@@ -66,13 +66,24 @@
                     <h3>Rent'a'Car</h3>
                     <img src="images/car.png" alt="logo">
                 </div>
+
                 <div class="header_middle">
+
                     <div class="searchbar">
-                        <input type="search" placeholder="Search Products..." name="search" id="searchInput" />
+                        <input type="search" placeholder="Search Products..." name="search" id="searchInput" autocomplete="off"/>
                         <button id="submitSearch" type="button" name="searchSubmit" value="true"></button>
                     </div>
-                    <div id="suggestions"></div>
+
+                    <div id="suggestions">
+                        <h3>Suggestions...</h3>
+                        <h3>Test</h3>
+                        <h3>Test</h3>
+                        <h3>Test</h3>
+                        <h3>Test</h3>
+                    </div>
+
                 </div>
+                
                 <div class="header_right" id="reservation">
                     <img src="images/book.png" alt="">
                     <h3>Reservations</h3>
@@ -136,8 +147,8 @@
                                     echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
                                     echo '<p>Seats: ' . $car['seats'] . '</p>';
                                     echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
-                                    echo '<p>Description: ' . $car['description'] . '</p>';
-                                    echo '<button class="addToCartBtn" onclick="addReservation(event)">Rent</button>';
+                                    echo '<p>' . $car['description'] . '</p>';
+                                    echo '<button class="addToCartBtn" onclick="addReservation(event)">RENT</button>';
                                     echo '<input type="hidden" value="' . $car['id'] . '"/>';
                                 echo '</div>';
                             echo '</div>';
@@ -153,8 +164,8 @@
                             echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
                             echo '<p>Seats: ' . $car['seats'] . '</p>';
                             echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
-                            echo '<p>Description: ' . $car['description'] . '</p>';
-                            echo '<button class="unavailable_addToCartBtn" disabled>Not Available</button>';
+                            echo '<p>' . $car['description'] . '</p>';
+                            echo '<button class="unavailable_addToCartBtn" disabled>NOT AVAILABLE</button>';
                             
                             echo '</div>';
                             echo '</div>';
