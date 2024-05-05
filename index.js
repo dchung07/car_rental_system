@@ -1,17 +1,77 @@
-// document.getElementById('searchInput').addEventListener('input', searchFilter);
-document.getElementById('submitSearch').addEventListener('click', searchFilter);
-
-//When focused search
 let suggestions = document.getElementById('suggestions');
-document.getElementById('searchInput').addEventListener('focus', function() {
+suggestions.style.display = "none";
 
-    suggestions.style.display = "block";
-});
+// Function to add recent searches to a localhost storage. 
+// let searchHistory = [];
+// function addSearchHistory(searchInput) {
 
-document.getElementById('searchInput').addEventListener('blur', function() {
+//     //Local storage can only store strings. So we need to retrieve the array from local storage, and then turn it into strings
 
-    suggestions.style.display = "none";
-});
+//     searchHistory.unshift(searchInput);
+//     if(searchHistory.length > 5) {
+//         searchHistory.pop();
+//     }
+
+//     console.log(searchHistory);
+    
+// }
+
+// function clearSuggestionsContent() {
+//     const suggestionsDiv = document.getElementById('suggestions');
+    
+//     const childNodes = suggestionsDiv.childNodes;
+
+//     for (let i = childNodes.length - 1; i >= 0; i--) {
+//         const childNode = childNodes[i];
+
+//         if (childNode.nodeName !== 'H4') {
+//             suggestionsDiv.removeChild(childNode);
+//         }
+//     }
+// }
+
+
+// document.getElementById('searchInput').addEventListener('input', searchFilter);
+// document.getElementById('submitSearch').addEventListener('click', searchFilter);
+
+// //When focused search
+// let suggestions = document.getElementById('suggestions');
+// document.getElementById('searchInput').addEventListener('focus', function() {
+//     let searchInput = document.getElementById('searchInput');
+//     let suggestions_title = document.getElementById('suggestions_title');
+
+//     suggestions.style.display = "block";
+
+//             //For the length of the searchHistory array, append each of the searches to the suggestions, div as h3 elements.
+//             // let suggestions_title_temp = suggestions.childNodes[1].textContent;
+//             clearSuggestionsContent();
+//             for(let i = 0; i < searchHistory.length; i++) {
+//                 let search = document.createElement('h3');
+//                 search.textContent = searchHistory[i];
+//                 // search.style.cursor = "pointer";
+
+
+//                 suggestions.appendChild(search);
+//             }
+
+//     //Case that the input is focused and there are no inputs inserted into the search input by user (hasnt typed anything yet)
+// });
+
+// document.getElementById('searchInput').addEventListener('input', function() {
+//     let suggestions_title = document.getElementById('suggestions_title');
+//     if(searchInput.value == "") {
+//         suggestions_title.textContent = "Recent Searches";
+
+//     } else {
+//         suggestions_title.textContent = "Suggestions";
+        
+//     }
+// });
+
+// document.getElementById('searchInput').addEventListener('blur', function() {
+
+//     suggestions.style.display = "none";
+// });
 
 
 
@@ -74,6 +134,85 @@ reservationBtn.addEventListener('click', openReservation);
 //     carsRequest.send(null);
 // }
 
+//Need to disabled the place order button if the inputs are empty
+function validPlaceOrder() {
+    let place_order_btn = document.getElementById('place_order_btn');
+    let valid_drivers_license = document.getElementById('valid_drivers_license');
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
+    let last_name = document.getElementById('last_name');
+    let first_name = document.getElementById('first_name');
+    let end_date = document.getElementById('end_date');
+    let start_date = document.getElementById('start_date');
+    let car_quantity = document.getElementById('car_quantity');
+
+    if(email.value === '' 
+        || phone.value === '' 
+        || last_name.value === '' 
+        || first_name.value === '' 
+        || end_date.value === ''
+        || start_date.value === ''
+        || car_quantity.value === ''
+        || valid_drivers_license.checked === false
+        ) {
+
+            place_order_btn.style.backgroundColor = "red";
+            place_order_btn.disabled = true;
+            place_order_btn.style.cursor = "not-allowed";
+            place_order_btn.style.opacity = "0.3";
+
+        } else {
+            place_order_btn.style.backgroundColor = "#005792";
+            place_order_btn.disabled = false;
+            place_order_btn.style.cursor = "pointer";
+            place_order_btn.style.opacity = "1";
+        }
+}
+
+let place_order_btn = document.getElementById('place_order_btn');
+let valid_drivers_license = document.getElementById('valid_drivers_license');
+let email = document.getElementById('email');
+let phone = document.getElementById('phone');
+let last_name = document.getElementById('last_name');
+let first_name = document.getElementById('first_name');
+let end_date = document.getElementById('end_date');
+let start_date = document.getElementById('start_date');
+let car_quantity = document.getElementById('car_quantity');
+
+first_name.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+first_name.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+valid_drivers_license.addEventListener('change', function() {
+    validPlaceOrder();
+});
+
+phone.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+email.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+end_date.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+start_date.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+car_quantity.addEventListener('input', function() {
+    validPlaceOrder();
+});
+
+
+
 function openReservation() {
 
     let reservation_modal = document.querySelector('.reservation_modal');
@@ -129,15 +268,15 @@ function openReservation() {
         details.appendChild(title);
 
         let type = document.createElement('p');
-        type.textContent = `Type: ${reservation.type}`;
+        type.textContent = `${reservation.type}`;
         sub_details.appendChild(type);
 
         let mileage = document.createElement('p');
-        mileage.textContent = `Mileage: ${reservation.mileage}`;
+        mileage.textContent = `${reservation.mileage}`;
         sub_details.appendChild(mileage);
 
         let price = document.createElement('p');
-        price.textContent = `Price per Day: $${reservation.pricePerDay}`;
+        price.textContent = `$${reservation.pricePerDay}/Day`;
         sub_details.appendChild(price);
 
 
@@ -322,6 +461,7 @@ function openReservation() {
         // console.log(localStorage.getItem('current_reservation'));
     }
 
+    validPlaceOrder();
 }
 
 let reservation_remove_button = document.getElementById('reservation_remove_button');
@@ -901,6 +1041,7 @@ function searchCategory(input) {
 }
 
 
+
 //Search Filter
 
 function searchFilter() {
@@ -916,6 +1057,7 @@ function searchFilter() {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 200) {
 
+                // addSearchHistory(searchInput);
                 const carsData = JSON.parse(xhttp.responseText);
                 const filteredCars = carsData.filter(car => {
 
@@ -961,6 +1103,8 @@ function searchFilter() {
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                         document.getElementById('searchInput').value = '';
+                        let suggestions_title = document.getElementById('suggestions_title');
+                        suggestions_title.textContent = "Recent Searches";
                     });
                 }
 
@@ -973,3 +1117,77 @@ function searchFilter() {
     xhttp.send();
 }
 
+//SearchFilter with input functionality
+
+function searchInputFilter(input) {
+
+    const searchInput = input.toLowerCase().trim();
+    const cardContainer = document.getElementById('cardContainer');
+    const contentDiv = document.getElementById('content');
+    cardContainer.innerHTML = '';
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === XMLHttpRequest.DONE) {
+            if (xhttp.status === 200) {
+
+                // addSearchHistory(searchInput);
+                const carsData = JSON.parse(xhttp.responseText);
+                const filteredCars = carsData.filter(car => {
+
+                    const searchInt = parseInt(searchInput);
+
+                    return car.brand.toLowerCase().includes(searchInput) ||
+                        car.model.toLowerCase().includes(searchInput) ||
+                        car.type.toLowerCase().includes(searchInput) ||
+                        car.mileage.toLowerCase().includes(searchInput) ||
+                        car.fuel_type.toLowerCase().includes(searchInput) ||
+                        car.description.toLowerCase().includes(searchInput) ||
+                        (searchInt && car.seats === searchInt);
+                });
+
+                if (filteredCars.length === 0) {
+
+                    cardContainer.textContent = '';
+
+                    carsData.forEach(car => {
+
+                        if (car.availability === false) {
+                            disabledCardGeneratorFunc(car);
+                        } else {
+                            // let cardHtml = '';
+                            cardGeneratorFunc(car);
+                        }
+                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                        document.getElementById('searchInput').value = '';
+                    });
+
+                } else {
+                    cardContainer.textContent = '';
+
+
+                    filteredCars.forEach(car => {
+                        // let cardHtml = '';
+
+                        if (car.availability === false) {
+                            disabledCardGeneratorFunc(car);
+                        } else {
+                            // let cardHtml = '';
+                            cardGeneratorFunc(car);
+                        }
+                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                        document.getElementById('searchInput').value = '';
+                        let suggestions_title = document.getElementById('suggestions_title');
+                        suggestions_title.textContent = "Recent Searches";
+                    });
+                }
+
+            } else {
+                console.error('Error:', xhttp.status);
+            }
+        }
+    };
+    xhttp.open('GET', 'cars.json', true);
+    xhttp.send();
+}

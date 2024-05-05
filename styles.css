@@ -194,12 +194,21 @@ body {
     position: absolute;
     top: 100%;
     /* left: 0; */
-    width: 100%;
+    width: 90%;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 9999; 
+    display: none;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#suggestions_title {
+    color: grey;
     display: none;
 }
 
@@ -536,11 +545,17 @@ body {
 
 .reservation_details {
     /* display: flex; */
+    font-size: 25px;
+    color: #005792;
+    font-weight: 1000;
 }
 
 .reservation_sub_details {
     display: flex;
     gap: 1rem;
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: grey;
 }
 
 .reservation_card {
@@ -574,7 +589,7 @@ body {
 }
 
 #car_quantity {
-    width: 50%;
+    /* width: 50%; */
 }
 
 .checkout-container {
@@ -590,6 +605,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 1rem;
+    align-items: center;
 }
 
 .remove_button {
@@ -614,7 +630,54 @@ body {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+
+    width: 100%;
 }
+
+.sub_form {
+    display: flex;
+    gap: 1rem;
+    width: 80%;
+}
+
+.sub_form > label {
+    width: 40%;
+    font-size: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.sub_form > input {
+    width: 60%;
+    height: 20px;
+}
+
+.sub_form_check {
+    display: flex;
+    gap: 1rem;
+    width: 80%;
+}
+
+.sub_form_check > label{
+    width:  60%;
+    font-size: 15px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.sub_form_check > input {
+    height: 25px;
+    width: 25px;
+}
+
+#place_order_btn {
+    color: white;
+    background-color: #005792;
+    font-size: 18px;
+    font-weight: 1000;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+}
+
 
 #reservation_remove_button {
     width: 100%;
