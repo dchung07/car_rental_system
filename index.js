@@ -397,8 +397,22 @@ start_date.addEventListener('input', function() {
     validPlaceOrder();
 });
 
-car_quantity.addEventListener('input', function() {
+car_quantity.addEventListener('input', function(event) {
     validPlaceOrder();
+    let currentReservation = JSON.parse(localStorage.getItem('current_reservation'));
+    let max = currentReservation.quantity;
+    let updatedValue
+
+        updatedValue = event.target.value;
+
+        //Make a check here, to see if the inptutted value is within the bounds of the currentReservation.quantity
+        if(updatedValue <= 0 || updatedValue > currentReservation.quantity) {
+            quantity_error.textContent = `Accepted Values (1 - ${max})`;
+        } else {
+            quantity_error.textContent = "";
+        }
+
+
 });
 
 
@@ -502,6 +516,12 @@ function openReservation() {
         let updatedValue
         car_quantity.addEventListener('input', function (event) {
             updatedValue = event.target.value;
+
+            //Make a check here, to see if the inptutted value is within the bounds of the currentReservation.quantity
+            // if(updatedValue == 0 || updatedValue > currentReservation.quantity) {
+  
+            //     //After -> Change the error text (div below)
+            // }
 
             totalRentalCost();
         });
@@ -1312,7 +1332,7 @@ function searchFilter() {
                 }
 
             } else {
-                console.error('Error:', xhttp.status);
+
             }
         }
     };
@@ -1389,7 +1409,7 @@ function searchInputFiltering(input) {
                 }
 
             } else {
-                console.error('Error:', xhttp.status);
+
             }
         }
     };

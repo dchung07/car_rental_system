@@ -106,3 +106,5 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 
 //Things I can possibly add to suggestions -> When click on suggestion / recent search, it is added to the recent search.
 // Also the search filter when there is no exact search match
+
+//The Rent button
