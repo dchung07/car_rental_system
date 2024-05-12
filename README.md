@@ -99,3 +99,7 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 -> Add error texts for the other inputs.
 
 //For real-time search, can make it pop up when the user starts inputting...
+
+//Ask tutor in consultation -> do I need to be able to click the recent searches / suggestions bar to take me to the results?
+
+//Add hover and cursor pointer to the suggestions / recent searches
