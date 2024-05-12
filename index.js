@@ -194,6 +194,7 @@ document.addEventListener('click', function(event) {
         isSuggestionsBox = true;
         if(targetClick.tagName === 'H3') {
             searchInputFiltering(targetClick.textContent);
+            suggestions.style.display = 'none';
         }
     }
 
@@ -849,7 +850,7 @@ browse_categories_btn.addEventListener('click', function () {
     category_main_modal_title.textContent = "Browse Categories";
 
     //Main category modal
-    category_main_modal.style.zIndex = "2147483647";
+    category_main_modal.style.zIndex = "9999";
     category_main_modal.style.position = "fixed";
     category_main_modal.style.backgroundColor = "white";
     category_main_modal.style.width = "400px";
@@ -868,7 +869,7 @@ browse_categories_btn.addEventListener('click', function () {
     category_main_modal_content_container.style.width = "400px";
 
     //Modal underlay
-    modal_underlay.style.zIndex = "2147483646";
+    modal_underlay.style.zIndex = "9998";
     modal_underlay.style.position = "fixed";
     modal_underlay.style.backgroundColor = "grey";
     modal_underlay.style.opacity = "0.8";
@@ -876,7 +877,7 @@ browse_categories_btn.addEventListener('click', function () {
     modal_underlay.style.height = "100%";
 
     let cardContainer = document.getElementById('cardContainer');
-    cardContainer.style.zIndex = "2147483645";
+    cardContainer.style.zIndex = "9997";
 
 
     //Prevent Scrolling

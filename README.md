@@ -103,3 +103,6 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 //Ask tutor in consultation -> do I need to be able to click the recent searches / suggestions bar to take me to the results?
 
 //Add hover and cursor pointer to the suggestions / recent searches
+
+//Things I can possibly add to suggestions -> When click on suggestion / recent search, it is added to the recent search.
+// Also the search filter when there is no exact search match
