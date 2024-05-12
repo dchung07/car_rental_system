@@ -77,3 +77,25 @@ So have an array of localstorage where searches by the user are stored in the lo
 -> Give Real-time suggestions
 So we need to get a list of brands, type, whatever else we want included in the search and then store each unique value inside an array.
 Then we can use include() to see if the search is included in any of the array elements.
+
+
+Stuff left to do
+
+-> Search Bar Suggestions / Recent Searches (3 marks)
+-> Form Validation + Live Feedback (2 marks)
+-> Order Confirmation (3 marks)
+
+-> for the live feedback, have an event listener input with the necessary validation check (e.g. regex or type/length)
+-> Then change the text content of the error div
+
+Just use id's. 
+
+-> Form (PHP) -> Reloads the screen -> 
+Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
+-> Retrieve the current localstorage item id and then can change the JSON through that.
+
+//Things to tweak
+-> Quantity Input currently allows user to input a number larger than the max input of the quantity. Fix that either by not letting user input number, or not input number that exceeds max quantity
+-> Add error texts for the other inputs.
+
+//For real-time search, can make it pop up when the user starts inputting...

@@ -75,7 +75,7 @@
                     </div>
 
                     <div id="suggestions">
-                        <!-- <h4 id="suggestions_title">Recent Searches</h4> -->
+                        <h4 id="suggestions_title">Recent Searches</h4>
 
                     </div>
 
@@ -214,45 +214,56 @@
 
                         <div class="reservation_order_details">
 
-                                <div class="sub_form">
-                                    <label for="car_quantity">Quantity to Rent: </label>
-                                    <input type="number" id="car_quantity" placeholder="How many...?" min="1" required>
-                                </div>
+                                <form action="index.php" method="POST" id="order_form">
+                                    <div class="sub_form">
+                                        <label for="car_quantity">Quantity to Rent: </label>
+                                        <input type="number" id="car_quantity" placeholder="How many...?" min="1" value="1" required>
+                                    </div>
+                                    <div class="error" id="quantity_error"></div>
 
-                                <div class="sub_form">
-                                    <label for="start_date">Start date: </label>
-                                    <input type="date" id="start_date" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="start_date">Start date: </label>
+                                        <input type="date" id="start_date" required>
+                                    </div>
+                                    <div class="error"></div>
 
-                                <div class="sub_form">
-                                    <label for="end_date">End date: </label>
-                                    <input type="date" id="end_date" required>
-                                </div>
-            
-                                <div class="sub_form">
-                                    <label for="first_name">First Name: </label>
-                                    <input type="text" id="first_name" placeholder="Tom" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="end_date">End date: </label>
+                                        <input type="date" id="end_date" required>
+                                    </div>
+                                    <div class="error"></div>
 
-                                <div class="sub_form">
-                                    <label for="last_name">Last Name: </label>
-                                    <input type="text" id="last_name" placeholder="Smith" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="first_name">First Name: </label>
+                                        <input type="text" id="first_name" placeholder="Tom" required>
+                                    </div>
+                                    <div class="error" id="first_name_error"></div>
 
-                                <div class="sub_form">
-                                    <label for="phone">Phone Number: </label>
-                                    <input type="phone" id="phone" placeholder="0407398761" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="last_name">Last Name: </label>
+                                        <input type="text" id="last_name" placeholder="Smith" required> 
+                                    </div>
+                                    <div class="error" id="last_name_error"></div>
 
-                                <div class="sub_form">
-                                    <label for="email">email: </label>
-                                    <input type="email" id="email" placeholder="Tom@gmail.com" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="phone">Phone Number: </label>
+                                        <input type="phone" id="phone" placeholder="0407398761" required>
+                                    </div>
+                                    <div class="error" id="phone_error"></div>
 
-                                <div class="sub_form_check">
-                                    <label for="valid_drivers_license">Do you have a valid drivers license?: </label>
-                                    <input type="checkbox" id="valid_drivers_license" required>
-                                </div>
+                                    <div class="sub_form">
+                                        <label for="email">email: </label>
+                                        <input type="email" id="email" placeholder="Tom@gmail.com" required>
+                                    </div>
+                                    <div class="error" id="email_error"></div>
+
+                                    <div class="sub_form_check">
+                                        <label for="valid_drivers_license">Do you have a valid drivers license?: </label>
+                                        <input type="checkbox" id="valid_drivers_license" required>
+                                    </div>
+                                    <div class="error" id="checkbox_error"></div>
+
+                                </form>
 
                         </div>
 

@@ -1,78 +1,182 @@
+//SearchFilter with input functionality
+//This function takes an input (a string)
+//The purpose of this function is to get the 5 most relevant suggestions. 
+
+//Initialise here so we can access it later outside of the function.
+
+function suggestionFilter(input) {
+    return new Promise((resolve, reject) => {
+        const searchInput = input.toLowerCase().trim();
+        const xhttp = new XMLHttpRequest();
+        const suggestionsArray = new Set();
+
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                if (xhttp.status === 200) {
+                    const carsData = JSON.parse(xhttp.responseText);
+                    
+                    const filteredCars = carsData.filter(car => {
+
+                        return (
+                            car.brand.toLowerCase().includes(searchInput) ||
+                            car.model.toLowerCase().includes(searchInput) ||
+                            car.type.toLowerCase().includes(searchInput)
+                        );
+                    });
+
+                    filteredCars.forEach(car => {
+                        if (suggestionsArray.size < 5) {
+                            if (car.brand.toLowerCase().includes(searchInput)) {
+                                suggestionsArray.add(car.brand);
+                            }
+                            if (car.model.toLowerCase().includes(searchInput)) {
+                                suggestionsArray.add(car.model);
+                            }
+                        }
+                    });
+
+                    const uniqueSuggestions = Array.from(suggestionsArray);
+                    resolve(uniqueSuggestions);
+                } else {
+                    console.error('Error:', xhttp.status);
+                    resolve([]); 
+                }
+            }
+        };
+
+        xhttp.open('GET', 'cars.json', true);
+        xhttp.send();
+    });
+}
+
+
+
 let suggestions = document.getElementById('suggestions');
 suggestions.style.display = "none";
 
-// Function to add recent searches to a localhost storage. 
-// let searchHistory = [];
-// function addSearchHistory(searchInput) {
 
-//     //Local storage can only store strings. So we need to retrieve the array from local storage, and then turn it into strings
+let searchHistory = new Set(JSON.parse(localStorage.getItem('searchHistory')) || []);
 
-//     searchHistory.unshift(searchInput);
-//     if(searchHistory.length > 5) {
-//         searchHistory.pop();
-//     }
+function addSearchHistory(searchInput) {
+    searchHistory.add(searchInput);
 
-//     console.log(searchHistory);
-    
-// }
+    if (searchHistory.size > 5) {
+        const oldestItem = Array.from(searchHistory.values())[0];
+        searchHistory.delete(oldestItem);
+    }
 
-// function clearSuggestionsContent() {
-//     const suggestionsDiv = document.getElementById('suggestions');
-    
-//     const childNodes = suggestionsDiv.childNodes;
+    localStorage.setItem('searchHistory', JSON.stringify(Array.from(searchHistory)));
 
-//     for (let i = childNodes.length - 1; i >= 0; i--) {
-//         const childNode = childNodes[i];
+    console.log(searchHistory);
+}
 
-//         if (childNode.nodeName !== 'H4') {
-//             suggestionsDiv.removeChild(childNode);
-//         }
-//     }
-// }
+function clearSuggestionsContent() {
+    const suggestionsDiv = document.getElementById('suggestions');
+    const childNodes = suggestionsDiv.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+        const childNode = childNodes[i];
+
+        if (childNode.nodeName !== 'H4') {
+            suggestionsDiv.removeChild(childNode);
+        }
+    }
+}
 
 
 // document.getElementById('searchInput').addEventListener('input', searchFilter);
-// document.getElementById('submitSearch').addEventListener('click', searchFilter);
+document.getElementById('submitSearch').addEventListener('click', searchFilter);
 
-// //When focused search
-// let suggestions = document.getElementById('suggestions');
-// document.getElementById('searchInput').addEventListener('focus', function() {
-//     let searchInput = document.getElementById('searchInput');
-//     let suggestions_title = document.getElementById('suggestions_title');
+//When focused on search bar
 
-//     suggestions.style.display = "block";
+document.getElementById('searchInput').addEventListener('focus', function() {
+    let searchInput = document.getElementById('searchInput');
+    let suggestions = document.getElementById('suggestions');
+    let suggestions_title = document.getElementById('suggestions_title');
+    
+    suggestions.style.display = "block";
+    suggestions_title.style.display = "block";
 
-//             //For the length of the searchHistory array, append each of the searches to the suggestions, div as h3 elements.
-//             // let suggestions_title_temp = suggestions.childNodes[1].textContent;
-//             clearSuggestionsContent();
-//             for(let i = 0; i < searchHistory.length; i++) {
-//                 let search = document.createElement('h3');
-//                 search.textContent = searchHistory[i];
-//                 // search.style.cursor = "pointer";
+    if (searchInput.value === "") {
+        if (searchHistory.size > 0) {
+            clearSuggestionsContent();
+            let myArray = Array.from(searchHistory);
+            for (let i = myArray.length - 1; i >= 0; i--) {
+                let search = document.createElement('h3');
+                search.textContent = myArray[i];
+                suggestions.appendChild(search);
+            }
+        } else {
 
+        }
+    } else {
+        suggestions_title.textContent = "Suggestions";
+        clearSuggestionsContent();
+        //Also show suggestions here using ajax. Since its duplicative of below - perhaps use a function
+        suggestionFilter(searchInput.value).then(suggArray => {
+            for (let i = suggArray.length - 1; i >= 0; i--) {
+                let search = document.createElement('h3');
+                search.textContent = suggArray[i];
+                suggestions.appendChild(search);
+            }
+        })
+        .catch(error => {
 
-//                 suggestions.appendChild(search);
-//             }
+        });
+    }
+});
 
-//     //Case that the input is focused and there are no inputs inserted into the search input by user (hasnt typed anything yet)
-// });
+document.getElementById('searchInput').addEventListener('input', function(event) {
+    let suggestions_title = document.getElementById('suggestions_title');
+    const searchText = event.target.value.trim();
+    if(searchText === "") {
+        suggestions_title.textContent = "Recent Searches";
+        if (searchHistory.size > 0) {
+            clearSuggestionsContent();
+            let myArray = Array.from(searchHistory);
+            for (let i = myArray.length - 1; i >= 0; i--) {
+                let search = document.createElement('h3');
+                search.textContent = myArray[i];
+                suggestions.appendChild(search);
+            }
+        }
 
-// document.getElementById('searchInput').addEventListener('input', function() {
-//     let suggestions_title = document.getElementById('suggestions_title');
-//     if(searchInput.value == "") {
-//         suggestions_title.textContent = "Recent Searches";
+    } else {
+        //If search bar is empty then suggestions should not be shown
+        if(searchText === "") {
+            console.log("should show recent searches instead");
+        } else {
+            suggestions_title.textContent = "Suggestions";
+            clearSuggestionsContent();
+            //Now at this point, it's time to Show the suggestions. Might need to use AJAX to access the JSON cars.json file
+            //Get the current value of the searchInput
+            suggestionFilter(searchInput.value).then(suggArray => {
+                for (let i = suggArray.length - 1; i >= 0; i--) {
+                    let search = document.createElement('h3');
+                    search.textContent = suggArray[i];
+                    suggestions.appendChild(search);
+                }
+            })
+            .catch(error => {
 
-//     } else {
-//         suggestions_title.textContent = "Suggestions";
-        
-//     }
-// });
+            });
 
-// document.getElementById('searchInput').addEventListener('blur', function() {
+        }
 
-//     suggestions.style.display = "none";
-// });
+    }
+});
 
+//If want to add functionality to click on the keywords/suggestions, tweak the below as having the blur event listener prevents clicking and getting values.
+
+document.getElementById('searchInput').addEventListener('blur', function() {
+
+    suggestions.style.display = "none";
+    suggestions_title.style.display = "none";
+});
+
+//Need to create a suggestions bar. max 5 suggestions. 
+//Get the input (the current value of the search bar at the current moment)
+//
 
 
 function test(event) {
@@ -134,6 +238,23 @@ reservationBtn.addEventListener('click', openReservation);
 //     carsRequest.send(null);
 // }
 
+
+
+//Form validation
+function validateInputs() {
+    let valid_drivers_license = document.getElementById('valid_drivers_license');
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
+    let last_name = document.getElementById('last_name');
+    let first_name = document.getElementById('first_name');
+    let end_date = document.getElementById('end_date');
+    let start_date = document.getElementById('start_date');
+    let car_quantity = document.getElementById('car_quantity');
+
+    email = email.value.trim();
+
+}
+
 //Need to disabled the place order button if the inputs are empty
 function validPlaceOrder() {
     let place_order_btn = document.getElementById('place_order_btn');
@@ -166,10 +287,64 @@ function validPlaceOrder() {
             place_order_btn.disabled = false;
             place_order_btn.style.cursor = "pointer";
             place_order_btn.style.opacity = "1";
+            place_order_btn.addEventListener('click', function() {
+                console.log("order submitted!");
+
+                let reservationJSON = localStorage.getItem('current_reservation');
+                let reservationObject = JSON.parse(reservationJSON);
+                console.log(reservationObject);
+
+                //Need to get the quantity inputted by the user in car_quantity.value
+                console.log(car_quantity.value);
+
+                let userInputtedQuantity = car_quantity.value;
+
+
+                const jsonUrl = 'cars.json';
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('GET', jsonUrl, true);
+
+                xhr.onload = function() {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+
+                        let jsonData = JSON.parse(xhr.responseText);
+
+                        let foundCar = jsonData.find(car => car.id == reservationObject.carId);
+
+                        if (foundCar) {
+
+                            foundCar.quantity =- userInputtedQuantity;
+
+                            let updateRequest = new XMLHttpRequest();
+                            updateRequest.open('POST', jsonUrl, true);
+                            updateRequest.setRequestHeader('Content-Type', 'application/json');
+                            updateRequest.send(JSON.stringify(jsonData));
+
+                            console.log('Item quantity updated successfully:', foundCar);
+                        } else {
+                            console.log('Item with id not found:', reservationObject.carId);
+                        }
+                    } else {
+                        console.error('Failed to load JSON data:', xhr.statusText);
+                    }
+                };
+
+                xhr.send();
+
+            });
         }
 }
 
 let place_order_btn = document.getElementById('place_order_btn');
+
+// place_order_btn.addEventListener('click', function() {
+//     let order_form = document.getElementById('order_form');
+//     order_form.submit();
+// });
+
+
 let valid_drivers_license = document.getElementById('valid_drivers_license');
 let email = document.getElementById('email');
 let phone = document.getElementById('phone');
@@ -178,6 +353,22 @@ let first_name = document.getElementById('first_name');
 let end_date = document.getElementById('end_date');
 let start_date = document.getElementById('start_date');
 let car_quantity = document.getElementById('car_quantity');
+let errorMsg = document.querySelector('.error');
+
+let phone_error = document.getElementById('phone_error');
+let email_error = document.getElementById('email_error');
+let checkbox_error = document.getElementById('checkbox_error');
+let first_name_error = document.getElementById('first_name_error');
+let last_name_error = document.getElementById('last_name_error');
+let quantity_error = document.getElementById('quantity_error');
+
+// car_quantity.add('input', function() {
+//     validPlaceOrder();
+
+// });
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
 first_name.addEventListener('input', function() {
     validPlaceOrder();
@@ -193,10 +384,22 @@ valid_drivers_license.addEventListener('change', function() {
 
 phone.addEventListener('input', function() {
     validPlaceOrder();
+    if(phone.value.length !== 10) {
+        phone_error.textContent = "Must be 10 digits";
+    } else if(isNaN(phone.value)) {
+        phone_error.textContent = "Only numbers allowed";
+        } else {
+        phone_error.textContent = "";
+    }
 });
 
 email.addEventListener('input', function() {
     validPlaceOrder();
+    if(!emailRegex.test(email.value)) {
+        email_error.textContent = "Ensure email format (@/.com)";
+    } else {
+        email_error.textContent = "";
+    }
 });
 
 end_date.addEventListener('input', function() {
@@ -479,9 +682,20 @@ reservation_remove_button.addEventListener('click', function () {
     let end_date = document.getElementById('end_date');
     let car_quantity = document.getElementById('car_quantity');
 
+    let valid_drivers_license = document.getElementById('valid_drivers_license');
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
+    let last_name = document.getElementById('last_name');
+    let first_name = document.getElementById('first_name');
+
     start_date.value = '';
     end_date.value = '';
     car_quantity.value = '';
+    valid_drivers_license.checked = false;
+    email.value = '';
+    phone.value = '';
+    first_name.value = '';
+    last_name.value = '';
 
     // console.log(cart);
     // let reservation_modal_content_container_container = document.getQuerySelector('.reservation_modal_content_container_container');
@@ -1057,7 +1271,7 @@ function searchFilter() {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 200) {
 
-                // addSearchHistory(searchInput);
+                addSearchHistory(searchInput);
                 const carsData = JSON.parse(xhttp.responseText);
                 const filteredCars = carsData.filter(car => {
 
@@ -1086,6 +1300,8 @@ function searchFilter() {
                         }
                         cardContainer.insertAdjacentHTML('beforeend', cardHtml);
                         document.getElementById('searchInput').value = '';
+                        let suggestions_title = document.getElementById('suggestions_title');
+                        suggestions_title.textContent = "Recent Searches";
                     });
 
                 } else {
@@ -1113,81 +1329,7 @@ function searchFilter() {
             }
         }
     };
-    xhttp.open('GET', 'cars.json', true);
-    xhttp.send();
-}
-
-//SearchFilter with input functionality
-
-function searchInputFilter(input) {
-
-    const searchInput = input.toLowerCase().trim();
-    const cardContainer = document.getElementById('cardContainer');
-    const contentDiv = document.getElementById('content');
-    cardContainer.innerHTML = '';
-
-    const xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === XMLHttpRequest.DONE) {
-            if (xhttp.status === 200) {
-
-                // addSearchHistory(searchInput);
-                const carsData = JSON.parse(xhttp.responseText);
-                const filteredCars = carsData.filter(car => {
-
-                    const searchInt = parseInt(searchInput);
-
-                    return car.brand.toLowerCase().includes(searchInput) ||
-                        car.model.toLowerCase().includes(searchInput) ||
-                        car.type.toLowerCase().includes(searchInput) ||
-                        car.mileage.toLowerCase().includes(searchInput) ||
-                        car.fuel_type.toLowerCase().includes(searchInput) ||
-                        car.description.toLowerCase().includes(searchInput) ||
-                        (searchInt && car.seats === searchInt);
-                });
-
-                if (filteredCars.length === 0) {
-
-                    cardContainer.textContent = '';
-
-                    carsData.forEach(car => {
-
-                        if (car.availability === false) {
-                            disabledCardGeneratorFunc(car);
-                        } else {
-                            // let cardHtml = '';
-                            cardGeneratorFunc(car);
-                        }
-                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
-                        document.getElementById('searchInput').value = '';
-                    });
-
-                } else {
-                    cardContainer.textContent = '';
-
-
-                    filteredCars.forEach(car => {
-                        // let cardHtml = '';
-
-                        if (car.availability === false) {
-                            disabledCardGeneratorFunc(car);
-                        } else {
-                            // let cardHtml = '';
-                            cardGeneratorFunc(car);
-                        }
-                        cardContainer.insertAdjacentHTML('beforeend', cardHtml);
-                        document.getElementById('searchInput').value = '';
-                        let suggestions_title = document.getElementById('suggestions_title');
-                        suggestions_title.textContent = "Recent Searches";
-                    });
-                }
-
-            } else {
-                console.error('Error:', xhttp.status);
-            }
-        }
-    };
+    
     xhttp.open('GET', 'cars.json', true);
     xhttp.send();
 }
