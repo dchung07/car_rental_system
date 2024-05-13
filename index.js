@@ -252,6 +252,14 @@ let start_date = document.getElementById('start_date');
 let car_quantity = document.getElementById('car_quantity');
 let errorMsg = document.querySelector('.error');
 
+start_date.addEventListener('keydown', (event) => {
+    event.preventDefault(); 
+});
+
+end_date.addEventListener('keydown', (event) => {
+    event.preventDefault(); 
+});
+
 let phone_error = document.getElementById('phone_error');
 let email_error = document.getElementById('email_error');
 let checkbox_error = document.getElementById('checkbox_error');
@@ -281,6 +289,7 @@ function validPlaceOrder() {
         || valid_drivers_license.checked === false
         || phone_error.textContent != ""
         || email_error.textContent != ""
+        || quantity_error.textContent !== ""
         ) {
 
             place_order_btn.style.backgroundColor = "red";
@@ -430,7 +439,7 @@ car_quantity.addEventListener('input', function(event) {
         } else {
             quantity_error.textContent = "";
         }
-        validPlaceOrder();
+    validPlaceOrder();
 });
 
 
