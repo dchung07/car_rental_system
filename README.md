@@ -108,3 +108,6 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 // Also the search filter when there is no exact search match
 
 //The Rent button
+
+//Need to add checks so that the Place Order button only activates when the inputs are filled AND there are no errors.
+-> Can check that through a boolean perhaps?

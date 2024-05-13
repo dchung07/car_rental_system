@@ -242,6 +242,23 @@ function validateInputs() {
 
 }
 
+let valid_drivers_license = document.getElementById('valid_drivers_license');
+let email = document.getElementById('email');
+let phone = document.getElementById('phone');
+let last_name = document.getElementById('last_name');
+let first_name = document.getElementById('first_name');
+let end_date = document.getElementById('end_date');
+let start_date = document.getElementById('start_date');
+let car_quantity = document.getElementById('car_quantity');
+let errorMsg = document.querySelector('.error');
+
+let phone_error = document.getElementById('phone_error');
+let email_error = document.getElementById('email_error');
+let checkbox_error = document.getElementById('checkbox_error');
+let first_name_error = document.getElementById('first_name_error');
+let last_name_error = document.getElementById('last_name_error');
+let quantity_error = document.getElementById('quantity_error');
+
 //Need to disabled the place order button if the inputs are empty
 function validPlaceOrder() {
     let place_order_btn = document.getElementById('place_order_btn');
@@ -262,6 +279,8 @@ function validPlaceOrder() {
         || start_date.value === ''
         || car_quantity.value === ''
         || valid_drivers_license.checked === false
+        || phone_error.textContent != ""
+        || email_error.textContent != ""
         ) {
 
             place_order_btn.style.backgroundColor = "red";
@@ -332,22 +351,6 @@ let place_order_btn = document.getElementById('place_order_btn');
 // });
 
 
-let valid_drivers_license = document.getElementById('valid_drivers_license');
-let email = document.getElementById('email');
-let phone = document.getElementById('phone');
-let last_name = document.getElementById('last_name');
-let first_name = document.getElementById('first_name');
-let end_date = document.getElementById('end_date');
-let start_date = document.getElementById('start_date');
-let car_quantity = document.getElementById('car_quantity');
-let errorMsg = document.querySelector('.error');
-
-let phone_error = document.getElementById('phone_error');
-let email_error = document.getElementById('email_error');
-let checkbox_error = document.getElementById('checkbox_error');
-let first_name_error = document.getElementById('first_name_error');
-let last_name_error = document.getElementById('last_name_error');
-let quantity_error = document.getElementById('quantity_error');
 
 // car_quantity.add('input', function() {
 //     validPlaceOrder();
@@ -356,21 +359,35 @@ let quantity_error = document.getElementById('quantity_error');
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+let place_order_okay = 0;
 
 first_name.addEventListener('input', function() {
     validPlaceOrder();
+
+    
 });
 
-first_name.addEventListener('input', function() {
+last_name.addEventListener('input', function() {
     validPlaceOrder();
+
 });
+
+if(!valid_drivers_license.checked) {
+    checkbox_error.textContent = "Must be Checked";
+}
 
 valid_drivers_license.addEventListener('change', function() {
+
+    if(!valid_drivers_license.checked) {
+        checkbox_error.textContent = "Must be Checked";
+    } else {
+        checkbox_error.textContent = "";
+    }
     validPlaceOrder();
 });
 
 phone.addEventListener('input', function() {
-    validPlaceOrder();
+
     if(phone.value.length !== 10) {
         phone_error.textContent = "Must be 10 digits";
     } else if(isNaN(phone.value)) {
@@ -378,15 +395,17 @@ phone.addEventListener('input', function() {
         } else {
         phone_error.textContent = "";
     }
+    validPlaceOrder();
 });
 
 email.addEventListener('input', function() {
-    validPlaceOrder();
+
     if(!emailRegex.test(email.value)) {
         email_error.textContent = "Ensure email format (@/.com)";
     } else {
         email_error.textContent = "";
     }
+    validPlaceOrder();
 });
 
 end_date.addEventListener('input', function() {
@@ -398,7 +417,7 @@ start_date.addEventListener('input', function() {
 });
 
 car_quantity.addEventListener('input', function(event) {
-    validPlaceOrder();
+
     let currentReservation = JSON.parse(localStorage.getItem('current_reservation'));
     let max = currentReservation.quantity;
     let updatedValue
@@ -411,8 +430,7 @@ car_quantity.addEventListener('input', function(event) {
         } else {
             quantity_error.textContent = "";
         }
-
-
+        validPlaceOrder();
 });
 
 
