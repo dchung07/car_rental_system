@@ -111,3 +111,9 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 
 //Need to add checks so that the Place Order button only activates when the inputs are filled AND there are no errors.
 -> Can check that through a boolean perhaps?
+
+//Add more security checks for changing the date 
+
+//Things that would be nice to add to the database columns -> Car_name, and quantity purchased by user.
+
+//Need to standadrise formats. Make sure the variables inputting into the database are of the same form. Check the start/end dates in particular.

@@ -302,51 +302,168 @@ function validPlaceOrder() {
             place_order_btn.disabled = false;
             place_order_btn.style.cursor = "pointer";
             place_order_btn.style.opacity = "1";
+
+            //this is the event listener for when the user places an order
+            //It should do 3 things
+            //Send through an SQL request, and log the user inputted data into the database
+            //Open a modal with a button that will confirm the request to rent a car.
+            // Modal should be in the center of the screen. Not too big not too small. Also should have a background underlay 
+            //If clicked, it will confirm the user sql and change the SQL once again, and then send through a JSON request.
+
+            //ALSO needs to clear the reservation (clear through the localhost)
             place_order_btn.addEventListener('click', function() {
-                console.log("order submitted!");
 
-                let reservationJSON = localStorage.getItem('current_reservation');
-                let reservationObject = JSON.parse(reservationJSON);
-                console.log(reservationObject);
+                console.log("order");
+                let order_modal = document.querySelector('.order_modal');
+                let order_modal_underlay = document.querySelector('.order_modal_underlay');
+                let order_modal_close = document.getElementById('order_modal_close');
 
-                //Need to get the quantity inputted by the user in car_quantity.value
-                console.log(car_quantity.value);
+                localStorage.removeItem('current_reservation');
+                let total_rental_cost = document.getElementById('total_rental_cost');
+                total_rental_cost.textContent = "Total Rental Cost: ";
+            
+                //Should also reset the values of the inputs of date, and quantity
+                let start_date = document.getElementById('start_date');
+                let end_date = document.getElementById('end_date');
+                let car_quantity = document.getElementById('car_quantity');
+            
+                let valid_drivers_license = document.getElementById('valid_drivers_license');
+                let email = document.getElementById('email');
+                let phone = document.getElementById('phone');
+                let last_name = document.getElementById('last_name');
+                let first_name = document.getElementById('first_name');
 
-                let userInputtedQuantity = car_quantity.value;
+                //Before resetting the values, store them in a variable so we can access them and send them off to PHP
+
+                let tempEmail = email.value;
+                let temp_start_date = start_date.value;
+                let temp_end_date = end_date.value;
+                let temp_phone = phone.value;
+                let temp_first_name = first_name.value;
+                let temp_last_name = last_name.value;
+                
+                let price_total = localStorage.getItem('total_price');
+                let temp_total_price = parseInt(price_total); 
+
+                console.log(typeof tempEmail);
+                console.log(tempEmail);
 
 
-                const jsonUrl = 'cars.json';
+                console.log(typeof temp_start_date);
+                console.log(temp_start_date);
+
+                console.log(typeof temp_end_date);
+                console.log(typeof temp_phone);
+                console.log(typeof temp_first_name);
+                console.log(typeof temp_last_name);
+                console.log(typeof temp_total_price);
+                console.log(temp_total_price);
+                
+                
+            
+                start_date.value = '';
+                end_date.value = '';
+                car_quantity.value = '';
+                valid_drivers_license.checked = false;
+                email.value = '';
+                phone.value = '';
+                first_name.value = '';
+                last_name.value = '';
+            
+                //Need to close the reservation modal.
+                let reservation_modal = document.querySelector('.reservation_modal');
+                let reservation_modal_underlay = document.querySelector('.reservation_modal_underlay');
+                reservation_modal.style.display = "none";
+                reservation_modal_underlay.style.display = "none";
+                document.body.style.overflow = "auto";
+
+                //Need to send through data to PHP so can store into SQL
+                //Data that needs to be sent
+                //customer_email, rent_start_date, rent_end_date, total_price, status (unconfirmed), mobile_number, first_name, last_name
 
                 let xhr = new XMLHttpRequest();
+                xhr.open('POST', 'submit_order_info.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
 
-                xhr.open('GET', jsonUrl, true);
-
-                xhr.onload = function() {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-
-                        let jsonData = JSON.parse(xhr.responseText);
-
-                        let foundCar = jsonData.find(car => car.id == reservationObject.carId);
-
-                        if (foundCar) {
-
-                            foundCar.quantity =- userInputtedQuantity;
-
-                            let updateRequest = new XMLHttpRequest();
-                            updateRequest.open('POST', jsonUrl, true);
-                            updateRequest.setRequestHeader('Content-Type', 'application/json');
-                            updateRequest.send(JSON.stringify(jsonData));
-
-                            console.log('Item quantity updated successfully:', foundCar);
                         } else {
-                            console.log('Item with id not found:', reservationObject.carId);
+                            alert("fail!");
                         }
-                    } else {
-                        console.error('Failed to load JSON data:', xhr.statusText);
                     }
                 };
+                
+                //Data to send as listed above (will need to send the data in the input fields or store them in a variable before wiping them off)
+                let data = `email=${encodeURIComponent(tempEmail)}
+                &start_date=${encodeURIComponent(temp_start_date)}
+                &end_date=${encodeURIComponent(temp_end_date)}
+                &phone=${encodeURIComponent(temp_phone)}
+                &first_name=${encodeURIComponent(temp_first_name)}
+                &last_name=${encodeURIComponent(temp_last_name)}
+                &total_price=${encodeURIComponent(temp_total_price)}`;
 
-                xhr.send();
+                xhr.send(data);
+
+
+                //Open up the order checkout modal (with the link)
+                order_modal.style.display = "block";
+                order_modal_underlay.style.display = "block";
+                document.body.style.overflow = "hidden";
+
+                order_modal_close.addEventListener('click', function() {
+                    order_modal.style.display = "none";
+                    order_modal_underlay.style.display = "none";
+                    document.body.style.overflow = "auto";
+                });
+
+
+
+                // console.log("order submitted!");
+
+                // let reservationJSON = localStorage.getItem('current_reservation');
+                // let reservationObject = JSON.parse(reservationJSON);
+                // console.log(reservationObject);
+
+                // //Need to get the quantity inputted by the user in car_quantity.value
+                // console.log(car_quantity.value);
+
+                // let userInputtedQuantity = car_quantity.value;
+
+
+                // const jsonUrl = 'cars.json';
+
+                // let xhr = new XMLHttpRequest();
+
+                // xhr.open('GET', jsonUrl, true);
+
+                // xhr.onload = function() {
+                //     if (xhr.status >= 200 && xhr.status < 300) {
+
+                //         let jsonData = JSON.parse(xhr.responseText);
+
+                //         let foundCar = jsonData.find(car => car.id == reservationObject.carId);
+
+                //         if (foundCar) {
+
+                //             foundCar.quantity =- userInputtedQuantity;
+
+                //             let updateRequest = new XMLHttpRequest();
+                //             updateRequest.open('POST', jsonUrl, true);
+                //             updateRequest.setRequestHeader('Content-Type', 'application/json');
+                //             updateRequest.send(JSON.stringify(jsonData));
+
+                //             console.log('Item quantity updated successfully:', foundCar);
+                //         } else {
+                //             console.log('Item with id not found:', reservationObject.carId);
+                //         }
+                //     } else {
+                //         console.error('Failed to load JSON data:', xhr.statusText);
+                //     }
+                // };
+
+                // xhr.send();
 
             });
         }
@@ -622,9 +739,25 @@ function openReservation() {
                 //Check if updatedValue is set (user selection for car quantity)
                 if (!isNaN(updatedValue)) {
                     let rental_cost = differenceDays * updatedValue * currentReservation.pricePerDay;
+                    //Store rental_cost in localhost, so we can retrieve it and send it off to database
+                    let total_price = JSON.parse(localStorage.getItem('total_price'));
+
+                    total_price = rental_cost;
+                    
+                    localStorage.setItem('total_price', JSON.stringify(total_price));
+
                     total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
                 } else {
                     let rental_cost = differenceDays * 1 * currentReservation.pricePerDay;
+
+                    let total_price = JSON.parse(localStorage.getItem('total_price'));
+
+                    total_price = rental_cost;
+                    
+                    localStorage.setItem('total_price', JSON.stringify(total_price));
+
+                    total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
+
                     total_rental_cost.textContent = "Total Rental Cost: $" + rental_cost;
                 }
             }

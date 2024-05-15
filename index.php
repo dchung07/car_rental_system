@@ -280,11 +280,24 @@
                     </div>
             </div>
             <div class="reservation_modal_underlay">
-                </div>
+            </div>
 
         <div class="footer">
 
             <h3>@2024 Rent'a'Car Pty Ltd</h3>
+
+        </div>
+
+        <div class="order_modal">
+            <div class="order_modal_title_container">
+                <h3>Confirm Order By Clicking Link</h3>
+                <img id="order_modal_close" class="reservation_close_btn" src="images/close.png" alt="Close Icon">
+            </div>
+            <div class="order_link">
+                <h5>Click Here to Confirm Order</h5>
+            </div>
+        </div>
+        <div class="order_modal_underlay">
 
         </div>
 
