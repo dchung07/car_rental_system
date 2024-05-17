@@ -117,3 +117,10 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 //Things that would be nice to add to the database columns -> Car_name, and quantity purchased by user.
 
 //Need to standadrise formats. Make sure the variables inputting into the database are of the same form. Check the start/end dates in particular.
+
+//Retrieve the latest SQL input by saving mobile number of user in local storage, and then just access the most latest insert of a mobile number match.
+
+//When the cars.json is updated, we need to reload the cars.json cars because the quantities will be different.
+
+//Afterwards, we should refresh the page so that the cars show as available or not after the changes!
+//We can refresh the page on link press

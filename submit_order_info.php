@@ -1,3 +1,4 @@
+<!-- To insert data into the SQL -->
 <?php
 $email = $_POST['email'];
 $start_date = $_POST['start_date'];
@@ -16,7 +17,7 @@ $dbname = "assignment2";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("SQL Connection Fail: " . $conn->connect_error);
 }
 
 $stmt = $conn->prepare("INSERT INTO orders (customer_email, rent_start_date, rent_end_date, price , status, mobile_number, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");

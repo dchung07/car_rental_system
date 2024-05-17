@@ -313,12 +313,11 @@ function validPlaceOrder() {
             //ALSO needs to clear the reservation (clear through the localhost)
             place_order_btn.addEventListener('click', function() {
 
-                console.log("order");
                 let order_modal = document.querySelector('.order_modal');
                 let order_modal_underlay = document.querySelector('.order_modal_underlay');
                 let order_modal_close = document.getElementById('order_modal_close');
 
-                localStorage.removeItem('current_reservation');
+
                 let total_rental_cost = document.getElementById('total_rental_cost');
                 total_rental_cost.textContent = "Total Rental Cost: ";
             
@@ -345,30 +344,20 @@ function validPlaceOrder() {
                 let price_total = localStorage.getItem('total_price');
                 let temp_total_price = parseInt(price_total); 
 
-                console.log(typeof tempEmail);
-                console.log(tempEmail);
+                // console.log(typeof tempEmail);
+                // console.log(tempEmail);
 
 
-                console.log(typeof temp_start_date);
-                console.log(temp_start_date);
+                // console.log(typeof temp_start_date);
+                // console.log(temp_start_date);
 
-                console.log(typeof temp_end_date);
-                console.log(typeof temp_phone);
-                console.log(typeof temp_first_name);
-                console.log(typeof temp_last_name);
-                console.log(typeof temp_total_price);
-                console.log(temp_total_price);
+                // console.log(typeof temp_end_date);
+                // console.log(typeof temp_phone);
+                // console.log(typeof temp_first_name);
+                // console.log(typeof temp_last_name);
+                // console.log(typeof temp_total_price);
+                // console.log(temp_total_price);
                 
-                
-            
-                start_date.value = '';
-                end_date.value = '';
-                car_quantity.value = '';
-                valid_drivers_license.checked = false;
-                email.value = '';
-                phone.value = '';
-                first_name.value = '';
-                last_name.value = '';
             
                 //Need to close the reservation modal.
                 let reservation_modal = document.querySelector('.reservation_modal');
@@ -406,6 +395,59 @@ function validPlaceOrder() {
 
                 xhr.send(data);
 
+                //The async request to update cars.json & also reset the id's.
+
+                let reservationJSON = localStorage.getItem('current_reservation');
+                let reservationObject = JSON.parse(reservationJSON);
+                console.log(reservationObject);
+
+                //Need to get the quantity inputted by the user in car_quantity.value
+                console.log("Car Quantity Value" + car_quantity.value);
+
+                let userInputtedQuantity = car_quantity.value;
+
+                const id = reservationObject.carId;
+                if (id) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'update_quantity.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    alert('Car Quantity Update Success!');
+
+                                } else {
+                                    alert('Car Quantity Update Fail: ' + response.message);
+                                }
+                            } else {
+                                console.error('Error: ' + xhr.status);
+                            }
+                        }
+                    };
+
+                    const data = JSON.stringify({ id: id, userQuantity: userInputtedQuantity });
+                    xhr.send(data);
+                } else {
+                    alert('Please enter an ID');
+                }
+
+                //Reset values after the asyncs are sent
+
+                localStorage.removeItem('current_reservation');
+                start_date.value = '';
+                end_date.value = '';
+                car_quantity.value = '';
+                valid_drivers_license.checked = false;
+                email.value = '';
+                phone.value = '';
+                first_name.value = '';
+                last_name.value = '';
+
+                //Afterwards, we should refresh the page so that the cars show as available or not after the changes!
+                
 
                 //Open up the order checkout modal (with the link)
                 order_modal.style.display = "block";
@@ -970,7 +1012,7 @@ browse_all_categories_btn.addEventListener('click', function () {
 
                 carsData.forEach(car => {
 
-                    if (car.availability === false) {
+                    if (car.availability === false || car.quantity === 0) {
                         // let cardHtml = '';
                         disabledCardGeneratorFunc(car);
                     } else {
@@ -1406,7 +1448,7 @@ function searchCategory(input) {
 
                 filteredCars.forEach(car => {
 
-                    if (car.availability === false) {
+                    if (car.availability === false || car.quantity === 0) {
                         disabledCardGeneratorFunc(car);
                     } else {
                         // let cardHtml = '';
@@ -1459,7 +1501,7 @@ function searchFilter() {
 
                     carsData.forEach(car => {
 
-                        if (car.availability === false) {
+                        if (car.availability === false || car.quantity === 0) {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1478,7 +1520,7 @@ function searchFilter() {
                     filteredCars.forEach(car => {
                         // let cardHtml = '';
 
-                        if (car.availability === false) {
+                        if (car.availability === false || car.quantity === 0) {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1536,7 +1578,7 @@ function searchInputFiltering(input) {
 
                     carsData.forEach(car => {
 
-                        if (car.availability === false) {
+                        if (car.availability === false || car.quantity === 0) {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1555,7 +1597,7 @@ function searchInputFiltering(input) {
                     filteredCars.forEach(car => {
                         // let cardHtml = '';
 
-                        if (car.availability === false) {
+                        if (car.availability === false || car.quantity === 0) {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';

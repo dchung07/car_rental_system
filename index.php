@@ -132,7 +132,7 @@
                     $carsJson = file_get_contents('cars.json');
                     $cars = json_decode($carsJson, true);
                     foreach ($cars as $car) {
-                        if ($car['availability'] == 'true') {
+                        if ($car['availability'] == 'true' &&  $car['quantity'] != '0') {
                             echo '<div class="card">';
                                 echo '<div class="car-image">';
                                     echo '<img src="car_images/' . $car['image'] . '" alt="' . $car['brand'] . "image" . ' ' . $car['model'] . '">';
