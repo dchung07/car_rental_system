@@ -126,4 +126,5 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 //We can refresh the page on link press
 
 //Clear irrelevant cache afterwards.
+Need to update STATUS of SQL
 

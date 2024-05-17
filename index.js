@@ -395,6 +395,7 @@ function validPlaceOrder() {
                 let orderConfirmationLink = document.getElementById('orderConfirmationLink');
 
                 orderConfirmationLink.addEventListener('click', function() {
+
                     //On click we need to update the JSON here.
 
                     //The async request to update cars.json & also reset the id's.
@@ -439,6 +440,24 @@ function validPlaceOrder() {
                     //Make a localstorage with this phone.value.
                     
                     localStorage.setItem('customerPhone', phone.value);
+
+                    let xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            let response = JSON.parse(this.responseText);
+                            console.log(response);
+        
+                            if (response.error) {
+                                alert(response.error);
+                            } else {
+                                alert("Updated entry: " + JSON.stringify(response));
+                            }
+                        }
+                    };
+        
+                    xhttp.open("GET", "status_change_sql.php", true);
+                    xhttp.send();
 
                     //Reset values after the asyncs are sent
 
@@ -970,7 +989,7 @@ browse_all_categories_btn.addEventListener('click', function () {
 
                 carsData.forEach(car => {
 
-                    if (car.availability === false || car.quantity === 0) {
+                    if (car.availability === false && car.quantity == '0') {
                         // let cardHtml = '';
                         disabledCardGeneratorFunc(car);
                     } else {
@@ -1406,7 +1425,7 @@ function searchCategory(input) {
 
                 filteredCars.forEach(car => {
 
-                    if (car.availability === false || car.quantity === 0) {
+                    if (car.availability === false && car.quantity == '0') {
                         disabledCardGeneratorFunc(car);
                     } else {
                         // let cardHtml = '';
@@ -1459,7 +1478,7 @@ function searchFilter() {
 
                     carsData.forEach(car => {
 
-                        if (car.availability === false || car.quantity === 0) {
+                        if (car.availability === false && car.quantity == '0') {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1478,7 +1497,7 @@ function searchFilter() {
                     filteredCars.forEach(car => {
                         // let cardHtml = '';
 
-                        if (car.availability === false || car.quantity === 0) {
+                        if (car.availability === false && car.quantity == '0') {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1536,7 +1555,7 @@ function searchInputFiltering(input) {
 
                     carsData.forEach(car => {
 
-                        if (car.availability === false || car.quantity === 0) {
+                        if (car.availability === false && car.quantity == '0') {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
@@ -1555,7 +1574,7 @@ function searchInputFiltering(input) {
                     filteredCars.forEach(car => {
                         // let cardHtml = '';
 
-                        if (car.availability === false || car.quantity === 0) {
+                        if (car.availability === false && car.quantity == '0') {
                             disabledCardGeneratorFunc(car);
                         } else {
                             // let cardHtml = '';
