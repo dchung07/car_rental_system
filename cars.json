@@ -8,10 +8,10 @@
         "mileage": "30 mpg",
         "fuel_type": "Hydrogen\/Electric",
         "seats": 2,
-        "quantity": 0,
+        "quantity": 2,
         "price_per_day": 150,
         "description": "N Vision 74 is a high-performance hydrogen-electric hybrid vehicle that encompasses Hyundai's past, present, and future.",
-        "availability": false
+        "availability": true
     },
     {
         "id": 2,
@@ -22,7 +22,7 @@
         "mileage": "28 mpg",
         "fuel_type": "petrol",
         "seats": 4,
-        "quantity": 3,
+        "quantity": 2,
         "price_per_day": 65,
         "description": "The Hyundai Elantra N inherits its turbocharged 2.0-liter four-cylinder from the Veloster N hatchback.",
         "availability": true
@@ -50,10 +50,10 @@
         "mileage": "32 mpg",
         "fuel_type": "petrol",
         "seats": 7,
-        "quantity": 3,
+        "quantity": 2,
         "price_per_day": 45,
         "description": "The Mazda CX-8 2023 is a 6 or 7 seat SUV with a 5-star ANCAP safety rating.",
-        "availability": true
+        "availability": false
     },
     {
         "id": 5,
@@ -67,7 +67,7 @@
         "quantity": 3,
         "price_per_day": 45,
         "description": "The Hyundai Kona 2024 is a 5 seat SUV with a 4-star ANCAP safety rating.",
-        "availability": false
+        "availability": true
     },
     {
         "id": 6,
@@ -81,7 +81,7 @@
         "quantity": 3,
         "price_per_day": 55,
         "description": "It has a hybrid or petrol engine with a fuel economy range from 3.9L\/100km to 8.5L\/100km, depending on the model badge.",
-        "availability": false
+        "availability": true
     },
     {
         "id": 7,
@@ -92,7 +92,7 @@
         "mileage": "32 mpg",
         "fuel_type": "petrol",
         "seats": 5,
-        "quantity": 3,
+        "quantity": 2,
         "price_per_day": 35,
         "description": "The iconic Camry.",
         "availability": true
@@ -106,10 +106,10 @@
         "mileage": "32 mpg",
         "fuel_type": "petrol",
         "seats": 5,
-        "quantity": 3,
+        "quantity": 0,
         "price_per_day": 55,
         "description": "The Mazda 3 is ready to be driven by you.",
-        "availability": true
+        "availability": false
     },
     {
         "id": 9,
@@ -151,7 +151,7 @@
         "quantity": 2,
         "price_per_day": 245,
         "description": "The Sprinter is yours for a fun family night out.",
-        "availability": false
+        "availability": true
     },
     {
         "id": 12,

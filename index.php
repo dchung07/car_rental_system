@@ -290,11 +290,11 @@
 
         <div class="order_modal">
             <div class="order_modal_title_container">
-                <h3>Confirm Order By Clicking Link</h3>
-                <img id="order_modal_close" class="reservation_close_btn" src="images/close.png" alt="Close Icon">
+                <h3>Confirm Order?</h3>
+                <h4 id="order_modal_close" class="reservation_close_btn">Click Here to Cancel the Order</h4>
             </div>
             <div class="order_link">
-                <h5>Click Here to Confirm Order</h5>
+                <h5 id="orderConfirmationLink">Click Here to Confirm Order</h5>
             </div>
         </div>
         <div class="order_modal_underlay">

@@ -219,9 +219,9 @@ body {
     padding: 2rem;
 }
 
-.order_modal_title_container > img {
-    width: 20px;
-    height: 20px;
+.order_modal_title_container > h4 {
+    color: red;
+    cursor: pointer;
 }
 
 .order_link {

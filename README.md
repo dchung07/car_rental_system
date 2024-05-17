@@ -124,3 +124,6 @@ Submit PHP / Change JSON (Do the JSON before submitting the PHP form)
 
 //Afterwards, we should refresh the page so that the cars show as available or not after the changes!
 //We can refresh the page on link press
+
+//Clear irrelevant cache afterwards.
+

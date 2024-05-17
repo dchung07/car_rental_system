@@ -343,21 +343,7 @@ function validPlaceOrder() {
                 
                 let price_total = localStorage.getItem('total_price');
                 let temp_total_price = parseInt(price_total); 
-
-                // console.log(typeof tempEmail);
-                // console.log(tempEmail);
-
-
-                // console.log(typeof temp_start_date);
-                // console.log(temp_start_date);
-
-                // console.log(typeof temp_end_date);
-                // console.log(typeof temp_phone);
-                // console.log(typeof temp_first_name);
-                // console.log(typeof temp_last_name);
-                // console.log(typeof temp_total_price);
-                // console.log(temp_total_price);
-                
+            
             
                 //Need to close the reservation modal.
                 let reservation_modal = document.querySelector('.reservation_modal');
@@ -395,135 +381,107 @@ function validPlaceOrder() {
 
                 xhr.send(data);
 
-                //The async request to update cars.json & also reset the id's.
 
-                let reservationJSON = localStorage.getItem('current_reservation');
-                let reservationObject = JSON.parse(reservationJSON);
-                console.log(reservationObject);
-
-                //Need to get the quantity inputted by the user in car_quantity.value
-                console.log("Car Quantity Value" + car_quantity.value);
-
-                let userInputtedQuantity = car_quantity.value;
-
-                const id = reservationObject.carId;
-                if (id) {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'update_quantity.php', true);
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                            if (xhr.status === 200) {
-                                const response = JSON.parse(xhr.responseText);
-                                if (response.success) {
-                                    alert('Car Quantity Update Success!');
-
-                                } else {
-                                    alert('Car Quantity Update Fail: ' + response.message);
-                                }
-                            } else {
-                                console.error('Error: ' + xhr.status);
-                            }
-                        }
-                    };
-
-                    const data = JSON.stringify({ id: id, userQuantity: userInputtedQuantity });
-                    xhr.send(data);
-                } else {
-                    alert('Please enter an ID');
-                }
-
-                //Reset values after the asyncs are sent
-
-                localStorage.removeItem('current_reservation');
-                start_date.value = '';
-                end_date.value = '';
-                car_quantity.value = '';
-                valid_drivers_license.checked = false;
-                email.value = '';
-                phone.value = '';
-                first_name.value = '';
-                last_name.value = '';
 
                 //Afterwards, we should refresh the page so that the cars show as available or not after the changes!
-                
+
 
                 //Open up the order checkout modal (with the link)
                 order_modal.style.display = "block";
                 order_modal_underlay.style.display = "block";
                 document.body.style.overflow = "hidden";
+                console.log(localStorage.getItem('customerPhone'));
+
+                let orderConfirmationLink = document.getElementById('orderConfirmationLink');
+
+                orderConfirmationLink.addEventListener('click', function() {
+                    //On click we need to update the JSON here.
+
+                    //The async request to update cars.json & also reset the id's.
+
+                    let reservationJSON = localStorage.getItem('current_reservation');
+                    let reservationObject = JSON.parse(reservationJSON);
+                    console.log(reservationObject);
+
+                    //Need to get the quantity inputted by the user in car_quantity.value
+                    console.log("Car Quantity Value" + car_quantity.value);
+
+                    let userInputtedQuantity = car_quantity.value;
+
+                    const id = reservationObject.carId;
+                    if (id) {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'update_quantity.php', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (xhr.status === 200) {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        alert('Car Quantity Update Success!');
+
+                                    } else {
+                                        alert('Car Quantity Update Fail: ' + response.message);
+                                    }
+                                } else {
+                                    console.error('Error: ' + xhr.status);
+                                }
+                            }
+                        };
+
+                        const data = JSON.stringify({ id: id, userQuantity: userInputtedQuantity });
+                        xhr.send(data);
+                    } else {
+                        alert('Please enter an ID');
+                    }
+
+                    //Make a localstorage with this phone.value.
+                    
+                    localStorage.setItem('customerPhone', phone.value);
+
+                    //Reset values after the asyncs are sent
+
+                    localStorage.removeItem('current_reservation');
+                    start_date.value = '';
+                    end_date.value = '';
+                    car_quantity.value = '';
+                    valid_drivers_license.checked = false;
+                    email.value = '';
+                    phone.value = '';
+                    first_name.value = '';
+                    last_name.value = '';
+
+                    location.reload(true);  
+
+                });
 
                 order_modal_close.addEventListener('click', function() {
+                    //This not only acts as a way to close the modal but... cancels the order.       
                     order_modal.style.display = "none";
                     order_modal_underlay.style.display = "none";
                     document.body.style.overflow = "auto";
+
+                    localStorage.removeItem('current_reservation');
+                    start_date.value = '';
+                    end_date.value = '';
+                    car_quantity.value = '';
+                    valid_drivers_license.checked = false;
+                    email.value = '';
+                    phone.value = '';
+                    first_name.value = '';
+                    last_name.value = '';
+
+                    location.reload(true);  
                 });
 
 
-
-                // console.log("order submitted!");
-
-                // let reservationJSON = localStorage.getItem('current_reservation');
-                // let reservationObject = JSON.parse(reservationJSON);
-                // console.log(reservationObject);
-
-                // //Need to get the quantity inputted by the user in car_quantity.value
-                // console.log(car_quantity.value);
-
-                // let userInputtedQuantity = car_quantity.value;
-
-
-                // const jsonUrl = 'cars.json';
-
-                // let xhr = new XMLHttpRequest();
-
-                // xhr.open('GET', jsonUrl, true);
-
-                // xhr.onload = function() {
-                //     if (xhr.status >= 200 && xhr.status < 300) {
-
-                //         let jsonData = JSON.parse(xhr.responseText);
-
-                //         let foundCar = jsonData.find(car => car.id == reservationObject.carId);
-
-                //         if (foundCar) {
-
-                //             foundCar.quantity =- userInputtedQuantity;
-
-                //             let updateRequest = new XMLHttpRequest();
-                //             updateRequest.open('POST', jsonUrl, true);
-                //             updateRequest.setRequestHeader('Content-Type', 'application/json');
-                //             updateRequest.send(JSON.stringify(jsonData));
-
-                //             console.log('Item quantity updated successfully:', foundCar);
-                //         } else {
-                //             console.log('Item with id not found:', reservationObject.carId);
-                //         }
-                //     } else {
-                //         console.error('Failed to load JSON data:', xhr.statusText);
-                //     }
-                // };
-
-                // xhr.send();
 
             });
         }
 }
 
 let place_order_btn = document.getElementById('place_order_btn');
-
-// place_order_btn.addEventListener('click', function() {
-//     let order_form = document.getElementById('order_form');
-//     order_form.submit();
-// });
-
-
-
-// car_quantity.add('input', function() {
-//     validPlaceOrder();
-
-// });
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
