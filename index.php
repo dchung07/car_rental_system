@@ -139,11 +139,11 @@
                                 echo '</div>';
                                 echo '<div class="car-details">';
                                     echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
+                                    echo '<p class="car-details-price">$' . $car['price_per_day'] . '/Day</p>';
                                     echo '<p>Type: ' . $car['type'] . '</p>';
                                     echo '<p>Mileage: ' . $car['mileage'] . '</p>';
                                     echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
                                     echo '<p>Seats: ' . $car['seats'] . '</p>';
-                                    echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
                                     echo '<p>' . $car['description'] . '</p>';
                                     echo '<button class="addToCartBtn" onclick="addReservation(event)">RENT</button>';
                                     echo '<input type="hidden" value="' . $car['id'] . '"/>';
@@ -156,11 +156,11 @@
                             echo '</div>';
                             echo '<div class="car-details">';
                             echo '<h3>' . $car['brand'] . ' ' . $car['model'] . '</h3>';
+                            echo '<p class="car-details-price">$' . $car['price_per_day'] . '/Day</p>';
                             echo '<p>Type: ' . $car['type'] . '</p>';
                             echo '<p>Mileage: ' . $car['mileage'] . '</p>';
                             echo '<p>Fuel Type: ' . $car['fuel_type'] . '</p>';
                             echo '<p>Seats: ' . $car['seats'] . '</p>';
-                            echo '<p>Price per Day: $' . $car['price_per_day'] . '</p>';
                             echo '<p>' . $car['description'] . '</p>';
                             echo '<button class="unavailable_addToCartBtn" disabled>NOT AVAILABLE</button>';
                             

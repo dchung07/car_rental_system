@@ -940,11 +940,11 @@ function disabledCardGeneratorFunc(car) {
         </div>
         <div class="car-details">
             <h3>${car.brand} ${car.model}</h3>
+            <p class="car-details-price">$${car.price_per_day}/Day</p>
             <p>Type: ${car.type}</p>
             <p>Mileage: ${car.mileage}</p>
             <p>Fuel Type: ${car.fuel_type}</p>
             <p>Seats: ${car.seats}</p>
-            <p>Price per Day: $${car.price_per_day}</p>
             <p>${car.description}</p>
             <button class="unavailable_addToCartBtn" disabled>NOT AVAILABLE</button>
         </div>
@@ -960,11 +960,11 @@ function cardGeneratorFunc(car) {
         </div>
         <div class="car-details">
             <h3>${car.brand} ${car.model}</h3>
+            <p class="car-details-price">$${car.price_per_day}/Day</p>
             <p>Type: ${car.type}</p>
             <p>Mileage: ${car.mileage}</p>
             <p>Fuel Type: ${car.fuel_type}</p>
             <p>Seats: ${car.seats}</p>
-            <p>Price per Day: $${car.price_per_day}</p>
             <p>${car.description}</p>
             <button class="addToCartBtn" onclick="addReservation(event)">RENT</button>
             <input type="hidden" value="${car.id}"/>
@@ -1089,6 +1089,10 @@ browse_categories_btn.addEventListener('click', function () {
         let category_main_modal_content_sub_container = document.createElement('div');
         let variableBtn = document.createElement('h3');
         let category_main_modal_arrow_img = document.createElement('img');
+
+        //Create a sub-container so we can add an image next to the variable text.
+        // let variable_sub_container = document.createElement('div');
+
 
         //Modal arrow
         category_main_modal_arrow_img.src = "images/right_arrow.png";

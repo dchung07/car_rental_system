@@ -441,6 +441,17 @@ body {
     justify-content: space-between;
 }
 
+.car-details-price {
+    font-size: 30px;
+    font-weight: 1000;
+    color:#ff7300 !important; 
+}
+
+.car-details-sub {
+    display: flex;
+    justify-content: space-between;
+}
+
 .addToCartBtn {
     border: 1px solid transparent;
     border-radius: 6px;
@@ -545,6 +556,7 @@ body {
 
 .addToCartBtn:hover {
     box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px;
+    background-color: #ff7300;
 }
 
 body {
@@ -770,6 +782,10 @@ body {
     padding: 1rem;
     font-weight: bold;
     border: none;
+}
+
+#reservation_remove_button:hover {
+    background-color:#005792;
 }
 
 
