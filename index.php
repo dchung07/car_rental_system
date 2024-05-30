@@ -174,111 +174,72 @@
         </div>
 
             <div class="reservation_modal">
-                    <div class="reservation_modal_title_container">
-                        <h3>Your Reservations</h3>
-                        <img class="reservation_close_btn" src="images/close.png" alt="Close Icon">
-                    </div>
-                    <div class="reservation_modal_content_container">
-                        <div class="current_reservation">
-
+                    <div class="reservation_modal_wrapper">
+                        <div class="reservation_modal_title_container">
+                            <h3>Your Reservations</h3>
+                            <img class="reservation_close_btn" src="images/close.png" alt="Close Icon">
                         </div>
-
-                        <!-- <div class="reservation_order_details">
-                            <div class="reservation_order_details_quantity_container">
-                                <label for="car_quantity">Quantity to Rent: </label>
-                                <input type="number" id="car_quantity" placeholder="How many...?" min="1" required>
+                        <div class="reservation_modal_content_container">
+                            <div class="current_reservation">
                             </div>
-                            <div class="reservation_order_details_date_container">
-                                <label for="start_date">Start date: </label>
-                                <input type="date" id="start_date" required>
-                                <label for="end_date">End date: </label>
-                                <input type="date" id="end_date" required>
+                            <div class="reservation_order_details">
+                                    <form action="index.php" method="POST" id="order_form">
+                                        <div class="sub_form">
+                                            <label for="car_quantity">Quantity to Rent: </label>
+                                            <input type="number" id="car_quantity" placeholder="How many...?" min="1" value="1" required>
+                                        </div>
+                                        <div class="error" id="quantity_error"></div>
+                                        <div class="sub_form">
+                                            <label for="start_date">Start date: </label>
+                                            <input type="date" id="start_date" required>
+                                        </div>
+                                        <div class="error"></div>
+                                        <div class="sub_form">
+                                            <label for="end_date">End date: </label>
+                                            <input type="date" id="end_date" required>
+                                        </div>
+                                        <div class="error"></div>
+                                        <div class="sub_form">
+                                            <label for="first_name">First Name: </label>
+                                            <input type="text" id="first_name" placeholder="Tom" required>
+                                        </div>
+                                        <div class="error" id="first_name_error"></div>
+                                        <div class="sub_form">
+                                            <label for="last_name">Last Name: </label>
+                                            <input type="text" id="last_name" placeholder="Smith" required>
+                                        </div>
+                                        <div class="error" id="last_name_error"></div>
+                                        <div class="sub_form">
+                                            <label for="phone">Phone Number: </label>
+                                            <input type="phone" id="phone" placeholder="0407398761" required>
+                                        </div>
+                                        <div class="error" id="phone_error"></div>
+                                        <div class="sub_form">
+                                            <label for="email">email: </label>
+                                            <input type="email" id="email" placeholder="Tom@gmail.com" required>
+                                        </div>
+                                        <div class="error" id="email_error"></div>
+                                        <div class="sub_form_check">
+                                            <label for="valid_drivers_license">Do you have a valid drivers license?: </label>
+                                            <input type="checkbox" id="valid_drivers_license" required>
+                                        </div>
+                                        <div class="error" id="checkbox_error"></div>
+                                    </form>
                             </div>
-                            <div class="user_details_form">
-                                <label for="first_name">First Name: </label>
-                                <input type="text" id="first_name" placeholder="Tom" required>
-                                <label for="last_name">Last Name: </label>
-                                <input type="text" id="last_name" placeholder="Smith" required>
-                            </div>
-                            <div class="user_details_form">
-                                <label for="phone">Phone Number: </label>
-                                <input type="phone" id="phone" placeholder="0407398761" required>
-                                <label for="email">email: </label>
-                                <input type="email" id="email" placeholder="Tom@gmail.com" required>
-                            </div>
-                            <div class="user_details_form">
-                                <label for="valid_drivers_license">Do you have a valid drivers license?: </label>
-                                <input type="checkbox" id="valid_drivers_license" required>
-                            </div>
-                        </div> -->
-
-                        <div class="reservation_order_details">
-
-                                <form action="index.php" method="POST" id="order_form">
-                                    <div class="sub_form">
-                                        <label for="car_quantity">Quantity to Rent: </label>
-                                        <input type="number" id="car_quantity" placeholder="How many...?" min="1" value="1" required>
-                                    </div>
-                                    <div class="error" id="quantity_error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="start_date">Start date: </label>
-                                        <input type="date" id="start_date" required>
-                                    </div>
-                                    <div class="error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="end_date">End date: </label>
-                                        <input type="date" id="end_date" required>
-                                    </div>
-                                    <div class="error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="first_name">First Name: </label>
-                                        <input type="text" id="first_name" placeholder="Tom" required>
-                                    </div>
-                                    <div class="error" id="first_name_error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="last_name">Last Name: </label>
-                                        <input type="text" id="last_name" placeholder="Smith" required> 
-                                    </div>
-                                    <div class="error" id="last_name_error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="phone">Phone Number: </label>
-                                        <input type="phone" id="phone" placeholder="0407398761" required>
-                                    </div>
-                                    <div class="error" id="phone_error"></div>
-
-                                    <div class="sub_form">
-                                        <label for="email">email: </label>
-                                        <input type="email" id="email" placeholder="Tom@gmail.com" required>
-                                    </div>
-                                    <div class="error" id="email_error"></div>
-
-                                    <div class="sub_form_check">
-                                        <label for="valid_drivers_license">Do you have a valid drivers license?: </label>
-                                        <input type="checkbox" id="valid_drivers_license" required>
-                                    </div>
-                                    <div class="error" id="checkbox_error"></div>
-
-                                </form>
-
                         </div>
-
-                    </div>
-                    <div class="reservation_modal_footer_container">
-                        <div class="remove_button">
-                            <button id="reservation_remove_button">CANCEL</button>
+                        <div class="reservation_modal_footer_container">
+                            <div class="remove_button">
+                                <button id="reservation_remove_button">CANCEL</button>
+                            </div>
+                            <h5>Order Summary</h5>
+                            <div class="checkout-container">
+                                <h5 id="total_rental_cost">Total Rental Cost: </h5>
+                                <button id="place_order_btn">PLACE ORDER</button>
+                            </div>
                         </div>
-                        <h5>Order Summary</h5>
-                        <div class="checkout-container">
-                            <h5 id="total_rental_cost">Total Rental Cost: </h5>
-                            <button id="place_order_btn">PLACE ORDER</button>
-                        </div>    
                     </div>
             </div>
+
             <div class="reservation_modal_underlay">
             </div>
 

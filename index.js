@@ -973,6 +973,38 @@ function cardGeneratorFunc(car) {
 `;
 }
 
+//Click on logo to just retrieve all cars
+let logoBtn = document.querySelector('.logo');
+logoBtn.addEventListener('click', function() {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === XMLHttpRequest.DONE) {
+            if (xhttp.status === 200) {
+                const carsData = JSON.parse(xhttp.responseText);
+
+                cardContainer.textContent = '';
+
+                carsData.forEach(car => {
+
+                    if (car.availability === false && car.quantity == '0') {
+                        // let cardHtml = '';
+                        disabledCardGeneratorFunc(car);
+                    } else {
+                        // let cardHtml = '';
+                        cardGeneratorFunc(car);
+                    }
+                    cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                });
+
+            }
+        }
+    };
+
+    xhttp.open('GET', 'cars.json', true);
+    xhttp.send();
+});
+
 //Click on all Cars button to retrieve all cars
 
 let browse_all_categories_btn = document.getElementById('browse_all_categories_btn');
